@@ -1,0 +1,1254 @@
+signal_id,bar_utc,event,reason,entry,sl,tp,decision_utc,spread_points,ema,adx,sl_touched,tp_touched,bar_utc_chart_label,decision_utc_chart_label
+1,2026-07-30 12:10:00+00:00,DETECTED,Decision at candle close,4065.8,4059.53,,2026-07-30 12:15:00+00:00,,,,,,2026.07.30 15:10:00,2026.07.30 15:15:00
+1,2026-07-30 12:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4065.8,4059.53,4072.07,2026-07-30 12:15:00+00:00,,,,,,2026.07.30 15:10:00,2026.07.30 15:15:00
+1,2026-07-30 12:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4065.8,4059.53,4072.07,,8.0,,,,,2026.07.30 15:15:00,
+1,2026-07-30 12:20:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4065.8,4059.53,4072.07,,,,,,,2026.07.30 15:20:00,
+2,2026-07-30 22:10:00+00:00,DETECTED,Decision at candle close,4102.77,4098.88,,2026-07-30 22:15:00+00:00,,,,,,2026.07.31 01:10:00,2026.07.31 01:15:00
+2,2026-07-30 22:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4102.77,4098.88,,,,4101.0322305413665,9.079454162759687,,,2026.07.31 01:10:00,
+2,2026-07-30 22:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4103.07,4098.88,,,,4101.349862399006,10.688566171786976,,,2026.07.31 01:15:00,
+2,2026-07-30 22:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4109.57,4098.88,,,,,,,,2026.07.31 01:20:00,
+3,2026-07-30 23:50:00+00:00,DETECTED,Decision at candle close,4103.57,4109.01,,2026-07-30 23:55:00+00:00,,,,,,2026.07.31 02:50:00,2026.07.31 02:55:00
+3,2026-07-30 23:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4103.57,4109.01,4098.13,2026-07-30 23:55:00+00:00,,,,,,2026.07.31 02:50:00,2026.07.31 02:55:00
+3,2026-07-30 23:55:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4103.57,4109.01,4098.13,,26.0,,,,,2026.07.31 02:55:00,
+3,2026-07-31 01:35:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4103.57,4109.01,4098.13,,,,,,,2026.07.31 04:35:00,
+4,2026-07-31 01:45:00+00:00,DETECTED,Decision at candle close,4109.55,4107.04,,2026-07-31 01:50:00+00:00,,,,,,2026.07.31 04:45:00,2026.07.31 04:50:00
+4,2026-07-31 01:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4109.55,4107.04,,,,4106.117978189958,14.616838363643357,,,2026.07.31 04:45:00,
+4,2026-07-31 01:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4110.25,4107.04,,,,4106.277060894177,14.692853833104746,,,2026.07.31 04:50:00,
+4,2026-07-31 01:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4110.25,4107.04,,,,4106.373222734002,14.158552456793512,,,2026.07.31 04:55:00,
+4,2026-07-31 02:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4110.25,4107.04,,,,4106.518690868198,13.724881372937757,,,2026.07.31 05:00:00,
+4,2026-07-31 02:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4110.25,4107.04,,,,4106.6203731313535,13.569531459681247,,,2026.07.31 05:05:00,
+4,2026-07-31 02:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4110.25,4107.04,,,,,,,,2026.07.31 05:10:00,
+5,2026-07-31 02:20:00+00:00,DETECTED,Decision at candle close,4107.56,4111.78,,2026-07-31 02:25:00+00:00,,,,,,2026.07.31 05:20:00,2026.07.31 05:25:00
+5,2026-07-31 02:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4107.56,4111.78,,,,4106.628451389057,13.117723466135546,,,2026.07.31 05:20:00,
+5,2026-07-31 02:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4106.64,4111.78,,,,4106.550469270153,13.641911222764135,,,2026.07.31 05:25:00,
+5,2026-07-31 02:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4105.26,4111.78,,,,4106.4622571213995,14.360378313823317,,,2026.07.31 05:30:00,
+5,2026-07-31 02:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4105.26,4111.78,,,,4106.443494534564,15.460739856581549,,,2026.07.31 05:35:00,
+5,2026-07-31 02:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4105.26,4111.78,,,,4106.435511128545,15.637091575568165,,,2026.07.31 05:40:00,
+5,2026-07-31 02:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4105.26,4111.78,,,,,,,,2026.07.31 05:45:00,
+5,2026-07-31 02:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4105.26,4111.78,,,,,,,,2026.07.31 05:50:00,
+5,2026-07-31 02:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4105.26,4111.78,,,,,,,,2026.07.31 05:55:00,
+5,2026-07-31 03:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4105.26,4111.78,,,,,,,,2026.07.31 06:00:00,
+5,2026-07-31 03:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4105.02,4111.78,,,,,,,,2026.07.31 06:05:00,
+5,2026-07-31 03:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4104.04,4111.78,,,,,,,,2026.07.31 06:10:00,
+5,2026-07-31 03:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4102.65,4111.78,,,,,,,,2026.07.31 06:15:00,
+5,2026-07-31 03:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4102.65,4111.78,,,,,,,,2026.07.31 06:20:00,
+5,2026-07-31 03:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4102.65,4111.78,,,,,,,,2026.07.31 06:25:00,
+5,2026-07-31 03:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4097.56,4111.78,,,,,,,,2026.07.31 06:30:00,
+6,2026-07-31 12:15:00+00:00,DETECTED,Decision at candle close,4058.06,4063.99,,2026-07-31 12:20:00+00:00,,,,,,2026.07.31 15:15:00,2026.07.31 15:20:00
+6,2026-07-31 12:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4058.06,4063.99,4052.13,2026-07-31 12:20:00+00:00,,,,,,2026.07.31 15:15:00,2026.07.31 15:20:00
+6,2026-07-31 12:20:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4057.47,4063.99,4050.95,2026-07-31 12:25:00+00:00,,,,,,2026.07.31 15:20:00,2026.07.31 15:25:00
+6,2026-07-31 12:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4053.27,4063.99,,,,,,,,2026.07.31 15:25:00,
+7,2026-07-31 12:30:00+00:00,DETECTED,Decision at candle close,4053.27,4057.18,,2026-07-31 12:35:00+00:00,,,,,,2026.07.31 15:30:00,2026.07.31 15:35:00
+7,2026-07-31 12:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4053.27,4057.18,4049.36,2026-07-31 12:35:00+00:00,,,,,,2026.07.31 15:30:00,2026.07.31 15:35:00
+7,2026-07-31 12:35:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4052.33,4057.18,4047.48,2026-07-31 12:40:00+00:00,,,,,,2026.07.31 15:35:00,2026.07.31 15:40:00
+7,2026-07-31 12:40:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4052.33,4057.18,4047.48,,8.0,,,,,2026.07.31 15:40:00,
+7,2026-07-31 13:05:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4052.33,4057.18,4047.48,,,,,,,2026.07.31 16:05:00,
+8,2026-07-31 14:40:00+00:00,DETECTED,Decision at candle close,4055.68,4060.85,,2026-07-31 14:45:00+00:00,,,,,,2026.07.31 17:40:00,2026.07.31 17:45:00
+8,2026-07-31 14:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4055.68,4060.85,,,,4061.1782656912073,18.625720916097997,,,2026.07.31 17:40:00,
+8,2026-07-31 14:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4053.41,4060.85,,,,4060.8881583182315,19.202062918577653,,,2026.07.31 17:45:00,
+8,2026-07-31 14:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 17:50:00,
+8,2026-07-31 14:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 17:55:00,
+8,2026-07-31 15:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 18:00:00,
+8,2026-07-31 15:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 18:05:00,
+8,2026-07-31 15:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 18:10:00,
+8,2026-07-31 15:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 18:15:00,
+8,2026-07-31 15:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4053.41,4060.85,,,,,,,,2026.07.31 18:20:00,
+8,2026-07-31 15:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4052.2,4060.85,,,,,,,,2026.07.31 18:25:00,
+8,2026-07-31 15:30:00+00:00,REPLACED,New setup replaces previous setup/order,4051.56,4060.85,,,,,,,,2026.07.31 18:30:00,
+9,2026-07-31 15:30:00+00:00,DETECTED,Decision at candle close,4052.2,4059.35,,2026-07-31 15:35:00+00:00,,,,,,2026.07.31 18:30:00,2026.07.31 18:35:00
+9,2026-07-31 15:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4052.2,4059.35,,,,4059.0190257990057,18.120099989291514,,,2026.07.31 18:30:00,
+9,2026-07-31 15:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4051.54,4059.35,,,,4058.545615633382,19.79198283152953,,,2026.07.31 18:35:00,
+9,2026-07-31 15:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4045.55,4059.35,,,,,,,,2026.07.31 18:40:00,
+10,2026-08-03 08:20:00+00:00,DETECTED,Decision at candle close,4057.97,4062.97,,2026-08-03 08:25:00+00:00,,,,,,2026.08.03 11:20:00,2026.08.03 11:25:00
+10,2026-08-03 08:20:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4057.97,4062.97,,,,,,,,2026.08.03 11:20:00,
+10,2026-08-03 08:25:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4057.97,4062.97,,,,,,,,2026.08.03 11:25:00,
+10,2026-08-03 08:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4057.97,4062.97,4052.97,2026-08-03 08:35:00+00:00,,,,,,2026.08.03 11:30:00,2026.08.03 11:35:00
+10,2026-08-03 08:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4057.97,4062.97,4052.97,,8.0,,,,,2026.08.03 11:35:00,
+10,2026-08-03 08:40:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4057.97,4062.97,4052.97,,,,,,,2026.08.03 11:40:00,
+11,2026-08-03 12:55:00+00:00,DETECTED,Decision at candle close,4055.92,4051.55,,2026-08-03 13:00:00+00:00,,,,,,2026.08.03 15:55:00,2026.08.03 16:00:00
+11,2026-08-03 12:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4055.92,4051.55,,,,4059.3159175335695,22.733330456258695,,,2026.08.03 15:55:00,
+11,2026-08-03 13:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4055.92,4051.55,,,,4059.1662157024057,23.00430478824319,,,2026.08.03 16:00:00,
+11,2026-08-03 13:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4055.92,4051.55,,,,,,,,2026.08.03 16:05:00,
+11,2026-08-03 13:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4055.92,4051.55,,,,,,,,2026.08.03 16:10:00,
+11,2026-08-03 13:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4055.92,4051.55,,,,,,,,2026.08.03 16:15:00,
+11,2026-08-03 13:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4055.92,4051.55,,,,,,,,2026.08.03 16:20:00,
+11,2026-08-03 13:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4055.92,4051.55,,,,,,,,2026.08.03 16:25:00,
+11,2026-08-03 13:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4055.92,4051.55,,,,,,,,2026.08.03 16:30:00,
+12,2026-08-03 14:55:00+00:00,DETECTED,Decision at candle close,4059.17,4051.13,,2026-08-03 15:00:00+00:00,,,,,,2026.08.03 17:55:00,2026.08.03 18:00:00
+12,2026-08-03 14:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4059.17,4051.13,4067.21,2026-08-03 15:00:00+00:00,,,,,,2026.08.03 17:55:00,2026.08.03 18:00:00
+12,2026-08-03 15:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4059.75,4051.13,4068.37,2026-08-03 15:05:00+00:00,,,,,,2026.08.03 18:00:00,2026.08.03 18:05:00
+12,2026-08-03 15:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4059.75,4051.13,4068.37,,8.0,,,,,2026.08.03 18:05:00,
+12,2026-08-03 15:20:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4059.75,4051.13,4068.37,,,,,,,2026.08.03 18:20:00,
+13,2026-08-03 21:00:00+00:00,DETECTED,Decision at candle close,4031.19,4036.43,,2026-08-03 21:05:00+00:00,,,,,,2026.08.04 00:00:00,2026.08.04 00:05:00
+13,2026-08-03 21:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4031.19,4036.43,,,,4037.4520212838115,12.924805640244912,,,2026.08.04 00:00:00,
+13,2026-08-03 21:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4031.19,4036.43,,,,,,,,2026.08.04 00:05:00,
+14,2026-08-03 21:50:00+00:00,DETECTED,Decision at candle close,4040.49,4036.85,,2026-08-03 21:55:00+00:00,,,,,,2026.08.04 00:50:00,2026.08.04 00:55:00
+14,2026-08-03 21:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4040.49,4036.85,4044.13,2026-08-03 21:55:00+00:00,,,,,,2026.08.04 00:50:00,2026.08.04 00:55:00
+14,2026-08-03 21:55:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4043.0,4036.85,4049.15,2026-08-03 22:00:00+00:00,,,,,,2026.08.04 00:55:00,2026.08.04 01:00:00
+14,2026-08-03 22:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4043.62,4036.85,4050.39,2026-08-03 22:05:00+00:00,,,,,,2026.08.04 01:00:00,2026.08.04 01:05:00
+14,2026-08-03 22:05:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4046.08,4036.85,,,,,,,,2026.08.04 01:05:00,
+14,2026-08-03 22:10:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4046.08,4036.85,4055.31,2026-08-03 22:15:00+00:00,,,,,,2026.08.04 01:10:00,2026.08.04 01:15:00
+14,2026-08-03 22:15:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4046.25,4036.85,4055.65,2026-08-03 22:20:00+00:00,,,,,,2026.08.04 01:15:00,2026.08.04 01:20:00
+14,2026-08-03 22:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4048.06,4036.85,,,,,,,,2026.08.04 01:20:00,
+15,2026-08-03 23:05:00+00:00,DETECTED,Decision at candle close,4052.19,4055.64,,2026-08-03 23:10:00+00:00,,,,,,2026.08.04 02:05:00,2026.08.04 02:10:00
+15,2026-08-03 23:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4052.19,4055.64,,,,4043.1334181880366,45.2959839749321,,,2026.08.04 02:05:00,
+15,2026-08-03 23:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4052.19,4055.64,,,,4043.4434698718906,44.810704582923435,,,2026.08.04 02:10:00,
+15,2026-08-03 23:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4052.19,4055.64,,,,,,,,2026.08.04 02:15:00,
+15,2026-08-03 23:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4052.19,4055.64,,,,,,,,2026.08.04 02:20:00,
+15,2026-08-03 23:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4052.19,4055.64,,,,,,,,2026.08.04 02:25:00,
+16,2026-08-04 03:30:00+00:00,DETECTED,Decision at candle close,4060.87,4064.44,,2026-08-04 03:35:00+00:00,,,,,,2026.08.04 06:30:00,2026.08.04 06:35:00
+16,2026-08-04 03:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4060.87,4064.44,,,,4052.153249355351,36.48409471242698,,,2026.08.04 06:30:00,
+16,2026-08-04 03:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4060.12,4064.44,,,,4052.3478970749593,36.044315184904534,,,2026.08.04 06:35:00,
+16,2026-08-04 03:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4058.28,4064.44,,,,4052.480752847418,35.183661710158574,,,2026.08.04 06:40:00,
+16,2026-08-04 03:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4057.6,4064.44,,,,4052.612531339898,34.223626101309534,,,2026.08.04 06:45:00,
+16,2026-08-04 03:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4057.6,4064.44,,,,4052.6963828867533,32.828568987822024,,,2026.08.04 06:50:00,
+16,2026-08-04 03:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4055.59,4064.44,4046.74,2026-08-04 04:00:00+00:00,,,,,,2026.08.04 06:55:00,2026.08.04 07:00:00
+16,2026-08-04 04:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4050.6,4064.44,,,,,,,,2026.08.04 07:00:00,
+17,2026-08-04 04:05:00+00:00,DETECTED,Decision at candle close,4050.6,4058.07,,2026-08-04 04:10:00+00:00,,,,,,2026.08.04 07:05:00,2026.08.04 07:10:00
+17,2026-08-04 04:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4050.6,4058.07,4043.13,2026-08-04 04:10:00+00:00,,,,,,2026.08.04 07:05:00,2026.08.04 07:10:00
+17,2026-08-04 04:10:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4048.5,4058.07,4038.93,2026-08-04 04:15:00+00:00,,,,,,2026.08.04 07:10:00,2026.08.04 07:15:00
+17,2026-08-04 04:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4048.5,4058.07,4038.93,,8.0,,,,,2026.08.04 07:15:00,
+17,2026-08-04 04:40:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4048.5,4058.07,4038.93,,,,,,,2026.08.04 07:40:00,
+18,2026-08-04 07:35:00+00:00,DETECTED,Decision at candle close,4060.61,4055.98,,2026-08-04 07:40:00+00:00,,,,,,2026.08.04 10:35:00,2026.08.04 10:40:00
+18,2026-08-04 07:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4060.61,4055.98,,,,4056.099081900461,19.846257782338853,,,2026.08.04 10:35:00,
+18,2026-08-04 07:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4062.36,4055.98,4068.74,2026-08-04 07:45:00+00:00,,,,,,2026.08.04 10:40:00,2026.08.04 10:45:00
+18,2026-08-04 07:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4062.53,4055.98,4069.08,2026-08-04 07:50:00+00:00,,,,,,2026.08.04 10:45:00,2026.08.04 10:50:00
+18,2026-08-04 07:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4063.46,4055.98,4070.94,2026-08-04 07:55:00+00:00,,,,,,2026.08.04 10:50:00,2026.08.04 10:55:00
+18,2026-08-04 07:55:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4063.46,4055.98,4070.94,,8.0,,,,,2026.08.04 10:55:00,
+18,2026-08-04 09:35:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4063.46,4055.98,4070.94,,,,,,,2026.08.04 12:35:00,
+19,2026-08-04 09:50:00+00:00,DETECTED,Decision at candle close,4060.04,4055.73,,2026-08-04 09:55:00+00:00,,,,,,2026.08.04 12:50:00,2026.08.04 12:55:00
+19,2026-08-04 09:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4060.04,4055.73,,,,4059.310342846572,18.28020549773971,,,2026.08.04 12:50:00,
+19,2026-08-04 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4060.04,4055.73,,,,4059.4460695361795,17.618932498244476,,,2026.08.04 12:55:00,
+19,2026-08-04 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4062.34,4055.73,,,,4059.616034353466,17.56688267173046,,,2026.08.04 13:00:00,
+19,2026-08-04 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4064.06,4055.73,,,,4059.7748526321566,17.628860639714095,,,2026.08.04 13:05:00,
+19,2026-08-04 10:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4064.06,4055.73,,,,4059.8163328096916,16.444966083653718,,,2026.08.04 13:10:00,
+19,2026-08-04 10:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:15:00,
+19,2026-08-04 10:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:20:00,
+19,2026-08-04 10:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:25:00,
+19,2026-08-04 10:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:30:00,
+19,2026-08-04 10:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:35:00,
+19,2026-08-04 10:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:40:00,
+19,2026-08-04 10:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:45:00,
+19,2026-08-04 10:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:50:00,
+19,2026-08-04 10:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.06,4055.73,,,,,,,,2026.08.04 13:55:00,
+19,2026-08-04 11:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4064.72,4055.73,,,,,,,,2026.08.04 14:00:00,
+19,2026-08-04 11:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4068.86,4055.73,,,,,,,,2026.08.04 14:05:00,
+20,2026-08-04 18:25:00+00:00,DETECTED,Decision at candle close,4077.77,4085.57,,2026-08-04 18:30:00+00:00,,,,,,2026.08.04 21:25:00,2026.08.04 21:30:00
+20,2026-08-04 18:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4077.77,4085.57,,,,4074.1147755718616,23.075747221089415,,,2026.08.04 21:25:00,
+20,2026-08-04 18:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4077.77,4085.57,,,,4074.2306845706594,21.814972348756676,,,2026.08.04 21:30:00,
+20,2026-08-04 18:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4077.77,4085.57,,,,,,,,2026.08.04 21:35:00,
+21,2026-08-04 21:45:00+00:00,DETECTED,Decision at candle close,4080.04,4085.76,,2026-08-04 21:50:00+00:00,,,,,,2026.08.05 00:45:00,2026.08.05 00:50:00
+21,2026-08-04 21:45:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4080.04,4085.76,,,,,,,,2026.08.05 00:45:00,
+21,2026-08-04 21:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4080.04,4085.76,4074.32,2026-08-04 21:55:00+00:00,,,,,,2026.08.05 00:50:00,2026.08.05 00:55:00
+21,2026-08-04 21:55:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4080.04,4085.76,4074.32,,10.0,,,,,2026.08.05 00:55:00,
+21,2026-08-05 01:40:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4080.04,4085.76,4074.32,,,,,,,2026.08.05 04:40:00,
+22,2026-08-05 02:30:00+00:00,DETECTED,Decision at candle close,4069.54,4074.67,,2026-08-05 02:35:00+00:00,,,,,,2026.08.05 05:30:00,2026.08.05 05:35:00
+22,2026-08-05 02:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4069.54,4074.67,4064.41,2026-08-05 02:35:00+00:00,,,,,,2026.08.05 05:30:00,2026.08.05 05:35:00
+22,2026-08-05 02:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4069.54,4074.67,4064.41,,14.0,,,,,2026.08.05 05:35:00,
+22,2026-08-05 03:15:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4069.54,4074.67,4064.41,,,,,,,2026.08.05 06:15:00,
+23,2026-08-05 04:20:00+00:00,DETECTED,Decision at candle close,4085.0,4079.72,,2026-08-05 04:25:00+00:00,,,,,,2026.08.05 07:20:00,2026.08.05 07:25:00
+23,2026-08-05 04:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4085.0,4079.72,,,,4078.6470973278824,19.921029635423462,,,2026.08.05 07:20:00,
+23,2026-08-05 04:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4085.0,4079.72,,,,4078.841946881377,19.474782534977454,,,2026.08.05 07:25:00,
+23,2026-08-05 04:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4085.0,4079.72,,,,4079.0408996682036,18.21653637156394,,,2026.08.05 07:30:00,
+23,2026-08-05 04:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4085.0,4079.72,,,,4079.3943127326884,17.976622849828807,,,2026.08.05 07:35:00,
+23,2026-08-05 04:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4089.47,4079.72,,,,4079.8436795167986,18.45789029708467,,,2026.08.05 07:40:00,
+23,2026-08-05 04:45:00+00:00,REPLACED,New setup replaces previous setup/order,4092.79,4079.72,,,,,,,,2026.08.05 07:45:00,
+24,2026-08-05 04:45:00+00:00,DETECTED,Decision at candle close,4089.47,4080.14,,2026-08-05 04:50:00+00:00,,,,,,2026.08.05 07:45:00,2026.08.05 07:50:00
+24,2026-08-05 04:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4089.47,4080.14,,,,4080.317329276407,19.26453757220812,,,2026.08.05 07:45:00,
+24,2026-08-05 04:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4093.04,4080.14,,,,,,,,2026.08.05 07:50:00,
+25,2026-08-05 09:15:00+00:00,DETECTED,Decision at candle close,4168.92,4160.2,,2026-08-05 09:20:00+00:00,,,,,,2026.08.05 12:15:00,2026.08.05 12:20:00
+25,2026-08-05 09:15:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4168.92,4160.2,,,,,,,,2026.08.05 12:15:00,
+25,2026-08-05 09:20:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4168.92,4160.2,,,,,,,,2026.08.05 12:20:00,
+25,2026-08-05 09:25:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4168.92,4160.2,,,,,,,,2026.08.05 12:25:00,
+25,2026-08-05 09:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4168.92,4160.2,4177.64,2026-08-05 09:35:00+00:00,,,,,,2026.08.05 12:30:00,2026.08.05 12:35:00
+25,2026-08-05 09:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4173.11,4160.2,,,,,,,,2026.08.05 12:35:00,
+26,2026-08-05 10:35:00+00:00,DETECTED,Decision at candle close,4165.57,4169.39,,2026-08-05 10:40:00+00:00,,,,,,2026.08.05 13:35:00,2026.08.05 13:40:00
+26,2026-08-05 10:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4165.57,4169.39,,,,4147.424138068075,35.703982918149215,,,2026.08.05 13:35:00,
+26,2026-08-05 10:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4165.57,4169.39,,,,4148.054166266412,33.766744242138344,,,2026.08.05 13:40:00,
+26,2026-08-05 10:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4165.57,4169.39,,,,4148.6464884485395,32.39167884100486,,,2026.08.05 13:45:00,
+26,2026-08-05 10:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4165.57,4169.39,,,,4149.1948000303955,31.114832397095228,,,2026.08.05 13:50:00,
+26,2026-08-05 10:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4165.57,4169.39,,,,,,,,2026.08.05 13:55:00,
+27,2026-08-05 14:05:00+00:00,DETECTED,Decision at candle close,4160.76,4154.05,,2026-08-05 14:10:00+00:00,,,,,,2026.08.05 17:05:00,2026.08.05 17:10:00
+27,2026-08-05 14:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4160.76,4154.05,4167.47,2026-08-05 14:10:00+00:00,,,,,,2026.08.05 17:05:00,2026.08.05 17:10:00
+27,2026-08-05 14:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4166.33,4154.05,,,,,,,,2026.08.05 17:10:00,
+28,2026-08-05 14:20:00+00:00,DETECTED,Decision at candle close,4170.02,4163.13,,2026-08-05 14:25:00+00:00,,,,,,2026.08.05 17:20:00,2026.08.05 17:25:00
+28,2026-08-05 14:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4170.02,4163.13,4176.91,2026-08-05 14:25:00+00:00,,,,,,2026.08.05 17:20:00,2026.08.05 17:25:00
+28,2026-08-05 14:25:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4170.02,4163.13,4176.91,,8.0,,,,,2026.08.05 17:25:00,
+28,2026-08-05 14:25:00+00:00,REVIEW,Both levels touched or TP on fill bar; inspect tick sequence,4170.02,4163.13,4176.91,,,,,False,True,2026.08.05 17:25:00,
+28,2026-08-05 14:30:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4170.02,4163.13,4176.91,,,,,,,2026.08.05 17:30:00,
+29,2026-08-05 16:00:00+00:00,DETECTED,Decision at candle close,4188.69,4195.7,,2026-08-05 16:05:00+00:00,,,,,,2026.08.05 19:00:00,2026.08.05 19:05:00
+29,2026-08-05 16:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4188.69,4195.7,,,,4175.235591964688,45.55559794366507,,,2026.08.05 19:00:00,
+29,2026-08-05 16:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4188.69,4195.7,,,,,,,,2026.08.05 19:05:00,
+30,2026-08-05 17:15:00+00:00,DETECTED,Decision at candle close,4225.82,4202.97,,2026-08-05 17:20:00+00:00,,,,,,2026.08.05 20:15:00,2026.08.05 20:20:00
+30,2026-08-05 17:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4225.82,4202.97,,,,,,,,2026.08.05 20:15:00,
+31,2026-08-05 17:50:00+00:00,DETECTED,Decision at candle close,4241.29,4228.81,,2026-08-05 17:55:00+00:00,,,,,,2026.08.05 20:50:00,2026.08.05 20:55:00
+31,2026-08-05 17:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4241.29,4228.81,,,,,,,,2026.08.05 20:50:00,
+32,2026-08-05 18:10:00+00:00,DETECTED,Decision at candle close,4251.76,4235.95,,2026-08-05 18:15:00+00:00,,,,,,2026.08.05 21:10:00,2026.08.05 21:15:00
+32,2026-08-05 18:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4251.76,4235.95,,,,,,,,2026.08.05 21:10:00,
+33,2026-08-05 19:05:00+00:00,DETECTED,Decision at candle close,4234.29,4250.31,,2026-08-05 19:10:00+00:00,,,,,,2026.08.05 22:05:00,2026.08.05 22:10:00
+33,2026-08-05 19:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4234.29,4250.31,,,,,,,,2026.08.05 22:05:00,
+34,2026-08-06 01:05:00+00:00,DETECTED,Decision at candle close,4246.73,4244.08,,2026-08-06 01:10:00+00:00,,,,,,2026.08.06 04:05:00,2026.08.06 04:10:00
+34,2026-08-06 01:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4246.73,4244.08,,,,4245.3045941197615,15.292140824725431,,,2026.08.06 04:05:00,
+34,2026-08-06 01:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4246.73,4244.08,,,,4245.380181534703,15.285725495770825,,,2026.08.06 04:10:00,
+34,2026-08-06 01:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4247.16,4244.08,,,,4245.452306623563,15.310148172487867,,,2026.08.06 04:15:00,
+34,2026-08-06 01:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4247.16,4244.08,,,,4245.543378471781,15.528112376823598,,,2026.08.06 04:20:00,
+34,2026-08-06 01:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4247.22,4244.08,,,,4245.623595539337,15.730507709421065,,,2026.08.06 04:25:00,
+34,2026-08-06 01:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4247.51,4244.08,,,,4245.749707092924,16.31076749503808,,,2026.08.06 04:30:00,
+34,2026-08-06 01:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4249.11,4244.08,,,,4245.874634668072,16.90854190827114,,,2026.08.06 04:35:00,
+34,2026-08-06 01:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4249.11,4244.08,,,,4245.953171264599,16.850481489986382,,,2026.08.06 04:40:00,
+34,2026-08-06 01:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4249.11,4244.08,,,,,,,,2026.08.06 04:45:00,
+34,2026-08-06 01:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4249.11,4244.08,,,,,,,,2026.08.06 04:50:00,
+34,2026-08-06 01:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4249.11,4244.08,,,,,,,,2026.08.06 04:55:00,
+34,2026-08-06 02:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4249.11,4244.08,,,,,,,,2026.08.06 05:00:00,
+34,2026-08-06 02:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4251.56,4244.08,,,,,,,,2026.08.06 05:05:00,
+34,2026-08-06 02:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4251.91,4244.08,,,,,,,,2026.08.06 05:10:00,
+34,2026-08-06 02:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4256.03,4244.08,,,,,,,,2026.08.06 05:15:00,
+35,2026-08-06 02:45:00+00:00,DETECTED,Decision at candle close,4276.43,4261.04,,2026-08-06 02:50:00+00:00,,,,,,2026.08.06 05:45:00,2026.08.06 05:50:00
+35,2026-08-06 02:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4276.43,4261.04,,,,,,,,2026.08.06 05:45:00,
+36,2026-08-06 05:40:00+00:00,DETECTED,Decision at candle close,4288.35,4295.0,,2026-08-06 05:45:00+00:00,,,,,,2026.08.06 08:40:00,2026.08.06 08:45:00
+36,2026-08-06 05:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4288.35,4295.0,,,,4276.361509161628,22.377439383711195,,,2026.08.06 08:40:00,
+36,2026-08-06 05:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4287.14,4295.0,,,,4276.367033254116,22.11601042331228,,,2026.08.06 08:45:00,
+36,2026-08-06 05:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4280.58,4295.0,,,,,,,,2026.08.06 08:50:00,
+37,2026-08-06 15:05:00+00:00,DETECTED,Decision at candle close,4260.73,4254.3,,2026-08-06 15:10:00+00:00,,,,,,2026.08.06 18:05:00,2026.08.06 18:10:00
+37,2026-08-06 15:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4260.73,4254.3,,,,4266.848417098711,20.99080839895037,,,2026.08.06 18:05:00,
+37,2026-08-06 15:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4260.73,4254.3,,,,4266.498960679247,21.328912832867793,,,2026.08.06 18:10:00,
+37,2026-08-06 15:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4260.73,4254.3,,,,,,,,2026.08.06 18:15:00,
+38,2026-08-06 15:40:00+00:00,DETECTED,Decision at candle close,4266.94,4256.76,,2026-08-06 15:45:00+00:00,,,,,,2026.08.06 18:40:00,2026.08.06 18:45:00
+38,2026-08-06 15:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4266.94,4256.76,,,,,,,,2026.08.06 18:40:00,
+39,2026-08-06 15:55:00+00:00,DETECTED,Decision at candle close,4256.43,4270.69,,2026-08-06 16:00:00+00:00,,,,,,2026.08.06 18:55:00,2026.08.06 19:00:00
+39,2026-08-06 15:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4256.43,4270.69,,,,,,,,2026.08.06 18:55:00,
+40,2026-08-06 18:25:00+00:00,DETECTED,Decision at candle close,4258.44,4268.46,,2026-08-06 18:30:00+00:00,,,,,,2026.08.06 21:25:00,2026.08.06 21:30:00
+40,2026-08-06 18:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4258.44,4268.46,,,,,,,,2026.08.06 21:25:00,
+41,2026-08-06 19:00:00+00:00,DETECTED,Decision at candle close,4237.63,4251.53,,2026-08-06 19:05:00+00:00,,,,,,2026.08.06 22:00:00,2026.08.06 22:05:00
+41,2026-08-06 19:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4237.63,4251.53,,,,,,,,2026.08.06 22:00:00,
+42,2026-08-06 20:05:00+00:00,DETECTED,Decision at candle close,4239.46,4235.32,,2026-08-06 20:10:00+00:00,,,,,,2026.08.06 23:05:00,2026.08.06 23:10:00
+42,2026-08-06 20:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4239.46,4235.32,,,,4250.767010676848,27.9888487388658,,,2026.08.06 23:05:00,
+42,2026-08-06 20:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4250.42120725174,26.230366958554207,,,2026.08.06 23:10:00,
+42,2026-08-06 20:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4250.099856168347,24.92744437825845,,,2026.08.06 23:15:00,
+42,2026-08-06 20:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4249.7637952440255,23.56240396482037,,,2026.08.06 23:20:00,
+42,2026-08-06 20:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4249.502359237467,22.051232719149045,,,2026.08.06 23:25:00,
+42,2026-08-06 20:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4249.205560257235,20.71547480260797,,,2026.08.06 23:30:00,
+42,2026-08-06 20:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4240.13,4235.32,,,,4248.973246475623,19.31388243075821,,,2026.08.06 23:35:00,
+42,2026-08-06 20:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4241.62,4235.32,,,,4248.755435215567,18.06693794564904,,,2026.08.06 23:40:00,
+42,2026-08-06 20:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4241.62,4235.32,,,,4248.540503008603,16.896793933281636,,,2026.08.06 23:45:00,
+42,2026-08-06 20:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4242.28,4235.32,,,,4248.50245369329,16.8799851935339,,,2026.08.06 23:50:00,
+42,2026-08-06 20:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4245.93,4235.32,,,,,,,,2026.08.06 23:55:00,
+43,2026-08-06 22:10:00+00:00,DETECTED,Decision at candle close,4246.48,4241.1,,2026-08-06 22:15:00+00:00,,,,,,2026.08.07 01:10:00,2026.08.07 01:15:00
+43,2026-08-06 22:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4246.48,4241.1,,,,4247.372834090414,13.389195840091961,,,2026.08.07 01:10:00,
+43,2026-08-06 22:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4246.48,4241.1,,,,4247.310773818426,13.526851108349087,,,2026.08.07 01:15:00,
+43,2026-08-06 22:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4246.48,4241.1,,,,,,,,2026.08.07 01:20:00,
+44,2026-08-06 22:30:00+00:00,DETECTED,Decision at candle close,4241.61,4248.56,,2026-08-06 22:35:00+00:00,,,,,,2026.08.07 01:30:00,2026.08.07 01:35:00
+44,2026-08-06 22:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4241.61,4248.56,,,,4246.506312902936,14.270187489704286,,,2026.08.07 01:30:00,
+44,2026-08-06 22:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4239.67,4248.56,,,,4246.177253336003,14.462531723931447,,,2026.08.07 01:35:00,
+44,2026-08-06 22:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4236.98,4248.56,,,,,,,,2026.08.07 01:40:00,
+45,2026-08-06 23:00:00+00:00,DETECTED,Decision at candle close,4243.82,4234.63,,2026-08-06 23:05:00+00:00,,,,,,2026.08.07 02:00:00,2026.08.07 02:05:00
+45,2026-08-06 23:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4243.82,4234.63,,,,4245.7303211438,16.341002733499746,,,2026.08.07 02:00:00,
+45,2026-08-06 23:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4245.11,4234.63,,,,,,,,2026.08.07 02:05:00,
+46,2026-08-07 03:00:00+00:00,DETECTED,Decision at candle close,4250.5,4245.73,,2026-08-07 03:05:00+00:00,,,,,,2026.08.07 06:00:00,2026.08.07 06:05:00
+46,2026-08-07 03:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4250.5,4245.73,,,,4244.670951940674,14.43370582223555,,,2026.08.07 06:00:00,
+46,2026-08-07 03:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4250.5,4245.73,,,,4244.824691158428,14.3809231340303,,,2026.08.07 06:05:00,
+46,2026-08-07 03:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4250.5,4245.73,,,,,,,,2026.08.07 06:10:00,
+47,2026-08-07 03:20:00+00:00,DETECTED,Decision at candle close,4246.24,4251.0,,2026-08-07 03:25:00+00:00,,,,,,2026.08.07 06:20:00,2026.08.07 06:25:00
+47,2026-08-07 03:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4246.24,4251.0,,,,4244.5805852693275,15.559525700111589,,,2026.08.07 06:20:00,
+47,2026-08-07 03:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4244.25,4251.0,,,,4244.5605661863165,16.434778821708022,,,2026.08.07 06:25:00,
+47,2026-08-07 03:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4244.05,4251.0,,,,4244.476941121414,17.247513863190427,,,2026.08.07 06:30:00,
+47,2026-08-07 03:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4243.21,4251.0,,,,4244.1881890083,19.137488177668626,,,2026.08.07 06:35:00,
+47,2026-08-07 03:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4235.84,4251.0,,,,,,,,2026.08.07 06:40:00,
+48,2026-08-07 03:45:00+00:00,DETECTED,Decision at candle close,4235.84,4244.05,,2026-08-07 03:50:00+00:00,,,,,,2026.08.07 06:45:00,2026.08.07 06:50:00
+48,2026-08-07 03:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4235.84,4244.05,4227.63,2026-08-07 03:50:00+00:00,,,,,,2026.08.07 06:45:00,2026.08.07 06:50:00
+48,2026-08-07 03:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4235.04,4244.05,4226.03,2026-08-07 03:55:00+00:00,,,,,,2026.08.07 06:50:00,2026.08.07 06:55:00
+48,2026-08-07 03:55:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4234.09,4244.05,4224.13,2026-08-07 04:00:00+00:00,,,,,,2026.08.07 06:55:00,2026.08.07 07:00:00
+48,2026-08-07 04:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4234.09,4244.05,4224.13,,8.0,,,,,2026.08.07 07:00:00,
+48,2026-08-07 04:05:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4234.09,4244.05,4224.13,,,,,,,2026.08.07 07:05:00,
+49,2026-08-07 06:35:00+00:00,DETECTED,Decision at candle close,4258.76,4251.94,,2026-08-07 06:40:00+00:00,,,,,,2026.08.07 09:35:00,2026.08.07 09:40:00
+49,2026-08-07 06:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4258.76,4251.94,,,,4250.359614704777,17.015139663028613,,,2026.08.07 09:35:00,
+49,2026-08-07 06:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4259.77,4251.94,,,,4250.699955149726,16.421959143071675,,,2026.08.07 09:40:00,
+49,2026-08-07 06:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4259.77,4251.94,,,,4251.030776053528,15.719130009550927,,,2026.08.07 09:45:00,
+49,2026-08-07 06:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4259.77,4251.94,,,,4251.341898218205,15.03984540412927,,,2026.08.07 09:50:00,
+49,2026-08-07 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4260.21,4251.94,,,,4251.829048877659,15.754252251448532,,,2026.08.07 09:55:00,
+49,2026-08-07 07:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4262.22,4251.94,,,,,,,,2026.08.07 10:00:00,
+50,2026-08-07 09:45:00+00:00,DETECTED,Decision at candle close,4291.83,4280.38,,2026-08-07 09:50:00+00:00,,,,,,2026.08.07 12:45:00,2026.08.07 12:50:00
+50,2026-08-07 09:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4291.83,4280.38,,,,,,,,2026.08.07 12:45:00,
+51,2026-08-07 14:30:00+00:00,DETECTED,Decision at candle close,4324.13,4317.14,,2026-08-07 14:35:00+00:00,,,,,,2026.08.07 17:30:00,2026.08.07 17:35:00
+51,2026-08-07 14:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4324.13,4317.14,4331.12,2026-08-07 14:35:00+00:00,,,,,,2026.08.07 17:30:00,2026.08.07 17:35:00
+51,2026-08-07 14:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4324.13,4317.14,4331.12,,8.0,,,,,2026.08.07 17:35:00,
+51,2026-08-07 15:05:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4324.13,4317.14,4331.12,,,,,,,2026.08.07 18:05:00,
+52,2026-08-07 23:35:00+00:00,DETECTED,Decision at candle close,4337.29,4339.46,,2026-08-07 23:40:00+00:00,,,,,,2026.08.08 02:35:00,2026.08.08 02:40:00
+52,2026-08-07 23:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4337.29,4339.46,,,,,,,,2026.08.08 02:35:00,
+53,2026-08-10 07:20:00+00:00,DETECTED,Decision at candle close,4330.84,4323.38,,2026-08-10 07:25:00+00:00,,,,,,2026.08.10 10:20:00,2026.08.10 10:25:00
+53,2026-08-10 07:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4330.84,4323.38,,,,4329.318885843452,17.53924247995737,,,2026.08.10 10:20:00,
+53,2026-08-10 07:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4333.93,4323.38,,,,,,,,2026.08.10 10:25:00,
+54,2026-08-10 09:50:00+00:00,DETECTED,Decision at candle close,4355.02,4346.01,,2026-08-10 09:55:00+00:00,,,,,,2026.08.10 12:50:00,2026.08.10 12:55:00
+54,2026-08-10 09:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4355.02,4346.01,4364.03,2026-08-10 09:55:00+00:00,,,,,,2026.08.10 12:50:00,2026.08.10 12:55:00
+54,2026-08-10 09:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4356.26,4346.01,,,,,,,,2026.08.10 12:55:00,
+55,2026-08-10 12:40:00+00:00,DETECTED,Decision at candle close,4344.24,4348.94,,2026-08-10 12:45:00+00:00,,,,,,2026.08.10 15:40:00,2026.08.10 15:45:00
+55,2026-08-10 12:40:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4344.24,4348.94,,,,,,,,2026.08.10 15:40:00,
+55,2026-08-10 12:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4344.24,4348.94,4339.54,2026-08-10 12:50:00+00:00,,,,,,2026.08.10 15:45:00,2026.08.10 15:50:00
+55,2026-08-10 12:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4342.63,4348.94,4336.32,2026-08-10 12:55:00+00:00,,,,,,2026.08.10 15:50:00,2026.08.10 15:55:00
+55,2026-08-10 12:55:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4342.63,4348.94,4336.32,,10.0,,,,,2026.08.10 15:55:00,
+55,2026-08-10 13:55:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4342.63,4348.94,4336.32,,,,,,,2026.08.10 16:55:00,
+56,2026-08-10 14:20:00+00:00,DETECTED,Decision at candle close,4331.45,4335.7,,2026-08-10 14:25:00+00:00,,,,,,2026.08.10 17:20:00,2026.08.10 17:25:00
+56,2026-08-10 14:20:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4331.45,4335.7,,,,,,,,2026.08.10 17:20:00,
+56,2026-08-10 14:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4331.45,4335.7,,,,,,,,2026.08.10 17:25:00,
+57,2026-08-10 17:35:00+00:00,DETECTED,Decision at candle close,4346.23,4333.21,,2026-08-10 17:40:00+00:00,,,,,,2026.08.10 20:35:00,2026.08.10 20:40:00
+57,2026-08-10 17:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4346.23,4333.21,,,,,,,,2026.08.10 20:35:00,
+58,2026-08-10 19:00:00+00:00,DETECTED,Decision at candle close,4357.26,4349.4,,2026-08-10 19:05:00+00:00,,,,,,2026.08.10 22:00:00,2026.08.10 22:05:00
+58,2026-08-10 19:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4357.26,4349.4,4365.12,2026-08-10 19:05:00+00:00,,,,,,2026.08.10 22:00:00,2026.08.10 22:05:00
+58,2026-08-10 19:05:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4357.63,4349.4,4365.86,2026-08-10 19:10:00+00:00,,,,,,2026.08.10 22:05:00,2026.08.10 22:10:00
+58,2026-08-10 19:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4362.06,4349.4,,,,,,,,2026.08.10 22:10:00,
+59,2026-08-10 19:40:00+00:00,DETECTED,Decision at candle close,4359.84,4365.4,,2026-08-10 19:45:00+00:00,,,,,,2026.08.10 22:40:00,2026.08.10 22:45:00
+59,2026-08-10 19:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4359.84,4365.4,,,,4346.57129385352,33.130443959936215,,,2026.08.10 22:40:00,
+59,2026-08-10 19:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4355.86,4365.4,,,,4346.8214154247835,31.252160931509454,,,2026.08.10 22:45:00,
+59,2026-08-10 19:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4354.92,4365.4,,,,,,,,2026.08.10 22:50:00,
+60,2026-08-10 21:40:00+00:00,DETECTED,Decision at candle close,4377.52,4365.28,,2026-08-10 21:45:00+00:00,,,,,,2026.08.11 00:40:00,2026.08.11 00:45:00
+60,2026-08-10 21:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4377.52,4365.28,,,,,,,,2026.08.11 00:40:00,
+61,2026-08-11 03:30:00+00:00,DETECTED,Decision at candle close,4411.83,4404.66,,2026-08-11 03:35:00+00:00,,,,,,2026.08.11 06:30:00,2026.08.11 06:35:00
+61,2026-08-11 03:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4411.83,4404.66,4419.0,2026-08-11 03:35:00+00:00,,,,,,2026.08.11 06:30:00,2026.08.11 06:35:00
+61,2026-08-11 03:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4411.83,4404.66,4419.0,,8.0,,,,,2026.08.11 06:35:00,
+61,2026-08-11 03:45:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4411.83,4404.66,4419.0,,,,,,,2026.08.11 06:45:00,
+62,2026-08-11 22:10:00+00:00,DETECTED,Decision at candle close,4367.54,4371.25,,2026-08-11 22:15:00+00:00,,,,,,2026.08.12 01:10:00,2026.08.12 01:15:00
+62,2026-08-11 22:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4367.54,4371.25,4363.83,2026-08-11 22:15:00+00:00,,,,,,2026.08.12 01:10:00,2026.08.12 01:15:00
+62,2026-08-11 22:15:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4365.14,4371.25,4359.03,2026-08-11 22:20:00+00:00,,,,,,2026.08.12 01:15:00,2026.08.12 01:20:00
+62,2026-08-11 22:20:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4365.14,4371.25,4359.03,,11.0,,,,,2026.08.12 01:20:00,
+62,2026-08-11 22:30:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4365.14,4371.25,4359.03,,,,,,,2026.08.12 01:30:00,
+63,2026-08-11 23:50:00+00:00,DETECTED,Decision at candle close,4367.13,4369.21,,2026-08-11 23:55:00+00:00,,,,,,2026.08.12 02:50:00,2026.08.12 02:55:00
+63,2026-08-11 23:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4367.13,4369.21,,,,4372.712983240101,17.575627482767022,,,2026.08.12 02:50:00,
+63,2026-08-11 23:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4367.13,4369.21,,,,,,,,2026.08.12 02:55:00,
+64,2026-08-12 02:25:00+00:00,DETECTED,Decision at candle close,4371.01,4364.64,,2026-08-12 02:30:00+00:00,,,,,,2026.08.12 05:25:00,2026.08.12 05:30:00
+64,2026-08-12 02:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4371.01,4364.64,,,,4372.481273410734,18.813486531187117,,,2026.08.12 05:25:00,
+64,2026-08-12 02:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4371.01,4364.64,,,,4372.351723431113,18.833991021854512,,,2026.08.12 05:30:00,
+64,2026-08-12 02:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 05:35:00,
+64,2026-08-12 02:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 05:40:00,
+64,2026-08-12 02:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 05:45:00,
+64,2026-08-12 02:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 05:50:00,
+64,2026-08-12 02:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 05:55:00,
+64,2026-08-12 03:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 06:00:00,
+64,2026-08-12 03:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 06:05:00,
+64,2026-08-12 03:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.01,4364.64,,,,,,,,2026.08.12 06:10:00,
+64,2026-08-12 03:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4374.74,4364.64,,,,,,,,2026.08.12 06:15:00,
+65,2026-08-12 03:20:00+00:00,DETECTED,Decision at candle close,4374.74,4368.51,,2026-08-12 03:25:00+00:00,,,,,,2026.08.12 06:20:00,2026.08.12 06:25:00
+65,2026-08-12 03:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4374.74,4368.51,,,,4372.538189811351,17.4620311629205,,,2026.08.12 06:20:00,
+65,2026-08-12 03:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4378.45,4368.51,,,,4372.816937809839,18.316709321052596,,,2026.08.12 06:25:00,
+65,2026-08-12 03:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4379.42,4368.51,,,,,,,,2026.08.12 06:30:00,
+66,2026-08-12 08:30:00+00:00,DETECTED,Decision at candle close,4395.83,4401.09,,2026-08-12 08:35:00+00:00,,,,,,2026.08.12 11:30:00,2026.08.12 11:35:00
+66,2026-08-12 08:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4395.83,4401.09,,,,4395.959679196439,18.40368175446546,,,2026.08.12 11:30:00,
+66,2026-08-12 08:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4395.04,4401.09,,,,4395.883951963519,19.71907128272815,,,2026.08.12 11:35:00,
+66,2026-08-12 08:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4394.22,4401.09,4387.35,2026-08-12 08:45:00+00:00,,,,,,2026.08.12 11:40:00,2026.08.12 11:45:00
+66,2026-08-12 08:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4389.19,4401.09,,,,,,,,2026.08.12 11:45:00,
+67,2026-08-12 09:55:00+00:00,DETECTED,Decision at candle close,4399.72,4393.55,,2026-08-12 10:00:00+00:00,,,,,,2026.08.12 12:55:00,2026.08.12 13:00:00
+67,2026-08-12 09:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4399.72,4393.55,4405.89,2026-08-12 10:00:00+00:00,,,,,,2026.08.12 12:55:00,2026.08.12 13:00:00
+67,2026-08-12 10:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4401.27,4393.55,4408.99,2026-08-12 10:05:00+00:00,,,,,,2026.08.12 13:00:00,2026.08.12 13:05:00
+67,2026-08-12 10:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4401.27,4393.55,4408.99,,8.0,,,,,2026.08.12 13:05:00,
+67,2026-08-12 10:45:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4401.27,4393.55,4408.99,,,,,,,2026.08.12 13:45:00,
+68,2026-08-12 15:10:00+00:00,DETECTED,Decision at candle close,4409.27,4415.42,,2026-08-12 15:15:00+00:00,,,,,,2026.08.12 18:10:00,2026.08.12 18:15:00
+68,2026-08-12 15:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4409.27,4415.42,,,,4409.485041537125,19.106867838653564,,,2026.08.12 18:10:00,
+68,2026-08-12 15:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4409.09,4415.42,,,,4409.459302266693,18.78328857040703,,,2026.08.12 18:15:00,
+68,2026-08-12 15:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4409.09,4415.42,,,,4409.372439993632,18.875392160052684,,,2026.08.12 18:20:00,
+68,2026-08-12 15:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4409.09,4415.42,,,,,,,,2026.08.12 18:25:00,
+69,2026-08-12 16:55:00+00:00,DETECTED,Decision at candle close,4425.65,4408.51,,2026-08-12 17:00:00+00:00,,,,,,2026.08.12 19:55:00,2026.08.12 20:00:00
+69,2026-08-12 16:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4425.65,4408.51,,,,,,,,2026.08.12 19:55:00,
+70,2026-08-12 17:40:00+00:00,DETECTED,Decision at candle close,4423.21,4436.49,,2026-08-12 17:45:00+00:00,,,,,,2026.08.12 20:40:00,2026.08.12 20:45:00
+70,2026-08-12 17:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4423.21,4436.49,,,,,,,,2026.08.12 20:40:00,
+71,2026-08-13 02:25:00+00:00,DETECTED,Decision at candle close,4407.34,4404.99,,2026-08-13 02:30:00+00:00,,,,,,2026.08.13 05:25:00,2026.08.13 05:30:00
+71,2026-08-13 02:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4407.34,4404.99,,,,4407.904018019511,19.95708112119988,,,2026.08.13 05:25:00,
+71,2026-08-13 02:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4408.24,4404.99,4411.49,2026-08-13 02:35:00+00:00,,,,,,2026.08.13 05:30:00,2026.08.13 05:35:00
+71,2026-08-13 02:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4408.24,4404.99,4411.49,,14.0,,,,,2026.08.13 05:35:00,
+71,2026-08-13 02:55:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4408.24,4404.99,4411.49,,,,,,,2026.08.13 05:55:00,
+72,2026-08-13 04:30:00+00:00,DETECTED,Decision at candle close,4423.55,4435.24,,2026-08-13 04:35:00+00:00,,,,,,2026.08.13 07:30:00,2026.08.13 07:35:00
+72,2026-08-13 04:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4423.55,4435.24,,,,,,,,2026.08.13 07:30:00,
+73,2026-08-13 06:50:00+00:00,DETECTED,Decision at candle close,4407.6,4410.45,,2026-08-13 06:55:00+00:00,,,,,,2026.08.13 09:50:00,2026.08.13 09:55:00
+73,2026-08-13 06:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4407.6,4410.45,4404.75,2026-08-13 06:55:00+00:00,,,,,,2026.08.13 09:50:00,2026.08.13 09:55:00
+73,2026-08-13 06:55:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4403.42,4410.45,4396.39,2026-08-13 07:00:00+00:00,,,,,,2026.08.13 09:55:00,2026.08.13 10:00:00
+73,2026-08-13 07:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4400.27,4410.45,,,,,,,,2026.08.13 10:00:00,
+74,2026-08-13 07:30:00+00:00,DETECTED,Decision at candle close,4396.93,4393.38,,2026-08-13 07:35:00+00:00,,,,,,2026.08.13 10:30:00,2026.08.13 10:35:00
+74,2026-08-13 07:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4396.93,4393.38,,,,4408.899088268771,32.569694659407325,,,2026.08.13 10:30:00,
+74,2026-08-13 07:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4397.32,4393.38,,,,4408.526987140394,32.79006749337864,,,2026.08.13 10:35:00,
+74,2026-08-13 07:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.32,4393.38,,,,,,,,2026.08.13 10:40:00,
+74,2026-08-13 07:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.32,4393.38,,,,,,,,2026.08.13 10:45:00,
+74,2026-08-13 07:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.32,4393.38,,,,,,,,2026.08.13 10:50:00,
+74,2026-08-13 07:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.32,4393.38,,,,,,,,2026.08.13 10:55:00,
+74,2026-08-13 08:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4397.32,4393.38,,,,,,,,2026.08.13 11:00:00,
+75,2026-08-13 09:55:00+00:00,DETECTED,Decision at candle close,4378.38,4371.32,,2026-08-13 10:00:00+00:00,,,,,,2026.08.13 12:55:00,2026.08.13 13:00:00
+75,2026-08-13 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4378.38,4371.32,,,,4394.385530298753,40.454490828338024,,,2026.08.13 12:55:00,
+75,2026-08-13 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4378.76,4371.32,,,,4393.903709714559,39.210876209757075,,,2026.08.13 13:00:00,
+75,2026-08-13 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4378.76,4371.32,,,,4393.3947355574865,38.29306567049624,,,2026.08.13 13:05:00,
+75,2026-08-13 10:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:10:00,
+75,2026-08-13 10:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:15:00,
+75,2026-08-13 10:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:20:00,
+75,2026-08-13 10:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:25:00,
+75,2026-08-13 10:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:30:00,
+75,2026-08-13 10:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:35:00,
+75,2026-08-13 10:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4378.76,4371.32,,,,,,,,2026.08.13 13:40:00,
+75,2026-08-13 10:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4378.76,4371.32,,,,,,,,2026.08.13 13:45:00,
+76,2026-08-14 03:20:00+00:00,DETECTED,Decision at candle close,4352.24,4360.25,,2026-08-14 03:25:00+00:00,,,,,,2026.08.14 06:20:00,2026.08.14 06:25:00
+76,2026-08-14 03:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4352.24,4360.25,,,,4357.1188371909275,15.484222863067668,,,2026.08.14 06:20:00,
+76,2026-08-14 03:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4347.37,4360.25,,,,,,,,2026.08.14 06:25:00,
+77,2026-08-14 09:50:00+00:00,DETECTED,Decision at candle close,4332.74,4328.2,,2026-08-14 09:55:00+00:00,,,,,,2026.08.14 12:50:00,2026.08.14 12:55:00
+77,2026-08-14 09:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4332.74,4328.2,,,,4328.446951953168,15.669163635083214,,,2026.08.14 12:50:00,
+77,2026-08-14 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4333.78,4328.2,,,,4328.689019144357,16.108258285316335,,,2026.08.14 12:55:00,
+77,2026-08-14 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4333.78,4328.2,,,,4328.905117113273,16.825452450130022,,,2026.08.14 13:00:00,
+77,2026-08-14 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4333.78,4328.2,,,,4329.092162361521,17.491418460314122,,,2026.08.14 13:05:00,
+77,2026-08-14 10:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:10:00,
+77,2026-08-14 10:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:15:00,
+77,2026-08-14 10:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:20:00,
+77,2026-08-14 10:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:25:00,
+77,2026-08-14 10:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:30:00,
+77,2026-08-14 10:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4333.78,4328.2,,,,,,,,2026.08.14 13:35:00,
+77,2026-08-14 10:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4336.39,4328.2,,,,,,,,2026.08.14 13:40:00,
+77,2026-08-14 10:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4339.52,4328.2,,,,,,,,2026.08.14 13:45:00,
+78,2026-08-14 14:40:00+00:00,DETECTED,Decision at candle close,4360.28,4353.2,,2026-08-14 14:45:00+00:00,,,,,,2026.08.14 17:40:00,2026.08.14 17:45:00
+78,2026-08-14 14:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4360.28,4353.2,4367.36,2026-08-14 14:45:00+00:00,,,,,,2026.08.14 17:40:00,2026.08.14 17:45:00
+78,2026-08-14 14:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4361.07,4353.2,4368.94,2026-08-14 14:50:00+00:00,,,,,,2026.08.14 17:45:00,2026.08.14 17:50:00
+78,2026-08-14 14:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4361.8,4353.2,4370.4,2026-08-14 14:55:00+00:00,,,,,,2026.08.14 17:50:00,2026.08.14 17:55:00
+78,2026-08-14 14:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4365.7,4353.2,,,,,,,,2026.08.14 17:55:00,
+79,2026-08-14 15:30:00+00:00,DETECTED,Decision at candle close,4377.46,4369.56,,2026-08-14 15:35:00+00:00,,,,,,2026.08.14 18:30:00,2026.08.14 18:35:00
+79,2026-08-14 15:30:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4377.46,4369.56,4385.36,2026-08-14 15:35:00+00:00,,,,,,2026.08.14 18:30:00,2026.08.14 18:35:00
+79,2026-08-14 15:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4377.46,4369.56,4385.36,,9.0,,,,,2026.08.14 18:35:00,
+79,2026-08-14 16:25:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4377.46,4369.56,4385.36,,,,,,,2026.08.14 19:25:00,
+80,2026-08-14 16:55:00+00:00,DETECTED,Decision at candle close,4388.46,4395.82,,2026-08-14 17:00:00+00:00,,,,,,2026.08.14 19:55:00,2026.08.14 20:00:00
+80,2026-08-14 16:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4388.46,4395.82,,,,4367.142776621853,43.19057950058926,,,2026.08.14 19:55:00,
+80,2026-08-14 17:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4388.46,4395.82,,,,4367.9417018504455,43.06851504286214,,,2026.08.14 20:00:00,
+80,2026-08-14 17:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:05:00,
+80,2026-08-14 17:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:10:00,
+80,2026-08-14 17:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:15:00,
+80,2026-08-14 17:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:20:00,
+80,2026-08-14 17:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:25:00,
+80,2026-08-14 17:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4388.46,4395.82,,,,,,,,2026.08.14 20:30:00,
+80,2026-08-14 17:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4387.19,4395.82,,,,,,,,2026.08.14 20:35:00,
+80,2026-08-14 17:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4386.67,4395.82,,,,,,,,2026.08.14 20:40:00,
+80,2026-08-14 17:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4384.47,4395.82,,,,,,,,2026.08.14 20:45:00,
+81,2026-08-17 01:40:00+00:00,DETECTED,Decision at candle close,4376.75,4372.8,,2026-08-17 01:45:00+00:00,,,,,,2026.08.17 04:40:00,2026.08.17 04:45:00
+81,2026-08-17 01:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4376.75,4372.8,4380.7,2026-08-17 01:45:00+00:00,,,,,,2026.08.17 04:40:00,2026.08.17 04:45:00
+81,2026-08-17 01:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4377.64,4372.8,4382.48,2026-08-17 01:50:00+00:00,,,,,,2026.08.17 04:45:00,2026.08.17 04:50:00
+81,2026-08-17 01:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4380.35,4372.8,4387.9,2026-08-17 01:55:00+00:00,,,,,,2026.08.17 04:50:00,2026.08.17 04:55:00
+81,2026-08-17 01:55:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4382.71,4372.8,4392.62,2026-08-17 02:00:00+00:00,,,,,,2026.08.17 04:55:00,2026.08.17 05:00:00
+81,2026-08-17 02:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4382.71,4372.8,4392.62,,23.0,,,,,2026.08.17 05:00:00,
+81,2026-08-17 02:25:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4382.71,4372.8,4392.62,,,,,,,2026.08.17 05:25:00,
+82,2026-08-17 07:05:00+00:00,DETECTED,Decision at candle close,4396.57,4394.25,,2026-08-17 07:10:00+00:00,,,,,,2026.08.17 10:05:00,2026.08.17 10:10:00
+82,2026-08-17 07:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4396.57,4394.25,,,,4391.539468610732,17.245539101173243,,,2026.08.17 10:05:00,
+82,2026-08-17 07:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4397.2,4394.25,,,,4391.765387623642,17.75289330334837,,,2026.08.17 10:10:00,
+82,2026-08-17 07:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4397.2,4394.25,,,,4391.939965076297,18.02317003641167,,,2026.08.17 10:15:00,
+82,2026-08-17 07:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4397.2,4394.25,,,,,,,,2026.08.17 10:20:00,
+83,2026-08-17 07:50:00+00:00,DETECTED,Decision at candle close,4395.44,4390.12,,2026-08-17 07:55:00+00:00,,,,,,2026.08.17 10:50:00,2026.08.17 10:55:00
+83,2026-08-17 07:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4395.44,4390.12,,,,4392.343600795521,14.419013546289992,,,2026.08.17 10:50:00,
+83,2026-08-17 07:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4395.44,4390.12,,,,,,,,2026.08.17 10:55:00,
+84,2026-08-17 09:55:00+00:00,DETECTED,Decision at candle close,4400.38,4393.71,,2026-08-17 10:00:00+00:00,,,,,,2026.08.17 12:55:00,2026.08.17 13:00:00
+84,2026-08-17 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4400.38,4393.71,,,,4394.517070736794,13.912386736332643,,,2026.08.17 12:55:00,
+84,2026-08-17 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4401.21,4393.71,,,,4394.742740294297,15.792310165502352,,,2026.08.17 13:00:00,
+84,2026-08-17 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4401.21,4393.71,,,,4394.9295357135225,16.63806738684839,,,2026.08.17 13:05:00,
+84,2026-08-17 10:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4401.21,4393.71,,,,,,,,2026.08.17 13:10:00,
+84,2026-08-17 10:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4401.21,4393.71,,,,,,,,2026.08.17 13:15:00,
+84,2026-08-17 10:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4401.21,4393.71,,,,,,,,2026.08.17 13:20:00,
+84,2026-08-17 10:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4401.21,4393.71,,,,,,,,2026.08.17 13:25:00,
+84,2026-08-17 10:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4404.75,4393.71,,,,,,,,2026.08.17 13:30:00,
+85,2026-08-17 22:25:00+00:00,DETECTED,Decision at candle close,4414.93,4403.55,,2026-08-17 22:30:00+00:00,,,,,,2026.08.18 01:25:00,2026.08.18 01:30:00
+85,2026-08-17 22:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4414.93,4403.55,,,,,,,,2026.08.18 01:25:00,
+86,2026-08-17 22:50:00+00:00,DETECTED,Decision at candle close,4418.56,4415.12,,2026-08-17 22:55:00+00:00,,,,,,2026.08.18 01:50:00,2026.08.18 01:55:00
+86,2026-08-17 22:50:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4418.56,4415.12,,,,,,,,2026.08.18 01:50:00,
+86,2026-08-17 22:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4418.56,4415.12,4422.0,2026-08-17 23:00:00+00:00,,,,,,2026.08.18 01:55:00,2026.08.18 02:00:00
+86,2026-08-17 23:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4418.56,4415.12,4422.0,,8.0,,,,,2026.08.18 02:00:00,
+86,2026-08-17 23:25:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4418.56,4415.12,4422.0,,,,,,,2026.08.18 02:25:00,
+87,2026-08-18 04:25:00+00:00,DETECTED,Decision at candle close,4426.52,4431.8,,2026-08-18 04:30:00+00:00,,,,,,2026.08.18 07:25:00,2026.08.18 07:30:00
+87,2026-08-18 04:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4426.52,4431.8,,,,4421.6251727781455,28.54647245547192,,,2026.08.18 07:25:00,
+87,2026-08-18 04:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4426.18,4431.8,,,,4421.651560790126,26.514096893127324,,,2026.08.18 07:30:00,
+87,2026-08-18 04:35:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4423.5,4431.8,4415.2,2026-08-18 04:40:00+00:00,,,,,,2026.08.18 07:35:00,2026.08.18 07:40:00
+87,2026-08-18 04:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4421.79,4431.8,,,,,,,,2026.08.18 07:40:00,
+88,2026-08-18 04:50:00+00:00,DETECTED,Decision at candle close,4412.23,4423.5,,2026-08-18 04:55:00+00:00,,,,,,2026.08.18 07:50:00,2026.08.18 07:55:00
+88,2026-08-18 04:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4412.23,4423.5,,,,,,,,2026.08.18 07:50:00,
+89,2026-08-18 05:10:00+00:00,DETECTED,Decision at candle close,4404.08,4409.51,,2026-08-18 05:15:00+00:00,,,,,,2026.08.18 08:10:00,2026.08.18 08:15:00
+89,2026-08-18 05:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4404.08,4409.51,4398.65,2026-08-18 05:15:00+00:00,,,,,,2026.08.18 08:10:00,2026.08.18 08:15:00
+89,2026-08-18 05:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4404.08,4409.51,4398.65,,11.0,,,,,2026.08.18 08:15:00,
+89,2026-08-18 05:30:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4404.08,4409.51,4398.65,,,,,,,2026.08.18 08:30:00,
+90,2026-08-18 13:45:00+00:00,DETECTED,Decision at candle close,4397.12,4391.75,,2026-08-18 13:50:00+00:00,,,,,,2026.08.18 16:45:00,2026.08.18 16:50:00
+90,2026-08-18 13:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4397.12,4391.75,,,,4395.225312892078,14.005927235950697,,,2026.08.18 16:45:00,
+90,2026-08-18 13:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4397.12,4391.75,,,,4395.284154751399,13.702784101276325,,,2026.08.18 16:50:00,
+90,2026-08-18 13:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.12,4391.75,,,,,,,,2026.08.18 16:55:00,
+90,2026-08-18 14:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.12,4391.75,,,,,,,,2026.08.18 17:00:00,
+90,2026-08-18 14:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.12,4391.75,,,,,,,,2026.08.18 17:05:00,
+90,2026-08-18 14:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.12,4391.75,,,,,,,,2026.08.18 17:10:00,
+90,2026-08-18 14:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4397.12,4391.75,,,,,,,,2026.08.18 17:15:00,
+90,2026-08-18 14:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4397.12,4391.75,,,,,,,,2026.08.18 17:20:00,
+91,2026-08-18 16:55:00+00:00,DETECTED,Decision at candle close,4398.65,4406.65,,2026-08-18 17:00:00+00:00,,,,,,2026.08.18 19:55:00,2026.08.18 20:00:00
+91,2026-08-18 16:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4398.65,4406.65,,,,4394.393563582034,19.701841829894157,,,2026.08.18 19:55:00,
+91,2026-08-18 17:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4398.65,4406.65,,,,4394.717709031439,18.73043291975222,,,2026.08.18 20:00:00,
+91,2026-08-18 17:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4398.65,4406.65,,,,,,,,2026.08.18 20:05:00,
+91,2026-08-18 17:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4398.65,4406.65,,,,,,,,2026.08.18 20:10:00,
+91,2026-08-18 17:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4398.65,4406.65,,,,,,,,2026.08.18 20:15:00,
+91,2026-08-18 17:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4398.65,4406.65,,,,,,,,2026.08.18 20:20:00,
+91,2026-08-18 17:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4398.65,4406.65,,,,,,,,2026.08.18 20:25:00,
+91,2026-08-18 17:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4396.24,4406.65,,,,,,,,2026.08.18 20:30:00,
+92,2026-08-19 01:10:00+00:00,DETECTED,Decision at candle close,4340.62,4333.22,,2026-08-19 01:15:00+00:00,,,,,,2026.08.19 04:10:00,2026.08.19 04:15:00
+92,2026-08-19 01:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4340.62,4333.22,,,,4352.581276649069,45.62290312646847,,,2026.08.19 04:10:00,
+92,2026-08-19 01:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4340.62,4333.22,,,,4352.144513536206,43.99833220278682,,,2026.08.19 04:15:00,
+92,2026-08-19 01:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4340.62,4333.22,,,,,,,,2026.08.19 04:20:00,
+92,2026-08-19 01:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4340.62,4333.22,,,,,,,,2026.08.19 04:25:00,
+92,2026-08-19 01:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4340.62,4333.22,,,,,,,,2026.08.19 04:30:00,
+92,2026-08-19 01:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4340.62,4333.22,,,,,,,,2026.08.19 04:35:00,
+92,2026-08-19 01:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4340.62,4333.22,,,,,,,,2026.08.19 04:40:00,
+93,2026-08-19 04:40:00+00:00,DETECTED,Decision at candle close,4350.23,4335.59,,2026-08-19 04:45:00+00:00,,,,,,2026.08.19 07:40:00,2026.08.19 07:45:00
+93,2026-08-19 04:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4350.23,4335.59,,,,,,,,2026.08.19 07:40:00,
+94,2026-08-19 08:55:00+00:00,DETECTED,Decision at candle close,4337.98,4343.56,,2026-08-19 09:00:00+00:00,,,,,,2026.08.19 11:55:00,2026.08.19 12:00:00
+94,2026-08-19 08:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4337.98,4343.56,4332.4,2026-08-19 09:00:00+00:00,,,,,,2026.08.19 11:55:00,2026.08.19 12:00:00
+94,2026-08-19 09:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4337.98,4343.56,4332.4,,9.0,,,,,2026.08.19 12:00:00,
+94,2026-08-19 09:15:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4337.98,4343.56,4332.4,,,,,,,2026.08.19 12:15:00,
+95,2026-08-19 10:00:00+00:00,DETECTED,Decision at candle close,4347.42,4340.83,,2026-08-19 10:05:00+00:00,,,,,,2026.08.19 13:00:00,2026.08.19 13:05:00
+95,2026-08-19 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4347.42,4340.83,,,,4345.776760975891,18.569558167064447,,,2026.08.19 13:00:00,
+95,2026-08-19 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4347.84,4340.83,,,,4346.0099819494235,18.888302303849763,,,2026.08.19 13:05:00,
+95,2026-08-19 10:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4349.82,4340.83,,,,4346.153916897095,19.194802850018462,,,2026.08.19 13:10:00,
+95,2026-08-19 10:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4349.82,4340.83,,,,4346.314116163104,18.72036119346038,,,2026.08.19 13:15:00,
+95,2026-08-19 10:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4349.82,4340.83,,,,4346.575292530625,19.04868573241865,,,2026.08.19 13:20:00,
+95,2026-08-19 10:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4353.97,4340.83,,,,,,,,2026.08.19 13:25:00,
+96,2026-08-19 11:15:00+00:00,DETECTED,Decision at candle close,4359.97,4351.15,,2026-08-19 11:20:00+00:00,,,,,,2026.08.19 14:15:00,2026.08.19 14:20:00
+96,2026-08-19 11:15:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4359.97,4351.15,,,,,,,,2026.08.19 14:15:00,
+96,2026-08-19 11:20:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4359.97,4351.15,,,,,,,,2026.08.19 14:20:00,
+96,2026-08-19 11:25:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4359.97,4351.15,4368.79,2026-08-19 11:30:00+00:00,,,,,,2026.08.19 14:25:00,2026.08.19 14:30:00
+96,2026-08-19 11:30:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4359.97,4351.15,4368.79,,8.0,,,,,2026.08.19 14:30:00,
+96,2026-08-19 13:20:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4359.97,4351.15,4368.79,,,,,,,2026.08.19 16:20:00,
+97,2026-08-19 14:10:00+00:00,DETECTED,Decision at candle close,4370.64,4366.28,,2026-08-19 14:15:00+00:00,,,,,,2026.08.19 17:10:00,2026.08.19 17:15:00
+97,2026-08-19 14:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4370.64,4366.28,4375.0,2026-08-19 14:15:00+00:00,,,,,,2026.08.19 17:10:00,2026.08.19 17:15:00
+97,2026-08-19 14:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4370.64,4366.28,4375.0,,9.0,,,,,2026.08.19 17:15:00,
+97,2026-08-19 14:40:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4370.64,4366.28,4375.0,,,,,,,2026.08.19 17:40:00,
+98,2026-08-19 15:45:00+00:00,DETECTED,Decision at candle close,4406.41,4367.95,,2026-08-19 15:50:00+00:00,,,,,,2026.08.19 18:45:00,2026.08.19 18:50:00
+98,2026-08-19 15:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4406.41,4367.95,,,,,,,,2026.08.19 18:45:00,
+99,2026-08-19 17:15:00+00:00,DETECTED,Decision at candle close,4469.15,4455.34,,2026-08-19 17:20:00+00:00,,,,,,2026.08.19 20:15:00,2026.08.19 20:20:00
+99,2026-08-19 17:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4469.15,4455.34,,,,,,,,2026.08.19 20:15:00,
+100,2026-08-19 21:50:00+00:00,DETECTED,Decision at candle close,4490.04,4478.91,,2026-08-19 21:55:00+00:00,,,,,,2026.08.20 00:50:00,2026.08.20 00:55:00
+100,2026-08-19 21:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4490.04,4478.91,,,,,,,,2026.08.20 00:50:00,
+101,2026-08-20 07:35:00+00:00,DETECTED,Decision at candle close,4490.9,4497.11,,2026-08-20 07:40:00+00:00,,,,,,2026.08.20 10:35:00,2026.08.20 10:40:00
+101,2026-08-20 07:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4490.9,4497.11,,,,4497.749197820229,17.608505195576548,,,2026.08.20 10:35:00,
+101,2026-08-20 07:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4488.71,4497.11,,,,4497.4033224559,19.045506570849646,,,2026.08.20 10:40:00,
+101,2026-08-20 07:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 10:45:00,
+101,2026-08-20 07:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 10:50:00,
+101,2026-08-20 07:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 10:55:00,
+101,2026-08-20 08:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 11:00:00,
+101,2026-08-20 08:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 11:05:00,
+101,2026-08-20 08:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4488.71,4497.11,,,,,,,,2026.08.20 11:10:00,
+101,2026-08-20 08:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4486.83,4497.11,,,,,,,,2026.08.20 11:15:00,
+102,2026-08-20 08:20:00+00:00,DETECTED,Decision at candle close,4486.83,4494.03,,2026-08-20 08:25:00+00:00,,,,,,2026.08.20 11:20:00,2026.08.20 11:25:00
+102,2026-08-20 08:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4486.83,4494.03,4479.63,2026-08-20 08:25:00+00:00,,,,,,2026.08.20 11:20:00,2026.08.20 11:25:00
+102,2026-08-20 08:25:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4486.37,4494.03,4478.71,2026-08-20 08:30:00+00:00,,,,,,2026.08.20 11:25:00,2026.08.20 11:30:00
+102,2026-08-20 08:30:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4486.06,4494.03,4478.09,2026-08-20 08:35:00+00:00,,,,,,2026.08.20 11:30:00,2026.08.20 11:35:00
+102,2026-08-20 08:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4481.62,4494.03,,,,,,,,2026.08.20 11:35:00,
+103,2026-08-20 09:10:00+00:00,DETECTED,Decision at candle close,4487.93,4477.96,,2026-08-20 09:15:00+00:00,,,,,,2026.08.20 12:10:00,2026.08.20 12:15:00
+103,2026-08-20 09:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4487.93,4477.96,4497.9,2026-08-20 09:15:00+00:00,,,,,,2026.08.20 12:10:00,2026.08.20 12:15:00
+103,2026-08-20 09:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4491.94,4477.96,,,,,,,,2026.08.20 12:15:00,
+104,2026-08-20 14:50:00+00:00,DETECTED,Decision at candle close,4475.74,4486.86,,2026-08-20 14:55:00+00:00,,,,,,2026.08.20 17:50:00,2026.08.20 17:55:00
+104,2026-08-20 14:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4475.74,4486.86,,,,,,,,2026.08.20 17:50:00,
+105,2026-08-20 15:10:00+00:00,DETECTED,Decision at candle close,4459.22,4471.06,,2026-08-20 15:15:00+00:00,,,,,,2026.08.20 18:10:00,2026.08.20 18:15:00
+105,2026-08-20 15:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4459.22,4471.06,,,,,,,,2026.08.20 18:10:00,
+106,2026-08-20 17:55:00+00:00,DETECTED,Decision at candle close,4504.87,4493.78,,2026-08-20 18:00:00+00:00,,,,,,2026.08.20 20:55:00,2026.08.20 21:00:00
+106,2026-08-20 17:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4504.87,4493.78,,,,,,,,2026.08.20 20:55:00,
+107,2026-08-20 23:15:00+00:00,DETECTED,Decision at candle close,4524.99,4529.07,,2026-08-20 23:20:00+00:00,,,,,,2026.08.21 02:15:00,2026.08.21 02:20:00
+107,2026-08-20 23:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4524.99,4529.07,,,,4517.044378053887,15.252852120208747,,,2026.08.21 02:15:00,
+107,2026-08-20 23:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4522.3,4529.07,,,,4517.185873588877,14.667293527105928,,,2026.08.21 02:20:00,
+107,2026-08-20 23:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4521.93,4529.07,,,,4517.304369671198,14.198254335665547,,,2026.08.21 02:25:00,
+107,2026-08-20 23:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4520.95,4529.07,,,,4517.32684954102,14.79117539994424,,,2026.08.21 02:30:00,
+107,2026-08-20 23:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4518.6,4529.07,,,,,,,,2026.08.21 02:35:00,
+108,2026-08-20 23:40:00+00:00,DETECTED,Decision at candle close,4518.6,4521.93,,2026-08-20 23:45:00+00:00,,,,,,2026.08.21 02:40:00,2026.08.21 02:45:00
+108,2026-08-20 23:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4518.6,4521.93,,,,4517.369390788218,15.797180504210264,,,2026.08.21 02:40:00,
+108,2026-08-20 23:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4518.6,4521.93,,,,4517.4080991612045,16.10226904298077,,,2026.08.21 02:45:00,
+108,2026-08-20 23:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4518.6,4521.93,,,,,,,,2026.08.21 02:50:00,
+108,2026-08-20 23:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4518.6,4521.93,,,,,,,,2026.08.21 02:55:00,
+108,2026-08-21 01:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4518.6,4521.93,,,,,,,,2026.08.21 04:00:00,
+109,2026-08-21 02:55:00+00:00,DETECTED,Decision at candle close,4526.03,4523.54,,2026-08-21 03:00:00+00:00,,,,,,2026.08.21 05:55:00,2026.08.21 06:00:00
+109,2026-08-21 02:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4526.03,4523.54,,,,4521.477329467282,15.212229790233359,,,2026.08.21 05:55:00,
+109,2026-08-21 03:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4526.03,4523.54,,,,,,,,2026.08.21 06:00:00,
+110,2026-08-21 03:10:00+00:00,DETECTED,Decision at candle close,4523.05,4527.63,,2026-08-21 03:15:00+00:00,,,,,,2026.08.21 06:10:00,2026.08.21 06:15:00
+110,2026-08-21 03:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4523.05,4527.63,,,,4521.384830464584,15.675514407075179,,,2026.08.21 06:10:00,
+110,2026-08-21 03:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4519.36,4527.63,,,,4521.265983568146,17.0311974899137,,,2026.08.21 06:15:00,
+110,2026-08-21 03:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4519.05,4527.63,,,,4521.148082462358,18.29004606683518,,,2026.08.21 06:20:00,
+110,2026-08-21 03:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4519.05,4527.63,,,,4520.943555073323,19.98799115375124,,,2026.08.21 06:25:00,
+110,2026-08-21 03:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4517.2,4527.63,,,,,,,,2026.08.21 06:30:00,
+111,2026-08-21 04:20:00+00:00,DETECTED,Decision at candle close,4520.4,4512.3,,2026-08-21 04:25:00+00:00,,,,,,2026.08.21 07:20:00,2026.08.21 07:25:00
+111,2026-08-21 04:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4520.4,4512.3,4528.5,2026-08-21 04:25:00+00:00,,,,,,2026.08.21 07:20:00,2026.08.21 07:25:00
+111,2026-08-21 04:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4525.37,4512.3,,,,,,,,2026.08.21 07:25:00,
+112,2026-08-21 12:15:00+00:00,DETECTED,Decision at candle close,4595.44,4582.27,,2026-08-21 12:20:00+00:00,,,,,,2026.08.21 15:15:00,2026.08.21 15:20:00
+112,2026-08-21 12:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4595.44,4582.27,,,,,,,,2026.08.21 15:15:00,
+113,2026-08-21 20:00:00+00:00,DETECTED,Decision at candle close,4625.96,4620.29,,2026-08-21 20:05:00+00:00,,,,,,2026.08.21 23:00:00,2026.08.21 23:05:00
+113,2026-08-21 20:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4625.96,4620.29,4631.63,2026-08-21 20:05:00+00:00,,,,,,2026.08.21 23:00:00,2026.08.21 23:05:00
+113,2026-08-21 20:05:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4626.1,4620.29,4631.91,2026-08-21 20:10:00+00:00,,,,,,2026.08.21 23:05:00,2026.08.21 23:10:00
+113,2026-08-21 20:10:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4626.1,4620.29,4631.91,,13.0,,,,,2026.08.21 23:10:00,
+113,2026-08-21 20:20:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4626.1,4620.29,4631.91,,,,,,,2026.08.21 23:20:00,
+114,2026-08-21 21:10:00+00:00,DETECTED,Decision at candle close,4623.61,4618.79,,2026-08-21 21:15:00+00:00,,,,,,2026.08.22 00:10:00,2026.08.22 00:15:00
+114,2026-08-21 21:10:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4623.61,4618.79,,,,,,,,2026.08.22 00:10:00,
+114,2026-08-21 21:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4623.72,4618.79,4628.65,2026-08-21 21:20:00+00:00,,,,,,2026.08.22 00:15:00,2026.08.22 00:20:00
+114,2026-08-21 21:20:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4624.69,4618.79,4630.59,2026-08-21 21:25:00+00:00,,,,,,2026.08.22 00:20:00,2026.08.22 00:25:00
+114,2026-08-21 21:25:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4624.69,4618.79,4630.59,,11.0,,,,,2026.08.22 00:25:00,
+114,2026-08-21 21:35:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4624.69,4618.79,4630.59,,,,,,,2026.08.22 00:35:00,
+115,2026-08-21 21:40:00+00:00,DETECTED,Decision at candle close,4622.24,4626.78,,2026-08-21 21:45:00+00:00,,,,,,2026.08.22 00:40:00,2026.08.22 00:45:00
+115,2026-08-21 21:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4622.24,4626.78,,,,4611.599173444429,23.53444185926906,,,2026.08.22 00:40:00,
+115,2026-08-21 21:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4622.24,4626.78,,,,4612.004118646048,23.26657033116341,,,2026.08.22 00:45:00,
+115,2026-08-21 21:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4622.24,4626.78,,,,,,,,2026.08.22 00:50:00,
+115,2026-08-21 21:55:00+00:00,REPLACED,New setup replaces previous setup/order,4622.24,4626.78,,,,,,,,2026.08.22 00:55:00,
+116,2026-08-21 21:55:00+00:00,DETECTED,Decision at candle close,4622.24,4619.68,,2026-08-21 22:00:00+00:00,,,,,,2026.08.22 00:55:00,2026.08.22 01:00:00
+116,2026-08-21 21:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4622.24,4619.68,4624.8,2026-08-21 22:00:00+00:00,,,,,,2026.08.22 00:55:00,2026.08.22 01:00:00
+116,2026-08-21 22:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4622.24,4619.68,4624.8,,9.0,,,,,2026.08.22 01:00:00,
+116,2026-08-21 22:00:00+00:00,REVIEW,Both levels touched or TP on fill bar; inspect tick sequence,4622.24,4619.68,4624.8,,,,,False,True,2026.08.22 01:00:00,
+116,2026-08-21 22:05:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4622.24,4619.68,4624.8,,,,,,,2026.08.22 01:05:00,
+117,2026-08-21 22:10:00+00:00,DETECTED,Decision at candle close,4621.46,4624.21,,2026-08-21 22:15:00+00:00,,,,,,2026.08.22 01:10:00,2026.08.22 01:15:00
+117,2026-08-21 22:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4621.46,4624.21,,,,4613.583309953716,19.20639744662022,,,2026.08.22 01:10:00,
+117,2026-08-21 22:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4621.46,4624.21,,,,4613.853037322573,17.865828974745877,,,2026.08.22 01:15:00,
+117,2026-08-21 22:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4621.46,4624.21,,,,4614.107364043306,16.813826101516845,,,2026.08.22 01:20:00,
+117,2026-08-21 22:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4621.46,4624.21,,,,4614.211056947035,16.656741050605618,,,2026.08.22 01:25:00,
+117,2026-08-21 22:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4619.12,4624.21,,,,4614.284464823684,16.74767246205834,,,2026.08.22 01:30:00,
+117,2026-08-21 22:35:00+00:00,REPLACED,New setup replaces previous setup/order,4617.75,4624.21,,,,,,,,2026.08.22 01:35:00,
+118,2026-08-21 22:35:00+00:00,DETECTED,Decision at candle close,4619.12,4622.62,,2026-08-21 22:40:00+00:00,,,,,,2026.08.22 01:35:00,2026.08.22 01:40:00
+118,2026-08-21 22:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4619.12,4622.62,,,,4614.380383352147,17.114656441360562,,,2026.08.22 01:35:00,
+118,2026-08-21 22:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4618.93,4622.62,,,,4614.47840387124,16.992241391135234,,,2026.08.22 01:40:00,
+118,2026-08-21 22:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4618.93,4622.62,,,,4614.725996885803,15.88163584246047,,,2026.08.22 01:45:00,
+118,2026-08-21 22:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4618.93,4622.62,,,,,,,,2026.08.22 01:50:00,
+119,2026-08-21 22:55:00+00:00,DETECTED,Decision at candle close,4620.57,4617.15,,2026-08-21 23:00:00+00:00,,,,,,2026.08.22 01:55:00,2026.08.22 02:00:00
+119,2026-08-21 22:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4620.57,4617.15,,,,,,,,2026.08.22 01:55:00,
+120,2026-08-24 03:15:00+00:00,DETECTED,Decision at candle close,4633.67,4620.25,,2026-08-24 03:20:00+00:00,,,,,,2026.08.24 06:15:00,2026.08.24 06:20:00
+120,2026-08-24 03:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4633.67,4620.25,,,,,,,,2026.08.24 06:15:00,
+121,2026-08-24 03:30:00+00:00,DETECTED,Decision at candle close,4612.7,4640.44,,2026-08-24 03:35:00+00:00,,,,,,2026.08.24 06:30:00,2026.08.24 06:35:00
+121,2026-08-24 03:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4612.7,4640.44,,,,,,,,2026.08.24 06:30:00,
+122,2026-08-24 04:05:00+00:00,DETECTED,Decision at candle close,4618.91,4611.65,,2026-08-24 04:10:00+00:00,,,,,,2026.08.24 07:05:00,2026.08.24 07:10:00
+122,2026-08-24 04:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4618.91,4611.65,4626.17,2026-08-24 04:10:00+00:00,,,,,,2026.08.24 07:05:00,2026.08.24 07:10:00
+122,2026-08-24 04:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4621.96,4611.65,,,,,,,,2026.08.24 07:10:00,
+123,2026-08-24 05:00:00+00:00,DETECTED,Decision at candle close,4626.66,4615.11,,2026-08-24 05:05:00+00:00,,,,,,2026.08.24 08:00:00,2026.08.24 08:05:00
+123,2026-08-24 05:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4626.66,4615.11,,,,,,,,2026.08.24 08:00:00,
+124,2026-08-24 06:50:00+00:00,DETECTED,Decision at candle close,4644.78,4650.11,,2026-08-24 06:55:00+00:00,,,,,,2026.08.24 09:50:00,2026.08.24 09:55:00
+124,2026-08-24 06:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4644.78,4650.11,,,,4630.8230568245235,14.682392867891402,,,2026.08.24 09:50:00,
+124,2026-08-24 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4643.66,4650.11,,,,4631.177054951619,13.814082345939166,,,2026.08.24 09:55:00,
+124,2026-08-24 07:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4642.54,4650.11,,,,4631.457479136567,13.061423425422575,,,2026.08.24 10:00:00,
+124,2026-08-24 07:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4639.71,4650.11,,,,,,,,2026.08.24 10:05:00,
+125,2026-08-24 10:50:00+00:00,DETECTED,Decision at candle close,4635.47,4647.96,,2026-08-24 10:55:00+00:00,,,,,,2026.08.24 13:50:00,2026.08.24 13:55:00
+125,2026-08-24 10:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4635.47,4647.96,,,,,,,,2026.08.24 13:50:00,
+126,2026-08-24 12:55:00+00:00,DETECTED,Decision at candle close,4641.8,4636.41,,2026-08-24 13:00:00+00:00,,,,,,2026.08.24 15:55:00,2026.08.24 16:00:00
+126,2026-08-24 12:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4641.8,4636.41,,,,4639.963177297944,10.526853890662476,,,2026.08.24 15:55:00,
+126,2026-08-24 13:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4645.78,4636.41,,,,4640.255204332352,11.465592338948122,,,2026.08.24 16:00:00,
+126,2026-08-24 13:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4646.05,4636.41,,,,4640.477656793548,12.337278040927643,,,2026.08.24 16:05:00,
+126,2026-08-24 13:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4646.05,4636.41,,,,4640.727897642099,12.978948502285068,,,2026.08.24 16:10:00,
+126,2026-08-24 13:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4646.3,4636.41,,,,4640.928622512058,13.57478535925982,,,2026.08.24 16:15:00,
+126,2026-08-24 13:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:20:00,
+126,2026-08-24 13:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:25:00,
+126,2026-08-24 13:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:30:00,
+126,2026-08-24 13:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:35:00,
+126,2026-08-24 13:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:40:00,
+126,2026-08-24 13:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:45:00,
+126,2026-08-24 13:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:50:00,
+126,2026-08-24 13:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 16:55:00,
+126,2026-08-24 14:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:00:00,
+126,2026-08-24 14:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:05:00,
+126,2026-08-24 14:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:10:00,
+126,2026-08-24 14:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:15:00,
+126,2026-08-24 14:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:20:00,
+126,2026-08-24 14:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:25:00,
+126,2026-08-24 14:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4646.3,4636.41,,,,,,,,2026.08.24 17:30:00,
+126,2026-08-24 14:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4650.97,4636.41,,,,,,,,2026.08.24 17:35:00,
+127,2026-08-24 16:15:00+00:00,DETECTED,Decision at candle close,4673.34,4661.61,,2026-08-24 16:20:00+00:00,,,,,,2026.08.24 19:15:00,2026.08.24 19:20:00
+127,2026-08-24 16:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4673.34,4661.61,,,,,,,,2026.08.24 19:15:00,
+128,2026-08-24 23:35:00+00:00,DETECTED,Decision at candle close,4650.01,4653.28,,2026-08-24 23:40:00+00:00,,,,,,2026.08.25 02:35:00,2026.08.25 02:40:00
+128,2026-08-24 23:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4650.01,4653.28,,,,4647.878353750825,19.127050531455392,,,2026.08.25 02:35:00,
+128,2026-08-24 23:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4648.67,4653.28,,,,4647.875456933647,17.77499826887146,,,2026.08.25 02:40:00,
+128,2026-08-24 23:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4648.67,4653.28,,,,4647.954950054329,17.11073377823505,,,2026.08.25 02:45:00,
+128,2026-08-24 23:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4648.67,4653.28,,,,4648.057410773473,16.647413298831026,,,2026.08.25 02:50:00,
+128,2026-08-24 23:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4648.67,4653.28,,,,,,,,2026.08.25 02:55:00,
+128,2026-08-25 01:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4648.67,4653.28,,,,,,,,2026.08.25 04:00:00,
+129,2026-08-25 08:25:00+00:00,DETECTED,Decision at candle close,4642.67,4635.38,,2026-08-25 08:30:00+00:00,,,,,,2026.08.25 11:25:00,2026.08.25 11:30:00
+129,2026-08-25 08:25:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4642.67,4635.38,4649.96,2026-08-25 08:30:00+00:00,,,,,,2026.08.25 11:25:00,2026.08.25 11:30:00
+129,2026-08-25 08:30:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4642.67,4635.38,4649.96,,17.0,,,,,2026.08.25 11:30:00,
+129,2026-08-25 09:10:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4642.67,4635.38,4649.96,,,,,,,2026.08.25 12:10:00,
+130,2026-08-25 09:15:00+00:00,DETECTED,Decision at candle close,4647.65,4641.02,,2026-08-25 09:20:00+00:00,,,,,,2026.08.25 12:15:00,2026.08.25 12:20:00
+130,2026-08-25 09:15:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4647.65,4641.02,,,,,,,,2026.08.25 12:15:00,
+130,2026-08-25 09:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4647.65,4641.02,4654.28,2026-08-25 09:25:00+00:00,,,,,,2026.08.25 12:20:00,2026.08.25 12:25:00
+130,2026-08-25 09:25:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4649.55,4641.02,4658.08,2026-08-25 09:30:00+00:00,,,,,,2026.08.25 12:25:00,2026.08.25 12:30:00
+130,2026-08-25 09:30:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4649.55,4641.02,4658.08,,8.0,,,,,2026.08.25 12:30:00,
+130,2026-08-25 09:55:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4649.55,4641.02,4658.08,,,,,,,2026.08.25 12:55:00,
+131,2026-08-25 22:35:00+00:00,DETECTED,Decision at candle close,4661.04,4667.03,,2026-08-25 22:40:00+00:00,,,,,,2026.08.26 01:35:00,2026.08.26 01:40:00
+131,2026-08-25 22:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4661.04,4667.03,,,,4646.777449543065,32.750934582151984,,,2026.08.26 01:35:00,
+131,2026-08-25 22:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4661.04,4667.03,,,,4647.255565982064,33.376195497095026,,,2026.08.26 01:40:00,
+131,2026-08-25 22:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4661.04,4667.03,,,,,,,,2026.08.26 01:45:00,
+131,2026-08-25 22:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4661.04,4667.03,,,,,,,,2026.08.26 01:50:00,
+131,2026-08-25 22:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4661.04,4667.03,,,,,,,,2026.08.26 01:55:00,
+131,2026-08-25 23:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4661.04,4667.03,,,,,,,,2026.08.26 02:00:00,
+131,2026-08-25 23:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4661.04,4667.03,,,,,,,,2026.08.26 02:05:00,
+132,2026-08-26 02:30:00+00:00,DETECTED,Decision at candle close,4661.21,4667.4,,2026-08-26 02:35:00+00:00,,,,,,2026.08.26 05:30:00,2026.08.26 05:35:00
+132,2026-08-26 02:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4661.21,4667.4,,,,4659.364952851755,24.219110100803494,,,2026.08.26 05:30:00,
+132,2026-08-26 02:35:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4660.05,4667.4,4652.7,2026-08-26 02:40:00+00:00,,,,,,2026.08.26 05:35:00,2026.08.26 05:40:00
+132,2026-08-26 02:40:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4659.01,4667.4,4650.62,2026-08-26 02:45:00+00:00,,,,,,2026.08.26 05:40:00,2026.08.26 05:45:00
+132,2026-08-26 02:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4657.97,4667.4,4648.54,2026-08-26 02:50:00+00:00,,,,,,2026.08.26 05:45:00,2026.08.26 05:50:00
+132,2026-08-26 02:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4656.23,4667.4,,,,,,,,2026.08.26 05:50:00,
+133,2026-08-26 03:45:00+00:00,DETECTED,Decision at candle close,4639.96,4650.05,,2026-08-26 03:50:00+00:00,,,,,,2026.08.26 06:45:00,2026.08.26 06:50:00
+133,2026-08-26 03:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4639.96,4650.05,,,,,,,,2026.08.26 06:45:00,
+134,2026-08-26 05:05:00+00:00,DETECTED,Decision at candle close,4655.76,4651.37,,2026-08-26 05:10:00+00:00,,,,,,2026.08.26 08:05:00,2026.08.26 08:10:00
+134,2026-08-26 05:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4655.76,4651.37,4660.15,2026-08-26 05:10:00+00:00,,,,,,2026.08.26 08:05:00,2026.08.26 08:10:00
+134,2026-08-26 05:10:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4658.73,4651.37,4666.09,2026-08-26 05:15:00+00:00,,,,,,2026.08.26 08:10:00,2026.08.26 08:15:00
+134,2026-08-26 05:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4660.09,4651.37,,,,,,,,2026.08.26 08:15:00,
+134,2026-08-26 05:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4660.09,4651.37,,,,,,,,2026.08.26 08:20:00,
+134,2026-08-26 05:25:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4658.73,4651.37,4666.09,,14.0,,,,,2026.08.26 08:25:00,
+134,2026-08-26 05:35:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4658.73,4651.37,4666.09,,,,,,,2026.08.26 08:35:00,
+135,2026-08-26 06:00:00+00:00,DETECTED,Decision at candle close,4662.03,4669.88,,2026-08-26 06:05:00+00:00,,,,,,2026.08.26 09:00:00,2026.08.26 09:05:00
+135,2026-08-26 06:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4662.03,4669.88,,,,4655.411453047677,25.787899156289665,,,2026.08.26 09:00:00,
+135,2026-08-26 06:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4658.01,4669.88,,,,,,,,2026.08.26 09:05:00,
+136,2026-08-26 06:15:00+00:00,DETECTED,Decision at candle close,4650.19,4659.48,,2026-08-26 06:20:00+00:00,,,,,,2026.08.26 09:15:00,2026.08.26 09:20:00
+136,2026-08-26 06:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4650.19,4659.48,4640.9,2026-08-26 06:20:00+00:00,,,,,,2026.08.26 09:15:00,2026.08.26 09:20:00
+136,2026-08-26 06:20:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4650.19,4659.48,4640.9,,11.0,,,,,2026.08.26 09:20:00,
+136,2026-08-26 07:25:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4650.19,4659.48,4640.9,,,,,,,2026.08.26 10:25:00,
+137,2026-08-26 09:30:00+00:00,DETECTED,Decision at candle close,4628.96,4637.82,,2026-08-26 09:35:00+00:00,,,,,,2026.08.26 12:30:00,2026.08.26 12:35:00
+137,2026-08-26 09:30:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:30:00,
+137,2026-08-26 09:35:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:35:00,
+137,2026-08-26 09:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:40:00,
+137,2026-08-26 09:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:45:00,
+137,2026-08-26 09:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:50:00,
+137,2026-08-26 09:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4628.96,4637.82,,,,,,,,2026.08.26 12:55:00,
+137,2026-08-26 10:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4628.96,4637.82,,,,,,,,2026.08.26 13:00:00,
+138,2026-08-26 15:05:00+00:00,DETECTED,Decision at candle close,4623.88,4617.53,,2026-08-26 15:10:00+00:00,,,,,,2026.08.26 18:05:00,2026.08.26 18:10:00
+138,2026-08-26 15:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4623.88,4617.53,,,,4625.170204742763,19.69662221861407,,,2026.08.26 18:05:00,
+138,2026-08-26 15:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4625.19,4617.53,,,,4625.189542247758,19.77204466316547,,,2026.08.26 18:10:00,
+138,2026-08-26 15:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4625.19,4617.53,4632.85,2026-08-26 15:20:00+00:00,,,,,,2026.08.26 18:15:00,2026.08.26 18:20:00
+138,2026-08-26 15:25:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4625.62,4617.53,4633.71,2026-08-26 15:30:00+00:00,,,,,,2026.08.26 18:25:00,2026.08.26 18:30:00
+138,2026-08-26 15:30:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4625.62,4617.53,4633.71,,8.0,,,,,2026.08.26 18:30:00,
+138,2026-08-26 15:30:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4625.62,4617.53,4633.71,,,,,,,2026.08.26 18:30:00,
+139,2026-08-26 21:25:00+00:00,DETECTED,Decision at candle close,4595.82,4603.66,,2026-08-26 21:30:00+00:00,,,,,,2026.08.27 00:25:00,2026.08.27 00:30:00
+139,2026-08-26 21:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.82,4603.66,,,,4602.390819493121,14.180673990344308,,,2026.08.27 00:25:00,
+139,2026-08-26 21:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.68,4603.66,,,,4602.098333640406,13.862709053803261,,,2026.08.27 00:30:00,
+139,2026-08-26 21:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.68,4603.66,,,,4601.843961907762,13.783432534534398,,,2026.08.27 00:35:00,
+139,2026-08-26 21:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.68,4603.66,,,,4601.677602743818,13.39534754731984,,,2026.08.27 00:40:00,
+139,2026-08-26 21:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4595.68,4603.66,,,,,,,,2026.08.27 00:45:00,
+139,2026-08-26 21:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4595.68,4603.66,,,,,,,,2026.08.27 00:50:00,
+139,2026-08-26 21:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4595.68,4603.66,,,,,,,,2026.08.27 00:55:00,
+139,2026-08-26 22:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4595.01,4603.66,,,,,,,,2026.08.27 01:00:00,
+139,2026-08-26 22:05:00+00:00,REPLACED,New setup replaces previous setup/order,4593.43,4603.66,,,,,,,,2026.08.27 01:05:00,
+140,2026-08-26 22:05:00+00:00,DETECTED,Decision at candle close,4595.01,4597.74,,2026-08-26 22:10:00+00:00,,,,,,2026.08.27 01:05:00,2026.08.27 01:10:00
+140,2026-08-26 22:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.01,4597.74,,,,4600.554568311507,14.757677903328904,,,2026.08.27 01:05:00,
+140,2026-08-26 22:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.01,4597.74,,,,4600.3531074794,14.725391574475632,,,2026.08.27 01:10:00,
+140,2026-08-26 22:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4595.01,4597.74,,,,4600.072677620408,15.004518986323461,,,2026.08.27 01:15:00,
+140,2026-08-26 22:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4594.43,4597.74,,,,4599.887671731601,15.540743010368516,,,2026.08.27 01:20:00,
+140,2026-08-26 22:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4594.43,4597.74,,,,,,,,2026.08.27 01:25:00,
+141,2026-08-27 06:50:00+00:00,DETECTED,Decision at candle close,4629.61,4634.39,,2026-08-27 06:55:00+00:00,,,,,,2026.08.27 09:50:00,2026.08.27 09:55:00
+141,2026-08-27 06:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4629.61,4634.39,,,,4624.313270666557,18.262369876578877,,,2026.08.27 09:50:00,
+141,2026-08-27 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4627.03,4634.39,,,,4624.350541402053,18.24637213855979,,,2026.08.27 09:55:00,
+141,2026-08-27 07:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4627.03,4634.39,,,,4624.42101480545,18.149140375195763,,,2026.08.27 10:00:00,
+141,2026-08-27 07:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4626.92,4634.39,,,,4624.454424236853,18.107341005427013,,,2026.08.27 10:05:00,
+141,2026-08-27 07:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4626.2,4634.39,,,,4624.48444286916,18.10569551300334,,,2026.08.27 10:10:00,
+141,2026-08-27 07:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4626.2,4634.39,,,,4624.467903877535,17.773629988743025,,,2026.08.27 10:15:00,
+141,2026-08-27 07:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4624.82,4634.39,,,,4624.426333016308,17.806563945587687,,,2026.08.27 10:20:00,
+141,2026-08-27 07:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4624.17,4634.39,,,,,,,,2026.08.27 10:25:00,
+142,2026-08-27 12:45:00+00:00,DETECTED,Decision at candle close,4584.45,4599.17,,2026-08-27 12:50:00+00:00,,,,,,2026.08.27 15:45:00,2026.08.27 15:50:00
+142,2026-08-27 12:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4584.45,4599.17,,,,,,,,2026.08.27 15:45:00,
+143,2026-08-27 19:00:00+00:00,DETECTED,Decision at candle close,4608.18,4600.26,,2026-08-27 19:05:00+00:00,,,,,,2026.08.27 22:00:00,2026.08.27 22:05:00
+143,2026-08-27 19:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4608.18,4600.26,4616.1,2026-08-27 19:05:00+00:00,,,,,,2026.08.27 22:00:00,2026.08.27 22:05:00
+143,2026-08-27 19:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4608.18,4600.26,4616.1,,8.0,,,,,2026.08.27 22:05:00,
+143,2026-08-27 19:50:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4608.18,4600.26,4616.1,,,,,,,2026.08.27 22:50:00,
+144,2026-08-28 02:55:00+00:00,DETECTED,Decision at candle close,4596.63,4601.59,,2026-08-28 03:00:00+00:00,,,,,,2026.08.28 05:55:00,2026.08.28 06:00:00
+144,2026-08-28 02:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4596.63,4601.59,4591.67,2026-08-28 03:00:00+00:00,,,,,,2026.08.28 05:55:00,2026.08.28 06:00:00
+144,2026-08-28 03:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4596.63,4601.59,4591.67,,17.0,,,,,2026.08.28 06:00:00,
+144,2026-08-28 03:10:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4596.63,4601.59,4591.67,,,,,,,2026.08.28 06:10:00,
+145,2026-08-28 06:40:00+00:00,DETECTED,Decision at candle close,4584.35,4589.99,,2026-08-28 06:45:00+00:00,,,,,,2026.08.28 09:40:00,2026.08.28 09:45:00
+145,2026-08-28 06:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4584.35,4589.99,,,,4590.194366054019,12.733499705679089,,,2026.08.28 09:40:00,
+145,2026-08-28 06:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4582.07,4589.99,,,,4589.879796562128,13.501193475885465,,,2026.08.28 09:45:00,
+145,2026-08-28 06:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4580.9,4589.99,,,,4589.527016301982,14.456850595475563,,,2026.08.28 09:50:00,
+145,2026-08-28 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4580.06,4589.99,,,,4589.212360107087,15.344246492237795,,,2026.08.28 09:55:00,
+145,2026-08-28 07:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4580.06,4589.99,,,,4588.88310258326,15.984285999958756,,,2026.08.28 10:00:00,
+145,2026-08-28 07:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4579.51,4589.99,,,,,,,,2026.08.28 10:05:00,
+146,2026-08-28 07:25:00+00:00,DETECTED,Decision at candle close,4582.7,4578.92,,2026-08-28 07:30:00+00:00,,,,,,2026.08.28 10:25:00,2026.08.28 10:30:00
+146,2026-08-28 07:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4582.7,4578.92,,,,4587.872115979377,14.718531749223105,,,2026.08.28 10:25:00,
+146,2026-08-28 07:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4582.7,4578.92,,,,4587.670407295085,13.694631225876003,,,2026.08.28 10:30:00,
+146,2026-08-28 07:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4582.7,4578.92,,,,,,,,2026.08.28 10:35:00,
+147,2026-08-28 11:50:00+00:00,DETECTED,Decision at candle close,4603.67,4611.49,,2026-08-28 11:55:00+00:00,,,,,,2026.08.28 14:50:00,2026.08.28 14:55:00
+147,2026-08-28 11:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4603.67,4611.49,,,,4597.826780240901,27.808509368208735,,,2026.08.28 14:50:00,
+147,2026-08-28 11:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4603.67,4611.49,,,,4597.993443016528,25.84120199078104,,,2026.08.28 14:55:00,
+147,2026-08-28 12:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4603.67,4611.49,,,,4598.193002372649,24.014416568883902,,,2026.08.28 15:00:00,
+147,2026-08-28 12:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4603.67,4611.49,,,,4598.309625519698,22.518050527397257,,,2026.08.28 15:05:00,
+147,2026-08-28 12:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.99,4611.49,,,,4598.420785203156,21.367762943615865,,,2026.08.28 15:10:00,
+147,2026-08-28 12:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4598.5483007960265,20.394974488404422,,,2026.08.28 15:15:00,
+147,2026-08-28 12:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4598.697865015869,18.961040179007174,,,2026.08.28 15:20:00,
+147,2026-08-28 12:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4598.8002299952095,17.84227182669922,,,2026.08.28 15:25:00,
+147,2026-08-28 12:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4598.92350159576,16.683524360129613,,,2026.08.28 15:30:00,
+147,2026-08-28 12:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4599.083386393024,15.96895876151489,,,2026.08.28 15:35:00,
+147,2026-08-28 12:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4602.7,4611.49,,,,4599.247209727092,15.30543356280121,,,2026.08.28 15:40:00,
+147,2026-08-28 12:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 15:45:00,
+147,2026-08-28 12:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 15:50:00,
+147,2026-08-28 12:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 15:55:00,
+147,2026-08-28 13:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:00:00,
+147,2026-08-28 13:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:05:00,
+147,2026-08-28 13:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:10:00,
+147,2026-08-28 13:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:15:00,
+147,2026-08-28 13:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:20:00,
+147,2026-08-28 13:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:25:00,
+147,2026-08-28 13:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:30:00,
+147,2026-08-28 13:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:35:00,
+147,2026-08-28 13:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:40:00,
+147,2026-08-28 13:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4602.7,4611.49,,,,,,,,2026.08.28 16:45:00,
+147,2026-08-28 13:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4601.27,4611.49,,,,,,,,2026.08.28 16:50:00,
+148,2026-08-28 15:40:00+00:00,DETECTED,Decision at candle close,4593.7,4603.8,,2026-08-28 15:45:00+00:00,,,,,,2026.08.28 18:40:00,2026.08.28 18:45:00
+148,2026-08-28 15:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4593.7,4603.8,,,,,,,,2026.08.28 18:40:00,
+149,2026-08-28 18:20:00+00:00,DETECTED,Decision at candle close,4564.36,4581.71,,2026-08-28 18:25:00+00:00,,,,,,2026.08.28 21:20:00,2026.08.28 21:25:00
+149,2026-08-28 18:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4564.36,4581.71,,,,,,,,2026.08.28 21:20:00,
+150,2026-08-28 22:55:00+00:00,DETECTED,Decision at candle close,4459.65,4466.89,,2026-08-28 23:00:00+00:00,,,,,,2026.08.29 01:55:00,2026.08.29 02:00:00
+150,2026-08-28 22:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4459.65,4466.89,4452.41,2026-08-28 23:00:00+00:00,,,,,,2026.08.29 01:55:00,2026.08.29 02:00:00
+150,2026-08-28 23:00:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4459.65,4466.89,4452.41,,8.0,,,,,2026.08.29 02:00:00,
+150,2026-08-31 01:00:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4459.65,4466.89,4452.41,,,,,,,2026.08.31 04:00:00,
+151,2026-08-31 05:40:00+00:00,DETECTED,Decision at candle close,4412.07,4428.02,,2026-08-31 05:45:00+00:00,,,,,,2026.08.31 08:40:00,2026.08.31 08:45:00
+151,2026-08-31 05:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4412.07,4428.02,,,,,,,,2026.08.31 08:40:00,
+152,2026-08-31 07:10:00+00:00,DETECTED,Decision at candle close,4419.0,4424.66,,2026-08-31 07:15:00+00:00,,,,,,2026.08.31 10:10:00,2026.08.31 10:15:00
+152,2026-08-31 07:10:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4419.0,4424.66,,,,,,,,2026.08.31 10:10:00,
+152,2026-08-31 07:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4419.0,4424.66,4413.34,2026-08-31 07:20:00+00:00,,,,,,2026.08.31 10:15:00,2026.08.31 10:20:00
+152,2026-08-31 07:20:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4419.0,4424.66,4413.34,,15.0,,,,,2026.08.31 10:20:00,
+152,2026-08-31 07:30:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4419.0,4424.66,4413.34,,,,,,,2026.08.31 10:30:00,
+153,2026-08-31 15:45:00+00:00,DETECTED,Decision at candle close,4442.47,4449.96,,2026-08-31 15:50:00+00:00,,,,,,2026.08.31 18:45:00,2026.08.31 18:50:00
+153,2026-08-31 15:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4442.47,4449.96,4434.98,2026-08-31 15:50:00+00:00,,,,,,2026.08.31 18:45:00,2026.08.31 18:50:00
+153,2026-08-31 15:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4441.47,4449.96,4432.98,2026-08-31 15:55:00+00:00,,,,,,2026.08.31 18:50:00,2026.08.31 18:55:00
+153,2026-08-31 15:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4439.49,4449.96,,,,,,,,2026.08.31 18:55:00,
+154,2026-08-31 16:15:00+00:00,DETECTED,Decision at candle close,4442.87,4433.89,,2026-08-31 16:20:00+00:00,,,,,,2026.08.31 19:15:00,2026.08.31 19:20:00
+154,2026-08-31 16:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4442.87,4433.89,,,,4446.407351701394,31.945781656045117,,,2026.08.31 19:15:00,
+154,2026-08-31 16:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4442.87,4433.89,,,,4446.227438456439,30.86569173844987,,,2026.08.31 19:20:00,
+154,2026-08-31 16:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4442.87,4433.89,,,,4446.206538725308,28.91940157055288,,,2026.08.31 19:25:00,
+154,2026-08-31 16:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4442.87,4433.89,,,,4445.951242285397,27.7243581988593,,,2026.08.31 19:30:00,
+154,2026-08-31 16:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4442.87,4433.89,,,,4445.658086572181,27.036425898795443,,,2026.08.31 19:35:00,
+154,2026-08-31 16:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4442.87,4433.89,,,,,,,,2026.08.31 19:40:00,
+155,2026-08-31 21:10:00+00:00,DETECTED,Decision at candle close,4433.13,4438.01,,2026-08-31 21:15:00+00:00,,,,,,2026.09.01 00:10:00,2026.09.01 00:15:00
+155,2026-08-31 21:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4433.13,4438.01,,,,4434.77642288036,10.332712749936105,,,2026.09.01 00:10:00,
+155,2026-08-31 21:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4433.13,4438.01,,,,4434.685720408924,10.357949292625241,,,2026.09.01 00:15:00,
+155,2026-08-31 21:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4433.13,4438.01,,,,,,,,2026.09.01 00:20:00,
+155,2026-08-31 21:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4433.09,4438.01,,,,,,,,2026.09.01 00:25:00,
+155,2026-08-31 21:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4430.09,4438.01,,,,,,,,2026.09.01 00:30:00,
+155,2026-08-31 21:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4428.89,4438.01,,,,,,,,2026.09.01 00:35:00,
+155,2026-08-31 21:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4428.89,4438.01,,,,,,,,2026.09.01 00:40:00,
+155,2026-08-31 21:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4428.89,4438.01,,,,,,,,2026.09.01 00:45:00,
+155,2026-08-31 21:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4428.89,4438.01,,,,,,,,2026.09.01 00:50:00,
+155,2026-08-31 21:55:00+00:00,REPLACED,New setup replaces previous setup/order,4428.89,4438.01,,,,,,,,2026.09.01 00:55:00,
+156,2026-08-31 21:55:00+00:00,DETECTED,Decision at candle close,4432.65,4427.73,,2026-08-31 22:00:00+00:00,,,,,,2026.09.01 00:55:00,2026.09.01 01:00:00
+156,2026-08-31 21:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.65,4427.73,,,,4433.7676286967835,12.632379576318534,,,2026.09.01 00:55:00,
+156,2026-08-31 22:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.65,4427.73,,,,4433.662460556632,12.799960845470727,,,2026.09.01 01:00:00,
+156,2026-08-31 22:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.65,4427.73,,,,4433.686969792174,12.362815644978328,,,2026.09.01 01:05:00,
+156,2026-08-31 22:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.69,4427.73,,,,4433.689692103877,11.683783445270555,,,2026.09.01 01:10:00,
+156,2026-08-31 22:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4433.32,4427.73,,,,4433.691669490403,11.053253545541912,,,2026.09.01 01:15:00,
+156,2026-08-31 22:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4433.32,4427.73,,,,4433.870958799552,11.729870390863269,,,2026.09.01 01:20:00,
+156,2026-08-31 22:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4438.19,4427.73,,,,,,,,2026.09.01 01:25:00,
+157,2026-08-31 22:30:00+00:00,DETECTED,Decision at candle close,4438.19,4433.32,,2026-08-31 22:35:00+00:00,,,,,,2026.09.01 01:30:00,2026.09.01 01:35:00
+157,2026-08-31 22:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4438.19,4433.32,,,,4434.301856459768,14.176351582246719,,,2026.09.01 01:30:00,
+157,2026-08-31 22:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4440.17,4433.32,,,,4434.583107427618,16.06594364822994,,,2026.09.01 01:35:00,
+157,2026-08-31 22:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4440.17,4433.32,,,,4434.857432075965,17.362506171565247,,,2026.09.01 01:40:00,
+157,2026-08-31 22:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4441.54,4433.32,,,,4435.314237144392,19.500557292675794,,,2026.09.01 01:45:00,
+157,2026-08-31 22:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4447.54,4433.32,,,,,,,,2026.09.01 01:50:00,
+158,2026-08-31 22:55:00+00:00,DETECTED,Decision at candle close,4447.54,4439.03,,2026-08-31 23:00:00+00:00,,,,,,2026.09.01 01:55:00,2026.09.01 02:00:00
+158,2026-08-31 22:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4447.54,4439.03,4456.05,2026-08-31 23:00:00+00:00,,,,,,2026.09.01 01:55:00,2026.09.01 02:00:00
+158,2026-08-31 23:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4452.63,4439.03,,,,,,,,2026.09.01 02:00:00,
+159,2026-08-31 23:20:00+00:00,DETECTED,Decision at candle close,4450.43,4453.33,,2026-08-31 23:25:00+00:00,,,,,,2026.09.01 02:20:00,2026.09.01 02:25:00
+159,2026-08-31 23:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4450.43,4453.33,,,,4438.52137069365,30.075574272030803,,,2026.09.01 02:20:00,
+159,2026-08-31 23:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4438.808210680335,29.922807601033934,,,2026.09.01 02:25:00,
+159,2026-08-31 23:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4439.111875846819,29.87631121578484,,,2026.09.01 02:30:00,
+159,2026-08-31 23:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4439.412798019428,29.97344266584655,,,2026.09.01 02:35:00,
+159,2026-08-31 23:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4439.69959172255,29.89752364759769,,,2026.09.01 02:40:00,
+159,2026-08-31 23:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4439.948457610983,29.527290089301506,,,2026.09.01 02:45:00,
+159,2026-08-31 23:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4440.218016380716,29.063942495339717,,,2026.09.01 02:50:00,
+159,2026-08-31 23:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4448.22,4453.33,,,,4440.460048796673,28.8845086229585,,,2026.09.01 02:55:00,
+159,2026-09-01 01:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4448.22,4453.33,,,,,,,,2026.09.01 04:00:00,
+160,2026-09-01 06:55:00+00:00,DETECTED,Decision at candle close,4440.92,4437.25,,2026-09-01 07:00:00+00:00,,,,,,2026.09.01 09:55:00,2026.09.01 10:00:00
+160,2026-09-01 06:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4440.92,4437.25,,,,,,,,2026.09.01 09:55:00,
+161,2026-09-01 09:45:00+00:00,DETECTED,Decision at candle close,4432.79,4428.5,,2026-09-01 09:50:00+00:00,,,,,,2026.09.01 12:45:00,2026.09.01 12:50:00
+161,2026-09-01 09:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.79,4428.5,,,,4436.042037975196,17.544277238690395,,,2026.09.01 12:45:00,
+161,2026-09-01 09:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4432.79,4428.5,,,,,,,,2026.09.01 12:50:00,
+162,2026-09-01 16:10:00+00:00,DETECTED,Decision at candle close,4342.91,4363.15,,2026-09-01 16:15:00+00:00,,,,,,2026.09.01 19:10:00,2026.09.01 19:15:00
+162,2026-09-01 16:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4342.91,4363.15,,,,,,,,2026.09.01 19:10:00,
+163,2026-09-01 18:50:00+00:00,DETECTED,Decision at candle close,4368.68,4361.68,,2026-09-01 18:55:00+00:00,,,,,,2026.09.01 21:50:00,2026.09.01 21:55:00
+163,2026-09-01 18:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4368.68,4361.68,,,,4367.693206879531,9.735126826447958,,,2026.09.01 21:50:00,
+163,2026-09-01 18:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4370.49,4361.68,,,,4367.865888407741,10.30506453997592,,,2026.09.01 21:55:00,
+163,2026-09-01 19:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4371.61,4361.68,,,,4368.005039808818,11.01718245697021,,,2026.09.01 22:00:00,
+163,2026-09-01 19:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4371.61,4361.68,,,,4368.000940051231,10.620942557556372,,,2026.09.01 22:05:00,
+163,2026-09-01 19:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4371.61,4361.68,,,,,,,,2026.09.01 22:10:00,
+163,2026-09-01 19:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4371.61,4361.68,,,,,,,,2026.09.01 22:15:00,
+164,2026-09-02 04:40:00+00:00,DETECTED,Decision at candle close,4310.01,4324.41,,2026-09-02 04:45:00+00:00,,,,,,2026.09.02 07:40:00,2026.09.02 07:45:00
+164,2026-09-02 04:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4310.01,4324.41,,,,,,,,2026.09.02 07:40:00,
+165,2026-09-02 09:55:00+00:00,DETECTED,Decision at candle close,4317.41,4326.47,,2026-09-02 10:00:00+00:00,,,,,,2026.09.02 12:55:00,2026.09.02 13:00:00
+165,2026-09-02 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4317.41,4326.47,,,,4314.6718305684435,20.191111522915783,,,2026.09.02 12:55:00,
+165,2026-09-02 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4317.41,4326.47,,,,4314.899967571674,19.53757243939052,,,2026.09.02 13:00:00,
+165,2026-09-02 10:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4317.41,4326.47,,,,,,,,2026.09.02 13:05:00,
+166,2026-09-02 10:50:00+00:00,DETECTED,Decision at candle close,4325.09,4331.35,,2026-09-02 10:55:00+00:00,,,,,,2026.09.02 13:50:00,2026.09.02 13:55:00
+166,2026-09-02 10:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4325.09,4331.35,,,,4317.947996994162,20.3517114684512,,,2026.09.02 13:50:00,
+166,2026-09-02 10:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4323.98,4331.35,,,,4318.1218329373405,19.63468661781541,,,2026.09.02 13:55:00,
+166,2026-09-02 11:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4323.98,4331.35,,,,,,,,2026.09.02 14:00:00,
+166,2026-09-02 11:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4323.98,4331.35,,,,,,,,2026.09.02 14:05:00,
+166,2026-09-02 11:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4323.98,4331.35,,,,,,,,2026.09.02 14:10:00,
+167,2026-09-02 12:00:00+00:00,DETECTED,Decision at candle close,4317.28,4322.58,,2026-09-02 12:05:00+00:00,,,,,,2026.09.02 15:00:00,2026.09.02 15:05:00
+167,2026-09-02 12:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4317.28,4322.58,,,,4319.433203658233,19.405973221041826,,,2026.09.02 15:00:00,
+167,2026-09-02 12:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4317.28,4322.58,,,,4319.409163780403,18.074186172498532,,,2026.09.02 15:05:00,
+167,2026-09-02 12:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4317.28,4322.58,,,,4319.229846853805,17.367985849856986,,,2026.09.02 15:10:00,
+167,2026-09-02 12:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4315.2,4322.58,,,,4319.072802502561,16.7689778826983,,,2026.09.02 15:15:00,
+167,2026-09-02 12:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4314.59,4322.58,,,,4318.743201946311,17.20211195398049,,,2026.09.02 15:20:00,
+167,2026-09-02 12:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4309.18,4322.58,,,,,,,,2026.09.02 15:25:00,
+168,2026-09-02 13:10:00+00:00,DETECTED,Decision at candle close,4305.77,4310.28,,2026-09-02 13:15:00+00:00,,,,,,2026.09.02 16:10:00,2026.09.02 16:15:00
+168,2026-09-02 13:10:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4305.77,4310.28,,,,,,,,2026.09.02 16:10:00,
+168,2026-09-02 13:15:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4305.77,4310.28,,,,,,,,2026.09.02 16:15:00,
+168,2026-09-02 13:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4305.77,4310.28,,,,,,,,2026.09.02 16:20:00,
+169,2026-09-02 14:40:00+00:00,DETECTED,Decision at candle close,4328.98,4316.97,,2026-09-02 14:45:00+00:00,,,,,,2026.09.02 17:40:00,2026.09.02 17:45:00
+169,2026-09-02 14:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4328.98,4316.97,,,,,,,,2026.09.02 17:40:00,
+170,2026-09-02 15:00:00+00:00,DETECTED,Decision at candle close,4329.47,4323.51,,2026-09-02 15:05:00+00:00,,,,,,2026.09.02 18:00:00,2026.09.02 18:05:00
+170,2026-09-02 15:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4329.47,4323.51,4335.43,2026-09-02 15:05:00+00:00,,,,,,2026.09.02 18:00:00,2026.09.02 18:05:00
+170,2026-09-02 15:05:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4330.46,4323.51,4337.41,2026-09-02 15:10:00+00:00,,,,,,2026.09.02 18:05:00,2026.09.02 18:10:00
+170,2026-09-02 15:10:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4330.46,4323.51,4337.41,,9.0,,,,,2026.09.02 18:10:00,
+170,2026-09-02 15:20:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4330.46,4323.51,4337.41,,,,,,,2026.09.02 18:20:00,
+171,2026-09-02 16:35:00+00:00,DETECTED,Decision at candle close,4357.06,4342.01,,2026-09-02 16:40:00+00:00,,,,,,2026.09.02 19:35:00,2026.09.02 19:40:00
+171,2026-09-02 16:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4357.06,4342.01,,,,,,,,2026.09.02 19:35:00,
+172,2026-09-03 01:50:00+00:00,DETECTED,Decision at candle close,4385.3,4388.51,,2026-09-03 01:55:00+00:00,,,,,,2026.09.03 04:50:00,2026.09.03 04:55:00
+172,2026-09-03 01:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4385.3,4388.51,,,,4380.903312890401,27.835596293603206,,,2026.09.03 04:50:00,
+172,2026-09-03 01:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4384.96,4388.51,,,,4381.026482748428,26.219196554016072,,,2026.09.03 04:55:00,
+172,2026-09-03 02:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4384.96,4388.51,,,,4381.205286661393,24.711684582128402,,,2026.09.03 05:00:00,
+172,2026-09-03 02:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4384.96,4388.51,,,,4381.384129860126,23.4080987934957,,,2026.09.03 05:05:00,
+172,2026-09-03 02:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4384.96,4388.51,,,,4381.468584685728,21.876314004448368,,,2026.09.03 05:10:00,
+172,2026-09-03 02:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4384.15,4388.51,,,,4381.500434425276,21.154819174043947,,,2026.09.03 05:15:00,
+172,2026-09-03 02:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4383.03,4388.51,,,,4381.547305590982,20.53300651966174,,,2026.09.03 05:20:00,
+172,2026-09-03 02:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4383.03,4388.51,,,,4381.571000518484,20.08838119046882,,,2026.09.03 05:25:00,
+172,2026-09-03 02:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4383.03,4388.51,,,,4381.618508403417,19.242686589323117,,,2026.09.03 05:30:00,
+172,2026-09-03 02:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4383.03,4388.51,,,,4381.6759343677895,18.696050507949103,,,2026.09.03 05:35:00,
+172,2026-09-03 02:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4383.03,4388.51,,,,4381.792788692546,17.588623890696095,,,2026.09.03 05:40:00,
+172,2026-09-03 02:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4383.03,4388.51,,,,,,,,2026.09.03 05:45:00,
+173,2026-09-03 05:40:00+00:00,DETECTED,Decision at candle close,4414.07,4407.77,,2026-09-03 05:45:00+00:00,,,,,,2026.09.03 08:40:00,2026.09.03 08:45:00
+173,2026-09-03 05:40:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4414.07,4407.77,,,,,,,,2026.09.03 08:40:00,
+173,2026-09-03 05:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4414.07,4407.77,4420.37,2026-09-03 05:50:00+00:00,,,,,,2026.09.03 08:45:00,2026.09.03 08:50:00
+173,2026-09-03 05:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4415.93,4407.77,4424.09,2026-09-03 05:55:00+00:00,,,,,,2026.09.03 08:50:00,2026.09.03 08:55:00
+173,2026-09-03 05:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4419.02,4407.77,,,,,,,,2026.09.03 08:55:00,
+174,2026-09-03 07:00:00+00:00,DETECTED,Decision at candle close,4429.7,4425.4,,2026-09-03 07:05:00+00:00,,,,,,2026.09.03 10:00:00,2026.09.03 10:05:00
+174,2026-09-03 07:00:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4429.7,4425.4,,,,,,,,2026.09.03 10:00:00,
+174,2026-09-03 07:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4429.7,4425.4,4434.0,2026-09-03 07:10:00+00:00,,,,,,2026.09.03 10:05:00,2026.09.03 10:10:00
+174,2026-09-03 07:10:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4430.78,4425.4,4436.16,2026-09-03 07:15:00+00:00,,,,,,2026.09.03 10:10:00,2026.09.03 10:15:00
+174,2026-09-03 07:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4430.78,4425.4,4436.16,,12.0,,,,,2026.09.03 10:15:00,
+174,2026-09-03 07:25:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4430.78,4425.4,4436.16,,,,,,,2026.09.03 10:25:00,
+175,2026-09-03 08:15:00+00:00,DETECTED,Decision at candle close,4432.7,4440.19,,2026-09-03 08:20:00+00:00,,,,,,2026.09.03 11:15:00,2026.09.03 11:20:00
+175,2026-09-03 08:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4432.7,4440.19,,,,4418.87419676061,36.8497239671123,,,2026.09.03 11:15:00,
+175,2026-09-03 08:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4428.67,4440.19,,,,,,,,2026.09.03 11:20:00,
+176,2026-09-04 04:35:00+00:00,DETECTED,Decision at candle close,4472.55,4478.25,,2026-09-04 04:40:00+00:00,,,,,,2026.09.04 07:35:00,2026.09.04 07:40:00
+176,2026-09-04 04:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4472.55,4478.25,,,,4476.558996536955,13.857372118305138,,,2026.09.04 07:35:00,
+176,2026-09-04 04:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4472.55,4478.25,,,,4476.460997015663,12.893678352799377,,,2026.09.04 07:40:00,
+176,2026-09-04 04:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4472.55,4478.25,,,,4476.204243142064,13.021827931552581,,,2026.09.04 07:45:00,
+176,2026-09-04 04:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4472.55,4478.25,,,,4476.105415477292,13.140823968966272,,,2026.09.04 07:50:00,
+176,2026-09-04 04:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4472.55,4478.25,,,,,,,,2026.09.04 07:55:00,
+177,2026-09-04 06:50:00+00:00,DETECTED,Decision at candle close,4470.1,4474.96,,2026-09-04 06:55:00+00:00,,,,,,2026.09.04 09:50:00,2026.09.04 09:55:00
+177,2026-09-04 06:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4470.1,4474.96,,,,4475.033006845402,11.771438707920007,,,2026.09.04 09:50:00,
+177,2026-09-04 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4469.93,4474.96,,,,4474.770941094498,12.946011514055959,,,2026.09.04 09:55:00,
+177,2026-09-04 07:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4469.3,4474.96,,,,4474.579434669307,14.452000046902084,,,2026.09.04 10:00:00,
+177,2026-09-04 07:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4469.3,4474.96,,,,4474.368633446076,15.598982052713373,,,2026.09.04 10:05:00,
+177,2026-09-04 07:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:10:00,
+177,2026-09-04 07:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:15:00,
+177,2026-09-04 07:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:20:00,
+177,2026-09-04 07:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:25:00,
+177,2026-09-04 07:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:30:00,
+177,2026-09-04 07:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:35:00,
+177,2026-09-04 07:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:40:00,
+177,2026-09-04 07:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4469.3,4474.96,,,,,,,,2026.09.04 10:45:00,
+177,2026-09-04 07:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4469.3,4474.96,,,,,,,,2026.09.04 10:50:00,
+178,2026-09-04 08:10:00+00:00,DETECTED,Decision at candle close,4471.95,4474.58,,2026-09-04 08:15:00+00:00,,,,,,2026.09.04 11:10:00,2026.09.04 11:15:00
+178,2026-09-04 08:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4471.95,4474.58,,,,4473.435490992249,15.300032946263654,,,2026.09.04 11:10:00,
+178,2026-09-04 08:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4471.95,4474.58,,,,,,,,2026.09.04 11:15:00,
+179,2026-09-04 10:10:00+00:00,DETECTED,Decision at candle close,4465.21,4460.26,,2026-09-04 10:15:00+00:00,,,,,,2026.09.04 13:10:00,2026.09.04 13:15:00
+179,2026-09-04 10:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4465.21,4460.26,,,,4470.439354791224,11.09021073369405,,,2026.09.04 13:10:00,
+179,2026-09-04 10:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4466.75,4460.26,,,,4470.388555844276,11.241452762315477,,,2026.09.04 13:15:00,
+179,2026-09-04 10:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4466.89,4460.26,,,,4470.364340956254,11.652661602610387,,,2026.09.04 13:20:00,
+179,2026-09-04 10:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4468.13,4460.26,,,,4470.445182504049,12.756684315515846,,,2026.09.04 13:25:00,
+179,2026-09-04 10:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4472.72,4460.26,,,,,,,,2026.09.04 13:30:00,
+180,2026-09-04 10:50:00+00:00,DETECTED,Decision at candle close,4484.76,4474.26,,2026-09-04 10:55:00+00:00,,,,,,2026.09.04 13:50:00,2026.09.04 13:55:00
+180,2026-09-04 10:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4484.76,4474.26,,,,,,,,2026.09.04 13:50:00,
+181,2026-09-04 12:20:00+00:00,DETECTED,Decision at candle close,4470.69,4478.33,,2026-09-04 12:25:00+00:00,,,,,,2026.09.04 15:20:00,2026.09.04 15:25:00
+181,2026-09-04 12:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4470.69,4478.33,4463.05,2026-09-04 12:25:00+00:00,,,,,,2026.09.04 15:20:00,2026.09.04 15:25:00
+181,2026-09-04 12:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4466.69,4478.33,,,,,,,,2026.09.04 15:25:00,
+182,2026-09-04 22:35:00+00:00,DETECTED,Decision at candle close,4434.18,4426.9,,2026-09-04 22:40:00+00:00,,,,,,2026.09.05 01:35:00,2026.09.05 01:40:00
+182,2026-09-04 22:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4434.18,4426.9,,,,4430.3134782179695,19.14154660404131,,,2026.09.05 01:35:00,
+182,2026-09-04 22:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4435.02,4426.9,,,,4430.525823603441,19.831894637633482,,,2026.09.05 01:40:00,
+182,2026-09-04 22:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 01:45:00,
+182,2026-09-04 22:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 01:50:00,
+182,2026-09-04 22:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 01:55:00,
+182,2026-09-04 23:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:00:00,
+182,2026-09-04 23:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:05:00,
+182,2026-09-04 23:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:10:00,
+182,2026-09-04 23:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:15:00,
+182,2026-09-04 23:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:20:00,
+182,2026-09-04 23:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:25:00,
+182,2026-09-04 23:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:30:00,
+182,2026-09-04 23:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:35:00,
+182,2026-09-04 23:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:40:00,
+182,2026-09-04 23:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:45:00,
+182,2026-09-04 23:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:50:00,
+182,2026-09-04 23:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4435.02,4426.9,,,,,,,,2026.09.05 02:55:00,
+182,2026-09-07 01:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4435.02,4426.9,,,,,,,,2026.09.07 04:00:00,
+183,2026-09-07 03:00:00+00:00,DETECTED,Decision at candle close,4424.97,4433.76,,2026-09-07 03:05:00+00:00,,,,,,2026.09.07 06:00:00,2026.09.07 06:05:00
+183,2026-09-07 03:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4424.97,4433.76,,,,4429.150073628262,13.958017001037994,,,2026.09.07 06:00:00,
+183,2026-09-07 03:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4424.97,4433.76,,,,4428.91695649358,13.795664730560967,,,2026.09.07 06:05:00,
+183,2026-09-07 03:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4424.97,4433.76,,,,4428.788859621093,12.866063735006463,,,2026.09.07 06:10:00,
+183,2026-09-07 03:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4424.97,4433.76,,,,4428.693815035852,12.175335515323523,,,2026.09.07 06:15:00,
+183,2026-09-07 03:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4424.97,4433.76,,,,,,,,2026.09.07 06:20:00,
+183,2026-09-07 03:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4424.97,4433.76,,,,,,,,2026.09.07 06:25:00,
+183,2026-09-07 03:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4422.59,4433.76,,,,,,,,2026.09.07 06:30:00,
+184,2026-09-07 12:00:00+00:00,DETECTED,Decision at candle close,4411.67,4415.22,,2026-09-07 12:05:00+00:00,,,,,,2026.09.07 15:00:00,2026.09.07 15:05:00
+184,2026-09-07 12:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4411.67,4415.22,,,,4406.46927098678,26.7639747828101,,,2026.09.07 15:00:00,
+184,2026-09-07 12:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4411.67,4415.22,,,,4406.674868519162,26.509833198179724,,,2026.09.07 15:05:00,
+184,2026-09-07 12:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4411.67,4415.22,,,,4406.820282553006,26.417340895376107,,,2026.09.07 15:10:00,
+184,2026-09-07 12:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4411.67,4415.22,,,,4406.862568055961,25.098486852773053,,,2026.09.07 15:15:00,
+184,2026-09-07 12:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4409.08,4415.22,,,,4406.922155310137,23.873836670355942,,,2026.09.07 15:20:00,
+184,2026-09-07 12:25:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4409.08,4415.22,4402.94,2026-09-07 12:30:00+00:00,,,,,,2026.09.07 15:25:00,2026.09.07 15:30:00
+184,2026-09-07 12:30:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4406.44,4415.22,4397.66,2026-09-07 12:35:00+00:00,,,,,,2026.09.07 15:30:00,2026.09.07 15:35:00
+184,2026-09-07 12:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4406.44,4415.22,4397.66,,8.0,,,,,2026.09.07 15:35:00,
+184,2026-09-07 13:25:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4406.44,4415.22,4397.66,,,,,,,2026.09.07 16:25:00,
+185,2026-09-07 16:10:00+00:00,DETECTED,Decision at candle close,4399.29,4394.33,,2026-09-07 16:15:00+00:00,,,,,,2026.09.07 19:10:00,2026.09.07 19:15:00
+185,2026-09-07 16:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4399.29,4394.33,,,,4397.813958553993,19.95595508253728,,,2026.09.07 19:10:00,
+185,2026-09-07 16:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4401.55,4394.33,4408.77,2026-09-07 16:20:00+00:00,,,,,,2026.09.07 19:15:00,2026.09.07 19:20:00
+185,2026-09-07 16:20:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4402.11,4394.33,4409.89,2026-09-07 16:25:00+00:00,,,,,,2026.09.07 19:20:00,2026.09.07 19:25:00
+185,2026-09-07 16:25:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4402.79,4394.33,4411.25,2026-09-07 16:30:00+00:00,,,,,,2026.09.07 19:25:00,2026.09.07 19:30:00
+185,2026-09-07 16:30:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4403.24,4394.33,4412.15,2026-09-07 16:35:00+00:00,,,,,,2026.09.07 19:30:00,2026.09.07 19:35:00
+185,2026-09-07 16:35:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4403.24,4394.33,4412.15,,8.0,,,,,2026.09.07 19:35:00,
+185,2026-09-07 17:40:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4403.24,4394.33,4412.15,,,,,,,2026.09.07 20:40:00,
+186,2026-09-07 18:10:00+00:00,DETECTED,Decision at candle close,4414.19,4417.44,,2026-09-07 18:15:00+00:00,,,,,,2026.09.07 21:10:00,2026.09.07 21:15:00
+186,2026-09-07 18:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4414.19,4417.44,,,,4403.780044580077,34.31745823187837,,,2026.09.07 21:10:00,
+186,2026-09-07 18:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4414.19,4417.44,,,,4404.130535054969,33.39906191806636,,,2026.09.07 21:15:00,
+186,2026-09-07 18:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4414.19,4417.44,,,,,,,,2026.09.07 21:20:00,
+186,2026-09-07 18:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4414.19,4417.44,,,,,,,,2026.09.07 21:25:00,
+186,2026-09-07 18:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4414.19,4417.44,,,,,,,,2026.09.07 21:30:00,
+186,2026-09-07 18:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4414.19,4417.44,,,,,,,,2026.09.07 21:35:00,
+186,2026-09-07 18:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 21:40:00,
+186,2026-09-07 18:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 21:45:00,
+186,2026-09-07 18:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 21:50:00,
+186,2026-09-07 18:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 21:55:00,
+186,2026-09-07 19:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:00:00,
+186,2026-09-07 19:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:05:00,
+186,2026-09-07 19:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:10:00,
+186,2026-09-07 19:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:15:00,
+186,2026-09-07 19:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:20:00,
+186,2026-09-07 19:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:25:00,
+186,2026-09-07 19:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:30:00,
+186,2026-09-07 19:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:35:00,
+186,2026-09-07 19:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:40:00,
+186,2026-09-07 19:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:45:00,
+186,2026-09-07 19:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:50:00,
+186,2026-09-07 19:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 22:55:00,
+186,2026-09-07 20:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:00:00,
+186,2026-09-07 20:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:05:00,
+186,2026-09-07 20:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:10:00,
+186,2026-09-07 20:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:15:00,
+186,2026-09-07 20:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:20:00,
+186,2026-09-07 20:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:25:00,
+186,2026-09-07 20:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4412.53,4417.44,,,,,,,,2026.09.07 23:30:00,
+186,2026-09-07 20:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4410.83,4417.44,,,,,,,,2026.09.07 23:35:00,
+186,2026-09-07 20:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4410.83,4417.44,,,,,,,,2026.09.07 23:40:00,
+186,2026-09-07 20:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4410.83,4417.44,,,,,,,,2026.09.07 23:45:00,
+186,2026-09-07 20:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4410.83,4417.44,,,,,,,,2026.09.07 23:50:00,
+186,2026-09-07 20:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4409.32,4417.44,,,,,,,,2026.09.07 23:55:00,
+186,2026-09-07 21:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4408.6,4417.44,,,,,,,,2026.09.08 00:00:00,
+186,2026-09-07 21:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4408.6,4417.44,,,,,,,,2026.09.08 00:05:00,
+186,2026-09-07 21:10:00+00:00,WAIT,Trend filter failed; existing order unchanged,4408.6,4417.44,,,,,,,,2026.09.08 00:10:00,
+186,2026-09-07 21:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4405.22,4417.44,,,,,,,,2026.09.08 00:15:00,
+187,2026-09-08 05:15:00+00:00,DETECTED,Decision at candle close,4430.88,4439.05,,2026-09-08 05:20:00+00:00,,,,,,2026.09.08 08:15:00,2026.09.08 08:20:00
+187,2026-09-08 05:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4430.88,4439.05,,,,4422.150640658451,31.145624384890798,,,2026.09.08 08:15:00,
+187,2026-09-08 05:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4429.67,4439.05,,,,4422.360783606141,29.751504596488314,,,2026.09.08 08:20:00,
+187,2026-09-08 05:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4428.9,4439.05,,,,,,,,2026.09.08 08:25:00,
+188,2026-09-08 06:55:00+00:00,DETECTED,Decision at candle close,4434.99,4430.94,,2026-09-08 07:00:00+00:00,,,,,,2026.09.08 09:55:00,2026.09.08 10:00:00
+188,2026-09-08 06:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4434.99,4430.94,4439.04,2026-09-08 07:00:00+00:00,,,,,,2026.09.08 09:55:00,2026.09.08 10:00:00
+188,2026-09-08 07:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4437.82,4430.94,4444.7,2026-09-08 07:05:00+00:00,,,,,,2026.09.08 10:00:00,2026.09.08 10:05:00
+188,2026-09-08 07:05:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4439.27,4430.94,4447.6,2026-09-08 07:10:00+00:00,,,,,,2026.09.08 10:05:00,2026.09.08 10:10:00
+188,2026-09-08 07:10:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4439.27,4430.94,,,,,,,,2026.09.08 10:10:00,
+188,2026-09-08 07:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4439.27,4430.94,4447.6,,11.0,,,,,2026.09.08 10:15:00,
+188,2026-09-08 08:05:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4439.27,4430.94,4447.6,,,,,,,2026.09.08 11:05:00,
+189,2026-09-08 09:00:00+00:00,DETECTED,Decision at candle close,4420.82,4429.01,,2026-09-08 09:05:00+00:00,,,,,,2026.09.08 12:00:00,2026.09.08 12:05:00
+189,2026-09-08 09:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4420.82,4429.01,4412.63,2026-09-08 09:05:00+00:00,,,,,,2026.09.08 12:00:00,2026.09.08 12:05:00
+189,2026-09-08 09:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4415.61,4429.01,,,,,,,,2026.09.08 12:05:00,
+190,2026-09-08 09:10:00+00:00,DETECTED,Decision at candle close,4415.61,4420.82,,2026-09-08 09:15:00+00:00,,,,,,2026.09.08 12:10:00,2026.09.08 12:15:00
+190,2026-09-08 09:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4415.61,4420.82,4410.4,2026-09-08 09:15:00+00:00,,,,,,2026.09.08 12:10:00,2026.09.08 12:15:00
+190,2026-09-08 09:15:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4411.54,4420.82,4402.26,2026-09-08 09:20:00+00:00,,,,,,2026.09.08 12:15:00,2026.09.08 12:20:00
+190,2026-09-08 09:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4406.04,4420.82,,,,,,,,2026.09.08 12:20:00,
+191,2026-09-08 09:50:00+00:00,DETECTED,Decision at candle close,4406.38,4398.59,,2026-09-08 09:55:00+00:00,,,,,,2026.09.08 12:50:00,2026.09.08 12:55:00
+191,2026-09-08 09:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4406.38,4398.59,,,,4421.473761431928,33.49223880631198,,,2026.09.08 12:50:00,
+191,2026-09-08 09:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4406.38,4398.59,,,,4420.907080837699,33.70217119656285,,,2026.09.08 12:55:00,
+191,2026-09-08 10:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4406.38,4398.59,,,,4420.500619229729,32.8492447364375,,,2026.09.08 13:00:00,
+191,2026-09-08 10:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4407.03,4398.59,,,,4420.065516985285,31.76786894061652,,,2026.09.08 13:05:00,
+191,2026-09-08 10:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4407.03,4398.59,,,,4419.519434276575,31.542188043164167,,,2026.09.08 13:10:00,
+191,2026-09-08 10:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4407.03,4398.59,,,,,,,,2026.09.08 13:15:00,
+191,2026-09-08 10:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4407.03,4398.59,,,,,,,,2026.09.08 13:20:00,
+191,2026-09-08 10:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4407.03,4398.59,,,,,,,,2026.09.08 13:25:00,
+191,2026-09-08 10:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4407.03,4398.59,,,,,,,,2026.09.08 13:30:00,
+192,2026-09-08 12:50:00+00:00,DETECTED,Decision at candle close,4400.94,4395.46,,2026-09-08 12:55:00+00:00,,,,,,2026.09.08 15:50:00,2026.09.08 15:55:00
+192,2026-09-08 12:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4400.94,4395.46,,,,4404.317652736304,19.995177723592626,,,2026.09.08 15:50:00,
+192,2026-09-08 12:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4402.74,4395.46,,,,4404.2665822436265,20.01568866079299,,,2026.09.08 15:55:00,
+192,2026-09-08 13:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4402.74,4395.46,,,,,,,,2026.09.08 16:00:00,
+192,2026-09-08 13:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4402.74,4395.46,,,,,,,,2026.09.08 16:05:00,
+192,2026-09-08 13:10:00+00:00,REPLACED,New setup replaces previous setup/order,4402.74,4395.46,,,,,,,,2026.09.08 16:10:00,
+193,2026-09-08 13:10:00+00:00,DETECTED,Decision at candle close,4398.65,4405.02,,2026-09-08 13:15:00+00:00,,,,,,2026.09.08 16:10:00,2026.09.08 16:15:00
+193,2026-09-08 13:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4398.65,4405.02,,,,4403.550045920739,18.107954445510398,,,2026.09.08 16:10:00,
+193,2026-09-08 13:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4398.43,4405.02,,,,4403.372995089437,17.552679384801188,,,2026.09.08 16:15:00,
+193,2026-09-08 13:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4398.43,4405.02,,,,,,,,2026.09.08 16:20:00,
+194,2026-09-08 14:40:00+00:00,DETECTED,Decision at candle close,4404.28,4400.42,,2026-09-08 14:45:00+00:00,,,,,,2026.09.08 17:40:00,2026.09.08 17:45:00
+194,2026-09-08 14:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4404.28,4400.42,,,,4401.745964419994,13.810649358728156,,,2026.09.08 17:40:00,
+194,2026-09-08 14:45:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4404.28,4400.42,,,,,,,,2026.09.08 17:45:00,
+195,2026-09-08 15:35:00+00:00,DETECTED,Decision at candle close,4400.79,4387.42,,2026-09-08 15:40:00+00:00,,,,,,2026.09.08 18:35:00,2026.09.08 18:40:00
+195,2026-09-08 15:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4400.79,4387.42,,,,,,,,2026.09.08 18:35:00,
+196,2026-09-08 16:30:00+00:00,DETECTED,Decision at candle close,4404.21,4410.8,,2026-09-08 16:35:00+00:00,,,,,,2026.09.08 19:30:00,2026.09.08 19:35:00
+196,2026-09-08 16:30:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4404.21,4410.8,,,,4402.030023293677,14.270227005906689,,,2026.09.08 19:30:00,
+196,2026-09-08 16:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4402.64,4410.8,,,,4401.968383180491,13.607761364727997,,,2026.09.08 19:35:00,
+196,2026-09-08 16:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4400.08,4410.8,,,,,,,,2026.09.08 19:40:00,
+197,2026-09-09 02:35:00+00:00,DETECTED,Decision at candle close,4357.13,4352.97,,2026-09-09 02:40:00+00:00,,,,,,2026.09.09 05:35:00,2026.09.09 05:40:00
+197,2026-09-09 02:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4357.13,4352.97,,,,4364.787201341881,38.393007018209346,,,2026.09.09 05:35:00,
+197,2026-09-09 02:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4357.13,4352.97,,,,4364.584014618008,35.88858013824053,,,2026.09.09 05:40:00,
+197,2026-09-09 02:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4357.13,4352.97,,,,,,,,2026.09.09 05:45:00,
+197,2026-09-09 02:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4357.13,4352.97,,,,,,,,2026.09.09 05:50:00,
+198,2026-09-09 03:50:00+00:00,DETECTED,Decision at candle close,4352.5,4343.38,,2026-09-09 03:55:00+00:00,,,,,,2026.09.09 06:50:00,2026.09.09 06:55:00
+198,2026-09-09 03:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4352.5,4343.38,4361.62,2026-09-09 03:55:00+00:00,,,,,,2026.09.09 06:50:00,2026.09.09 06:55:00
+198,2026-09-09 03:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4358.61,4343.38,,,,,,,,2026.09.09 06:55:00,
+199,2026-09-09 08:45:00+00:00,DETECTED,Decision at candle close,4391.69,4384.31,,2026-09-09 08:50:00+00:00,,,,,,2026.09.09 11:45:00,2026.09.09 11:50:00
+199,2026-09-09 08:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4391.69,4384.31,4399.07,2026-09-09 08:50:00+00:00,,,,,,2026.09.09 11:45:00,2026.09.09 11:50:00
+199,2026-09-09 08:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4395.72,4384.31,,,,,,,,2026.09.09 11:50:00,
+200,2026-09-09 13:00:00+00:00,DETECTED,Decision at candle close,4391.13,4396.34,,2026-09-09 13:05:00+00:00,,,,,,2026.09.09 16:00:00,2026.09.09 16:05:00
+200,2026-09-09 13:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4391.13,4396.34,4385.92,2026-09-09 13:05:00+00:00,,,,,,2026.09.09 16:00:00,2026.09.09 16:05:00
+200,2026-09-09 13:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4391.13,4396.34,4385.92,,8.0,,,,,2026.09.09 16:05:00,
+200,2026-09-09 13:30:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4391.13,4396.34,4385.92,,,,,,,2026.09.09 16:30:00,
+201,2026-09-09 16:10:00+00:00,DETECTED,Decision at candle close,4406.94,4398.39,,2026-09-09 16:15:00+00:00,,,,,,2026.09.09 19:10:00,2026.09.09 19:15:00
+201,2026-09-09 16:10:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4406.94,4398.39,4415.49,2026-09-09 16:15:00+00:00,,,,,,2026.09.09 19:10:00,2026.09.09 19:15:00
+201,2026-09-09 16:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4410.65,4398.39,,,,,,,,2026.09.09 19:15:00,
+202,2026-09-09 16:30:00+00:00,DETECTED,Decision at candle close,4425.14,4410.65,,2026-09-09 16:35:00+00:00,,,,,,2026.09.09 19:30:00,2026.09.09 19:35:00
+202,2026-09-09 16:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4425.14,4410.65,,,,,,,,2026.09.09 19:30:00,
+203,2026-09-09 18:10:00+00:00,DETECTED,Decision at candle close,4398.62,4420.4,,2026-09-09 18:15:00+00:00,,,,,,2026.09.09 21:10:00,2026.09.09 21:15:00
+203,2026-09-09 18:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4398.62,4420.4,,,,,,,,2026.09.09 21:10:00,
+204,2026-09-09 21:50:00+00:00,DETECTED,Decision at candle close,4410.11,4415.74,,2026-09-09 21:55:00+00:00,,,,,,2026.09.10 00:50:00,2026.09.10 00:55:00
+204,2026-09-09 21:50:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4410.11,4415.74,4404.48,2026-09-09 21:55:00+00:00,,,,,,2026.09.10 00:50:00,2026.09.10 00:55:00
+204,2026-09-09 21:55:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4406.87,4415.74,4398.0,2026-09-09 22:00:00+00:00,,,,,,2026.09.10 00:55:00,2026.09.10 01:00:00
+204,2026-09-09 22:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4404.11,4415.74,,,,,,,,2026.09.10 01:00:00,
+205,2026-09-10 07:10:00+00:00,DETECTED,Decision at candle close,4412.42,4407.88,,2026-09-10 07:15:00+00:00,,,,,,2026.09.10 10:10:00,2026.09.10 10:15:00
+205,2026-09-10 07:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4412.42,4407.88,,,,4409.324876982476,17.785895726334537,,,2026.09.10 10:10:00,
+205,2026-09-10 07:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4413.89,4407.88,,,,4409.499798844983,17.61519702586071,,,2026.09.10 10:15:00,
+205,2026-09-10 07:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4413.89,4407.88,,,,4409.640461240814,17.456691089706435,,,2026.09.10 10:20:00,
+205,2026-09-10 07:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4413.89,4407.88,,,,4409.709626388923,16.359622416169536,,,2026.09.10 10:25:00,
+205,2026-09-10 07:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4413.89,4407.88,,,,,,,,2026.09.10 10:30:00,
+205,2026-09-10 07:35:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4413.89,4407.88,,,,,,,,2026.09.10 10:35:00,
+206,2026-09-10 07:45:00+00:00,DETECTED,Decision at candle close,4408.69,4413.71,,2026-09-10 07:50:00+00:00,,,,,,2026.09.10 10:45:00,2026.09.10 10:50:00
+206,2026-09-10 07:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4408.69,4413.71,,,,4409.606399376136,16.432025490019512,,,2026.09.10 10:45:00,
+206,2026-09-10 07:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4408.69,4413.71,,,,4409.52848461192,15.777563583420793,,,2026.09.10 10:50:00,
+206,2026-09-10 07:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4408.69,4413.71,,,,4409.494435804591,15.313307602308644,,,2026.09.10 10:55:00,
+206,2026-09-10 08:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4408.69,4413.71,,,,4409.491667325829,14.67151716003407,,,2026.09.10 11:00:00,
+206,2026-09-10 08:05:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4408.69,4413.71,,,,,,,,2026.09.10 11:05:00,
+207,2026-09-10 11:40:00+00:00,DETECTED,Decision at candle close,4401.61,4406.39,,2026-09-10 11:45:00+00:00,,,,,,2026.09.10 14:40:00,2026.09.10 14:45:00
+207,2026-09-10 11:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4401.61,4406.39,4396.83,2026-09-10 11:45:00+00:00,,,,,,2026.09.10 14:40:00,2026.09.10 14:45:00
+207,2026-09-10 11:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4396.53,4406.39,4386.67,2026-09-10 11:50:00+00:00,,,,,,2026.09.10 14:45:00,2026.09.10 14:50:00
+207,2026-09-10 11:50:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4396.53,4406.39,4386.67,,10.0,,,,,2026.09.10 14:50:00,
+207,2026-09-10 13:30:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4396.53,4406.39,4386.67,,,,,,,2026.09.10 16:30:00,
+208,2026-09-10 15:40:00+00:00,DETECTED,Decision at candle close,4343.04,4368.19,,2026-09-10 15:45:00+00:00,,,,,,2026.09.10 18:40:00,2026.09.10 18:45:00
+208,2026-09-10 15:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4343.04,4368.19,,,,,,,,2026.09.10 18:40:00,
+209,2026-09-10 21:15:00+00:00,DETECTED,Decision at candle close,4343.85,4356.03,,2026-09-10 21:20:00+00:00,,,,,,2026.09.11 00:15:00,2026.09.11 00:20:00
+209,2026-09-10 21:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4343.85,4356.03,,,,,,,,2026.09.11 00:15:00,
+210,2026-09-11 01:10:00+00:00,DETECTED,Decision at candle close,4320.89,4316.24,,2026-09-11 01:15:00+00:00,,,,,,2026.09.11 04:10:00,2026.09.11 04:15:00
+210,2026-09-11 01:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4320.89,4316.24,,,,4335.033826392751,39.78659330113077,,,2026.09.11 04:10:00,
+210,2026-09-11 01:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4320.89,4316.24,,,,4334.5277996423065,38.210806748880664,,,2026.09.11 04:15:00,
+210,2026-09-11 01:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4320.89,4316.24,,,,,,,,2026.09.11 04:20:00,
+210,2026-09-11 01:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4320.89,4316.24,,,,,,,,2026.09.11 04:25:00,
+210,2026-09-11 01:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4320.89,4316.24,,,,,,,,2026.09.11 04:30:00,
+211,2026-09-11 07:15:00+00:00,DETECTED,Decision at candle close,4318.19,4301.97,,2026-09-11 07:20:00+00:00,,,,,,2026.09.11 10:15:00,2026.09.11 10:20:00
+211,2026-09-11 07:15:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4318.19,4301.97,,,,,,,,2026.09.11 10:15:00,
+212,2026-09-11 18:15:00+00:00,DETECTED,Decision at candle close,4363.78,4372.69,,2026-09-11 18:20:00+00:00,,,,,,2026.09.11 21:15:00,2026.09.11 21:20:00
+212,2026-09-11 18:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4363.78,4372.69,,,,4365.051890213161,17.193108709169664,,,2026.09.11 21:15:00,
+212,2026-09-11 18:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4363.78,4372.69,,,,4365.067238102716,16.90582879343375,,,2026.09.11 21:20:00,
+212,2026-09-11 18:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4363.78,4372.69,,,,,,,,2026.09.11 21:25:00,
+212,2026-09-11 18:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4363.78,4372.69,,,,,,,,2026.09.11 21:30:00,
+213,2026-09-11 18:35:00+00:00,DETECTED,Decision at candle close,4369.1,4362.28,,2026-09-11 18:40:00+00:00,,,,,,2026.09.11 21:35:00,2026.09.11 21:40:00
+213,2026-09-11 18:35:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4369.1,4362.28,,,,4365.799007362157,14.28577850317073,,,2026.09.11 21:35:00,
+213,2026-09-11 18:40:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4370.55,4362.28,,,,4366.035105494122,13.59287433837221,,,2026.09.11 21:40:00,
+213,2026-09-11 18:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4370.55,4362.28,,,,,,,,2026.09.11 21:45:00,
+213,2026-09-11 18:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4370.55,4362.28,,,,,,,,2026.09.11 21:50:00,
+213,2026-09-11 18:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4370.55,4362.28,,,,,,,,2026.09.11 21:55:00,
+213,2026-09-11 19:00:00+00:00,WAIT,Trend filter failed; existing order unchanged,4370.55,4362.28,,,,,,,,2026.09.11 22:00:00,
+213,2026-09-11 19:05:00+00:00,WAIT,Trend filter failed; existing order unchanged,4370.55,4362.28,,,,,,,,2026.09.11 22:05:00,
+213,2026-09-11 19:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4370.55,4362.28,,,,,,,,2026.09.11 22:10:00,
+214,2026-09-11 23:05:00+00:00,DETECTED,Decision at candle close,4348.63,4343.25,,2026-09-11 23:10:00+00:00,,,,,,2026.09.12 02:05:00,2026.09.12 02:10:00
+214,2026-09-11 23:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4348.63,4343.25,,,,4355.22702871077,21.196592743195968,,,2026.09.12 02:05:00,
+214,2026-09-11 23:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4348.79,4343.25,,,,4355.017945774529,19.850615389183975,,,2026.09.12 02:10:00,
+214,2026-09-11 23:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4348.79,4343.25,,,,,,,,2026.09.12 02:15:00,
+214,2026-09-11 23:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:20:00,
+214,2026-09-11 23:25:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:25:00,
+214,2026-09-11 23:30:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:30:00,
+214,2026-09-11 23:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:35:00,
+214,2026-09-11 23:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:40:00,
+214,2026-09-11 23:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:45:00,
+214,2026-09-11 23:50:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:50:00,
+214,2026-09-11 23:55:00+00:00,WAIT,Trend filter failed; existing order unchanged,4349.51,4343.25,,,,,,,,2026.09.12 02:55:00,
+214,2026-09-14 01:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4349.51,4343.25,,,,,,,,2026.09.14 04:00:00,
+215,2026-09-14 11:00:00+00:00,DETECTED,Decision at candle close,4312.51,4321.95,,2026-09-14 11:05:00+00:00,,,,,,2026.09.14 14:00:00,2026.09.14 14:05:00
+215,2026-09-14 11:00:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4312.51,4321.95,,,,,,,,2026.09.14 14:00:00,
+215,2026-09-14 11:05:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4312.51,4321.95,,,,,,,,2026.09.14 14:05:00,
+215,2026-09-14 11:10:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4312.51,4321.95,,,,,,,,2026.09.14 14:10:00,
+215,2026-09-14 11:15:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4312.51,4321.95,4303.07,2026-09-14 11:20:00+00:00,,,,,,2026.09.14 14:15:00,2026.09.14 14:20:00
+215,2026-09-14 11:20:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4312.51,4321.95,4303.07,,9.0,,,,,2026.09.14 14:20:00,
+215,2026-09-14 12:15:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4312.51,4321.95,4303.07,,,,,,,2026.09.14 15:15:00,
+216,2026-09-14 12:25:00+00:00,DETECTED,Decision at candle close,4292.96,4310.35,,2026-09-14 12:30:00+00:00,,,,,,2026.09.14 15:25:00,2026.09.14 15:30:00
+216,2026-09-14 12:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4292.96,4310.35,,,,,,,,2026.09.14 15:25:00,
+217,2026-09-14 15:15:00+00:00,DETECTED,Decision at candle close,4292.1,4285.1,,2026-09-14 15:20:00+00:00,,,,,,2026.09.14 18:15:00,2026.09.14 18:20:00
+217,2026-09-14 15:15:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4292.1,4285.1,,,,4299.785580944018,22.371378576802144,,,2026.09.14 18:15:00,
+217,2026-09-14 15:20:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4292.1,4285.1,,,,,,,,2026.09.14 18:20:00,
+218,2026-09-14 17:50:00+00:00,DETECTED,Decision at candle close,4276.48,4267.94,,2026-09-14 17:55:00+00:00,,,,,,2026.09.14 20:50:00,2026.09.14 20:55:00
+218,2026-09-14 17:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4276.48,4267.94,,,,4283.078751769676,22.076021321173645,,,2026.09.14 20:50:00,
+218,2026-09-14 17:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4276.48,4267.94,,,,4282.960432486608,20.5071173911083,,,2026.09.14 20:55:00,
+218,2026-09-14 18:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4276.48,4267.94,,,,4282.634844457772,19.415300884883187,,,2026.09.14 21:00:00,
+218,2026-09-14 18:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4276.48,4267.94,,,,4282.549111837025,18.818264613000128,,,2026.09.14 21:05:00,
+218,2026-09-14 18:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4277.14,4267.94,,,,4282.371763908516,18.263873789108718,,,2026.09.14 21:10:00,
+218,2026-09-14 18:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4277.14,4267.94,,,,,,,,2026.09.14 21:15:00,
+218,2026-09-14 18:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4277.14,4267.94,,,,,,,,2026.09.14 21:20:00,
+218,2026-09-14 18:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4278.24,4267.94,,,,,,,,2026.09.14 21:25:00,
+219,2026-09-14 18:40:00+00:00,DETECTED,Decision at candle close,4289.84,4278.24,,2026-09-14 18:45:00+00:00,,,,,,2026.09.14 21:40:00,2026.09.14 21:45:00
+219,2026-09-14 18:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4289.84,4278.24,,,,,,,,2026.09.14 21:40:00,
+220,2026-09-14 19:55:00+00:00,DETECTED,Decision at candle close,4312.43,4301.95,,2026-09-14 20:00:00+00:00,,,,,,2026.09.14 22:55:00,2026.09.14 23:00:00
+220,2026-09-14 19:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4312.43,4301.95,,,,,,,,2026.09.14 22:55:00,
+221,2026-09-14 22:40:00+00:00,DETECTED,Decision at candle close,4294.63,4298.52,,2026-09-14 22:45:00+00:00,,,,,,2026.09.15 01:40:00,2026.09.15 01:45:00
+221,2026-09-14 22:40:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4294.63,4298.52,4290.74,2026-09-14 22:45:00+00:00,,,,,,2026.09.15 01:40:00,2026.09.15 01:45:00
+221,2026-09-14 22:45:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4291.92,4298.52,4285.32,2026-09-14 22:50:00+00:00,,,,,,2026.09.15 01:45:00,2026.09.15 01:50:00
+221,2026-09-14 22:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4288.02,4298.52,,,,,,,,2026.09.15 01:50:00,
+222,2026-09-14 22:55:00+00:00,DETECTED,Decision at candle close,4288.02,4292.31,,2026-09-14 23:00:00+00:00,,,,,,2026.09.15 01:55:00,2026.09.15 02:00:00
+222,2026-09-14 22:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4288.02,4292.31,4283.73,2026-09-14 23:00:00+00:00,,,,,,2026.09.15 01:55:00,2026.09.15 02:00:00
+222,2026-09-14 23:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4285.06,4292.31,4277.81,2026-09-14 23:05:00+00:00,,,,,,2026.09.15 02:00:00,2026.09.15 02:05:00
+222,2026-09-14 23:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4285.06,4292.31,4277.81,,8.0,,,,,2026.09.15 02:05:00,
+222,2026-09-14 23:15:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4285.06,4292.31,4277.81,,,,,,,2026.09.15 02:15:00,
+223,2026-09-14 23:25:00+00:00,DETECTED,Decision at candle close,4293.45,4285.64,,2026-09-14 23:30:00+00:00,,,,,,2026.09.15 02:25:00,2026.09.15 02:30:00
+223,2026-09-14 23:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4293.45,4285.64,,,,4297.697718824916,34.005871991980314,,,2026.09.15 02:25:00,
+223,2026-09-14 23:30:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4296.77,4285.64,,,,,,,,2026.09.15 02:30:00,
+224,2026-09-15 06:55:00+00:00,DETECTED,Decision at candle close,4306.06,4310.16,,2026-09-15 07:00:00+00:00,,,,,,2026.09.15 09:55:00,2026.09.15 10:00:00
+224,2026-09-15 06:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4306.06,4310.16,,,,4303.343530239737,23.064149163765908,,,2026.09.15 09:55:00,
+224,2026-09-15 07:00:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4304.29,4310.16,4298.42,2026-09-15 07:05:00+00:00,,,,,,2026.09.15 10:00:00,2026.09.15 10:05:00
+224,2026-09-15 07:05:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4304.29,4310.16,4298.42,,19.0,,,,,2026.09.15 10:05:00,
+224,2026-09-15 08:20:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4304.29,4310.16,4298.42,,,,,,,2026.09.15 11:20:00,
+225,2026-09-15 10:45:00+00:00,DETECTED,Decision at candle close,4286.64,4292.82,,2026-09-15 10:50:00+00:00,,,,,,2026.09.15 13:45:00,2026.09.15 13:50:00
+225,2026-09-15 10:45:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4286.64,4292.82,4280.46,2026-09-15 10:50:00+00:00,,,,,,2026.09.15 13:45:00,2026.09.15 13:50:00
+225,2026-09-15 10:50:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4284.99,4292.82,4277.16,2026-09-15 10:55:00+00:00,,,,,,2026.09.15 13:50:00,2026.09.15 13:55:00
+225,2026-09-15 10:55:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4280.73,4292.82,,,,,,,,2026.09.15 13:55:00,
+226,2026-09-15 15:55:00+00:00,DETECTED,Decision at candle close,4287.45,4277.95,,2026-09-15 16:00:00+00:00,,,,,,2026.09.15 18:55:00,2026.09.15 19:00:00
+226,2026-09-15 15:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4287.45,4277.95,4296.95,2026-09-15 16:00:00+00:00,,,,,,2026.09.15 18:55:00,2026.09.15 19:00:00
+226,2026-09-15 16:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4289.26,4277.95,,,,,,,,2026.09.15 19:00:00,
+227,2026-09-15 16:55:00+00:00,DETECTED,Decision at candle close,4292.1,4285.3,,2026-09-15 17:00:00+00:00,,,,,,2026.09.15 19:55:00,2026.09.15 20:00:00
+227,2026-09-15 16:55:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4292.1,4285.3,4298.9,2026-09-15 17:00:00+00:00,,,,,,2026.09.15 19:55:00,2026.09.15 20:00:00
+227,2026-09-15 17:00:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4293.45,4285.3,4301.6,2026-09-15 17:05:00+00:00,,,,,,2026.09.15 20:00:00,2026.09.15 20:05:00
+227,2026-09-15 17:05:00+00:00,MODIFIED,Effective after this candle closes; no same-bar fill,4293.57,4285.3,4301.84,2026-09-15 17:10:00+00:00,,,,,,2026.09.15 20:05:00,2026.09.15 20:10:00
+227,2026-09-15 17:15:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4293.57,4285.3,4301.84,,10.0,,,,,2026.09.15 20:15:00,
+227,2026-09-15 17:25:00+00:00,SL,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4293.57,4285.3,4301.84,,,,,,,2026.09.15 20:25:00,
+228,2026-09-15 18:45:00+00:00,DETECTED,Decision at candle close,4288.04,4282.34,,2026-09-15 18:50:00+00:00,,,,,,2026.09.15 21:45:00,2026.09.15 21:50:00
+228,2026-09-15 18:45:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4288.04,4282.34,,,,4284.732598975235,14.22694042831898,,,2026.09.15 21:45:00,
+228,2026-09-15 18:50:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4288.04,4282.34,,,,4284.907595780911,14.107390470257842,,,2026.09.15 21:50:00,
+228,2026-09-15 18:55:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4288.04,4282.34,,,,4285.0539041332695,14.547689644737497,,,2026.09.15 21:55:00,
+228,2026-09-15 19:00:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4288.18,4282.34,,,,4285.255087562774,14.956538878182887,,,2026.09.15 22:00:00,
+228,2026-09-15 19:05:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4289.14,4282.34,,,,4285.433937085117,15.407865180586965,,,2026.09.15 22:05:00,
+228,2026-09-15 19:10:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4289.14,4282.34,,,,4285.463644094776,14.921992828164973,,,2026.09.15 22:10:00,
+228,2026-09-15 19:15:00+00:00,WAIT,Trend filter failed; existing order unchanged,4289.14,4282.34,,,,,,,,2026.09.15 22:15:00,
+228,2026-09-15 19:20:00+00:00,WAIT,Trend filter failed; existing order unchanged,4289.14,4282.34,,,,,,,,2026.09.15 22:20:00,
+228,2026-09-15 19:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4294.65,4282.34,,,,,,,,2026.09.15 22:25:00,
+229,2026-09-15 21:20:00+00:00,DETECTED,Decision at candle close,4302.41,4294.84,,2026-09-15 21:25:00+00:00,,,,,,2026.09.16 00:20:00,2026.09.16 00:25:00
+229,2026-09-15 21:20:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4302.41,4294.84,,,,4291.840310939445,17.821256074703832,,,2026.09.16 00:20:00,
+229,2026-09-15 21:25:00+00:00,WAIT,EMA/ADX/session filter failed; existing order unchanged,4303.83,4294.84,,,,4292.278989367368,19.448081438935045,,,2026.09.16 00:25:00,
+229,2026-09-15 21:30:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4303.83,4294.84,,,,,,,,2026.09.16 00:30:00,
+229,2026-09-15 21:35:00+00:00,WAIT,Trend filter failed; existing order unchanged,4303.83,4294.84,,,,,,,,2026.09.16 00:35:00,
+229,2026-09-15 21:40:00+00:00,WAIT,Trend filter failed; existing order unchanged,4303.83,4294.84,,,,,,,,2026.09.16 00:40:00,
+229,2026-09-15 21:45:00+00:00,WAIT,Trend filter failed; existing order unchanged,4304.52,4294.84,,,,,,,,2026.09.16 00:45:00,
+229,2026-09-15 21:50:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4307.04,4294.84,,,,,,,,2026.09.16 00:50:00,
+230,2026-09-16 03:40:00+00:00,DETECTED,Decision at candle close,4281.71,4285.21,,2026-09-16 03:45:00+00:00,,,,,,2026.09.16 06:40:00,2026.09.16 06:45:00
+230,2026-09-16 03:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4281.71,4285.21,,,,,,,,2026.09.16 06:40:00,
+231,2026-09-16 04:00:00+00:00,DETECTED,Decision at candle close,4278.47,4285.14,,2026-09-16 04:05:00+00:00,,,,,,2026.09.16 07:00:00,2026.09.16 07:05:00
+231,2026-09-16 04:00:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4278.47,4285.14,,,,,,,,2026.09.16 07:00:00,
+231,2026-09-16 04:05:00+00:00,WAIT,Limit not passive or too close to market; existing order unchanged,4278.47,4285.14,,,,,,,,2026.09.16 07:05:00,
+231,2026-09-16 04:10:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4278.47,4285.14,,,,,,,,2026.09.16 07:10:00,
+232,2026-09-16 04:20:00+00:00,DETECTED,Decision at candle close,4284.58,4278.27,,2026-09-16 04:25:00+00:00,,,,,,2026.09.16 07:20:00,2026.09.16 07:25:00
+232,2026-09-16 04:20:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4284.58,4278.27,4290.89,2026-09-16 04:25:00+00:00,,,,,,2026.09.16 07:20:00,2026.09.16 07:25:00
+232,2026-09-16 04:25:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4288.91,4278.27,,,,,,,,2026.09.16 07:25:00,
+233,2026-09-16 05:40:00+00:00,DETECTED,Decision at candle close,4309.26,4295.42,,2026-09-16 05:45:00+00:00,,,,,,2026.09.16 08:40:00,2026.09.16 08:45:00
+233,2026-09-16 05:40:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4309.26,4295.42,,,,,,,,2026.09.16 08:40:00,
+234,2026-09-16 10:05:00+00:00,DETECTED,Decision at candle close,4332.1,4326.79,,2026-09-16 10:10:00+00:00,,,,,,2026.09.16 13:05:00,2026.09.16 13:10:00
+234,2026-09-16 10:05:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4332.1,4326.79,4337.41,2026-09-16 10:10:00+00:00,,,,,,2026.09.16 13:05:00,2026.09.16 13:10:00
+234,2026-09-16 10:10:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4332.1,4326.79,4337.41,,9.0,,,,,2026.09.16 13:10:00,
+234,2026-09-16 10:15:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4332.1,4326.79,4337.41,,,,,,,2026.09.16 13:15:00,
+235,2026-09-16 11:25:00+00:00,DETECTED,Decision at candle close,4331.17,4323.08,,2026-09-16 11:30:00+00:00,,,,,,2026.09.16 14:25:00,2026.09.16 14:30:00
+235,2026-09-16 11:25:00+00:00,PLACED,Effective after this candle closes; no same-bar fill,4331.17,4323.08,4339.26,2026-09-16 11:30:00+00:00,,,,,,2026.09.16 14:25:00,2026.09.16 14:30:00
+235,2026-09-16 11:30:00+00:00,FILLED,Simulated limit touch; exact tick time unknown,4331.17,4323.08,4339.26,,10.0,,,,,2026.09.16 14:30:00,
+235,2026-09-16 12:55:00+00:00,TP,"exit_result: open-gap priority, otherwise SL-first; fill-bar TP requires proof",4331.17,4323.08,4339.26,,,,,,,2026.09.16 15:55:00,
+236,2026-09-16 22:00:00+00:00,DETECTED,Decision at candle close,4272.91,4307.53,,2026-09-16 22:05:00+00:00,,,,,,2026.09.17 01:00:00,2026.09.17 01:05:00
+236,2026-09-16 22:00:00+00:00,CANCELLED,SL breached or risk outside permitted distance,4272.91,4307.53,,,,,,,,2026.09.17 01:00:00,

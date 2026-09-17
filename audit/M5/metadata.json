@@ -1,0 +1,38 @@
+{
+  "symbol": "XAUUSD",
+  "timeframe": "M5",
+  "created_utc": "2026-09-16T22:08:36.525042+00:00",
+  "settings": {
+    "point": 0.01,
+    "digits": 2,
+    "number_of_data": 500,
+    "spike_candle_size": 1.5,
+    "pgap_points": 100,
+    "max_sl_distance_points": 1000,
+    "tp_r": 1.0,
+    "use_ema_filter": true,
+    "ema_period": 60,
+    "use_trend_filter": true,
+    "max_opposite_moves": 1,
+    "use_range_filter": true,
+    "adx_period": 14,
+    "min_adx": 20.0,
+    "use_session_filter": false,
+    "session_start_hour": 1,
+    "session_end_hour": 5,
+    "session_timezone": "America/New_York",
+    "minimum_distance_points": 25
+  },
+  "chart_offset_hours": 3.0,
+  "first_bar_utc": "2026-07-28 16:15:00+00:00",
+  "last_bar_utc": "2026-09-17 01:00:00+00:00",
+  "bars": 10000,
+  "signal_scope": "Only setups scanned while flat and outside cooldown, after warmup.",
+  "time_note": "Entry/exit times identify candles, NOT exact tick execution times.",
+  "files_sha256": {
+    "history.csv": "bf5ec9ac27c78c881e8a4db7917600cad573a4ad14b2ceed1bf9316179ea353e",
+    "SP2L_Advanced_Bot.py": "7926180007e8a2946531bbeb77ee10cf0aa9083c073a7db5d1688fdcb22094a7",
+    "SP2L_Advanced_Backtest.py": "2d6b837fe77a051d94ce0aa66516cca74677e2bbbb922c638150b71b25161c5c",
+    "SP2L_Audit.py": "fd40205c4723f907baf92df6caebed21f4902cbb07d90e0db62a3a7bb0c0ad4e"
+  }
+}

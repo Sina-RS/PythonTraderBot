@@ -13,10 +13,10 @@ import json
 from urllib.parse import quote
 import requests
 
-token = ''
-chatId = ''
+token = '8977275651:AAGRk_pnhlTFC6K5KLV1sl__AW01di69B8w'
+chatId = '-5111310419'
 ip = '127.0.0.1'
-port = '1090'
+port = '10808'
 useProxy = True
 
 class TeleBot():
