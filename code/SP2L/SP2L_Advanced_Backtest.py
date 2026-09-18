@@ -19,14 +19,14 @@ class Settings:
     point: float = 0.01
     digits: int = 2
     number_of_data: int = 500
-    spike_candle_size: float = 1.5
-    pgap_points: int = 100
+    spike_candle_size: float = 1.25
+    pgap_points: int = 150
     max_sl_distance_points: int = 1000
-    tp_r: float = 1.0
+    tp_r: float = 3.0
     use_ema_filter: bool = True
     ema_period: int = 60
     use_trend_filter: bool = True
-    max_opposite_moves: int = 1
+    max_opposite_moves: int = 2
     use_range_filter: bool = True
     adx_period: int = 14
     min_adx: float = 20.0
@@ -346,4 +346,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
-

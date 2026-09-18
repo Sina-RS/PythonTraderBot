@@ -184,12 +184,12 @@ TIMEFRAMES = {
     },
 }
 
-SPIKE_CANDLE_SIZE = 1.5
+SPIKE_CANDLE_SIZE = 1.25
 
-PGAP_POINTS = 100
+PGAP_POINTS = 150
 MAX_SL_DISTANCE_POINTS = 1000
 
-TP_R = 1.0
+TP_R = 3.0
 
 # ------------------------------------------------------------
 # Second entry
@@ -213,7 +213,7 @@ EMA_PERIOD = 60
 
 USE_TREND_FILTER = True
 
-MAX_OPPOSITE_MOVES = 1
+MAX_OPPOSITE_MOVES = 2
 
 # ------------------------------------------------------------
 # Range / ADX filter
@@ -244,6 +244,11 @@ SESSION_TIMEZONE = "America/New_York"
 LOT = 0.1
 
 LOOP_SECONDS = 2
+
+# A broker can reject removing a pending order while the symbol is
+# closed or the order is temporarily frozen. Keep the setup for a
+# later retry, but do not hammer the trade server every loop.
+PENDING_REMOVE_RETRY_SECONDS = 60
 
 # ============================================================
 # SYMBOL INFORMATION
@@ -1155,10 +1160,18 @@ def remove_pending_order(symbol, magic, direction, tf_label):
     if order is None:
         return True
 
+    ticket = int(order.ticket)
+    retry_key = (symbol, int(magic), direction, ticket)
+    retry_after = pending_remove_retry_after.get(retry_key)
+    now = datetime.now()
+
+    if retry_after is not None and now < retry_after:
+        return False
+
     result = mt5.order_send(
         {
             "action": mt5.TRADE_ACTION_REMOVE,
-            "order": int(order.ticket),
+            "order": ticket,
             "symbol": symbol,
         }
     )
@@ -1167,12 +1180,19 @@ def remove_pending_order(symbol, magic, direction, tf_label):
         mt5.TRADE_RETCODE_DONE,
         mt5.TRADE_RETCODE_PLACED,
     ):
+        pending_remove_retry_after[retry_key] = (
+            now + timedelta(seconds=PENDING_REMOVE_RETRY_SECONDS)
+        )
+        retcode = getattr(result, "retcode", None)
         add_log(
             f"[{tf_label}] Failed to remove invalid "
-            f"{direction} LIMIT order {order.ticket}"
+            f"{direction} LIMIT order {ticket} "
+            f"(retcode={retcode}); retrying in "
+            f"{PENDING_REMOVE_RETRY_SECONDS}s"
         )
         return False
 
+    pending_remove_retry_after.pop(retry_key, None)
     add_log(
         f"[{tf_label}] Removed invalid {direction} LIMIT order",
         send_telegram=True
@@ -1739,6 +1759,10 @@ last_processed_candle = None
 # Throttle for the "MT5 disconnected" notice so it does not spam.
 last_disconnect_log_time = None
 DISCONNECT_LOG_INTERVAL = 30.0
+
+# Next allowed removal attempt per live order. The ticket is included
+# so a new order is never throttled by an older failed removal.
+pending_remove_retry_after = {}
 
 # ============================================================
 # MAIN LOOP
