@@ -981,6 +981,19 @@ def make_trend_chart(candles, tf_label, direction):
     return image
 
 
+def trend_candle_summary(candles):
+    values = []
+    for index, candle in candles.iterrows():
+        values.append(
+            f"{str(index)} "
+            f"O={float(candle['open']):.{DIGITS}f} "
+            f"H={float(candle['high']):.{DIGITS}f} "
+            f"L={float(candle['low']):.{DIGITS}f} "
+            f"C={float(candle['close']):.{DIGITS}f}"
+        )
+    return " | ".join(values)
+
+
 def log_trend_formation(data, tf_label):
     """Log a newly formed three-candle trend without repeating each loop."""
 
@@ -1042,12 +1055,17 @@ def log_trend_formation(data, tf_label):
     )
 
     if TELEGRAM_TREND_FORMATION and TREND_CHART_ENABLED:
+        candle_summary = trend_candle_summary(candles)
+        log_verbose(
+            f"[{tf_label}] Trend chart OHLC: {candle_summary}"
+        )
         chart = make_trend_chart(candles, tf_label, direction)
         telegram_bot.SendPhoto(
             chart,
             caption=(
                 f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد - "
-                f"{STRUCTURE_FA.get(structure, structure)}"
+                f"{STRUCTURE_FA.get(structure, structure)}\n"
+                f"{candle_summary}"
             )
         )
 
