@@ -833,6 +833,175 @@ def entry_filters_are_valid(
 
 
 # ============================================================
+# REJECTION DIAGNOSTICS
+#
+# When a trend has formed and the pullback happened but the trade was
+# NOT opened, these helpers explain exactly which filter blocked it
+# (EMA, ADX, trend structure, spread, broker stop level, price ran
+# away, ...). Each unique rejection is logged once per setup/entry
+# level so the console and Telegram are not spammed every loop.
+# ============================================================
+
+REJECTION_FA = {
+    "EMA": "فیلتر EMA",
+    "ADX": "فیلتر ADX (بازار رنج)",
+    "TREND": "فیلتر ساختار روند",
+    "HOUR": "فیلتر ساعت سرور",
+    "SESSION": "فیلتر سشن نیویورک",
+    "SPREAD": "اسپرد زیاد",
+    "STOP_LEVEL": "حد ضرر/سود خیلی نزدیک به قیمت (محدودیت بروکر)",
+    "PRICE_RAN": "قیمت از ناحیه ورود دور شد (پولبک تمام شد)",
+    "RISK": "ریسک نامعتبر (فاصله SL)",
+    "MIN_DISTANCE": "فاصله قیمت بازار تا ناحیه ورود کمتر از حد مجاز بروکر",
+    "TICKET": "سفارش قبلی هنوز در انتظار است",
+    "INVALID": "ستاپ نامعتبر شد (SL لمس شد یا ریسک بیش از حد)",
+}
+
+# One log per (timeframe, direction, entry level). A new trailing level
+# is a new key, so a re-rejection at a better price is reported again.
+last_rejection_log_keys = {}
+
+
+def collect_entry_rejections(data, direction):
+    """Return a list of (code, detail) for every failed entry filter."""
+
+    rejections = []
+    entry_pos = len(data) - 1
+
+    if USE_EMA_FILTER:
+
+        entry_close = float(data.iloc[entry_pos]["close"])
+        entry_ema = float(data.iloc[entry_pos]["EMA"])
+
+        if not np.isfinite(entry_ema):
+            rejections.append(
+                ("EMA", f"EMA not converged yet (EMA={entry_ema})")
+            )
+        elif direction == "BUY" and entry_close <= entry_ema:
+            rejections.append(
+                ("EMA",
+                 f"close {entry_close:.{DIGITS}f} <= EMA{EMA_PERIOD} "
+                 f"{entry_ema:.{DIGITS}f} (price below EMA for BUY)")
+            )
+        elif direction == "SELL" and entry_close >= entry_ema:
+            rejections.append(
+                ("EMA",
+                 f"close {entry_close:.{DIGITS}f} >= EMA{EMA_PERIOD} "
+                 f"{entry_ema:.{DIGITS}f} (price above EMA for SELL)")
+            )
+
+    if USE_RANGE_FILTER:
+
+        entry_adx = float(data.iloc[entry_pos]["ADX"])
+
+        if not np.isfinite(entry_adx):
+            rejections.append(("ADX", "ADX not converged yet"))
+        elif entry_adx < MIN_ADX:
+            rejections.append(
+                ("ADX",
+                 f"ADX {entry_adx:.1f} < MIN_ADX {MIN_ADX:.1f} (ranging market)")
+            )
+
+    entry_idx = data.index[entry_pos]
+
+    if not is_in_allowed_server_hour(entry_idx):
+        rejections.append(
+            ("HOUR",
+             f"server hour {pd.Timestamp(entry_idx).hour:02d} outside "
+             f"{HOUR_FROM:02d}:00-{HOUR_TO:02d}:00")
+        )
+
+    if USE_SESSION_FILTER and not is_in_new_york_session(entry_idx):
+        rejections.append(
+            ("SESSION",
+             f"bar time {entry_idx} outside New York session "
+             f"{SESSION_START_HOUR:02d}:00-{SESSION_END_HOUR:02d}:00")
+        )
+
+    return rejections
+
+
+def collect_trend_rejections(data, start_pos, direction):
+    """Explain a failed trend-structure filter with concrete numbers."""
+
+    if USE_TREND_FILTER is False:
+        return []
+
+    consecutive_opposite = 0
+    worst = 0
+
+    for pos in range(start_pos + 1, len(data)):
+
+        if direction == "BUY":
+            current = float(data.iloc[pos]["high"])
+            previous = float(data.iloc[pos - 1]["high"])
+            reset = current > previous
+        else:
+            current = float(data.iloc[pos]["low"])
+            previous = float(data.iloc[pos - 1]["low"])
+            reset = current < previous
+
+        if reset:
+            consecutive_opposite = 0
+        else:
+            consecutive_opposite += 1
+            worst = max(worst, consecutive_opposite)
+
+    if worst > MAX_OPPOSITE_MOVES:
+        return [
+            ("TREND",
+             f"{worst} consecutive opposite candles since the spike "
+             f"(max allowed {MAX_OPPOSITE_MOVES})")
+        ]
+
+    return []
+
+
+def log_pending_rejection(tf_label, pending, code, detail):
+    """Throttled diagnostic: why this pending setup cannot trade yet."""
+
+    key = (
+        tf_label,
+        pending["direction"],
+        str(pending.get("setup_time")),
+        round(float(pending["entry"]), DIGITS),
+        code,
+    )
+
+    if last_rejection_log_keys.get(key) is True:
+        return
+
+    last_rejection_log_keys[key] = True
+
+    direction = pending["direction"]
+    entry = float(pending["entry"])
+
+    message = (
+        f"[{tf_label}] {direction} setup NOT taken @ {entry:.{DIGITS}f} - "
+        f"{code}: {detail}"
+    )
+
+    fa_text = (
+        f"[{tf_label}] ستاپ {DIRECTION_FA.get(direction, direction)} در قیمت "
+        f"{entry:.{DIGITS}f} باز نشد - دلیل: "
+        f"{REJECTION_FA.get(code, code)} ({detail})"
+    )
+
+    add_log(
+        message,
+        telegram_enabled=True,
+        telegram_message=fa_text
+    )
+
+
+def prune_rejection_keys():
+    """Keep the throttle dict bounded (one entry per setup/level/code)."""
+
+    if len(last_rejection_log_keys) > 500:
+        last_rejection_log_keys.clear()
+
+
+# ============================================================
 # TREND FILTER
 # ============================================================
 
@@ -1720,14 +1889,25 @@ def sync_pending_limit_order(
             len(data) - 1
         )
 
-    if (
-        not trend_valid
-        or not entry_filters_are_valid(
+    # --------------------------------------------------------
+    # DIAGNOSTICS: explain exactly why the setup cannot trade.
+    # --------------------------------------------------------
+
+    if not trend_valid:
+        for code, detail in collect_trend_rejections(
             data,
-            len(data) - 1,
+            start_pos,
             direction
-        )
-    ):
+        ):
+            log_pending_rejection(tf_label, pending, code, detail)
+
+    filter_rejections = collect_entry_rejections(data, direction)
+
+    if not trend_valid or filter_rejections:
+
+        for code, detail in filter_rejections:
+            log_pending_rejection(tf_label, pending, code, detail)
+
         return None
 
     price = round(float(pending["entry"]), DIGITS)
@@ -1739,6 +1919,12 @@ def sync_pending_limit_order(
             f"[{tf_label}] {direction} limit setup invalid: "
             f"entry={price}, sl={sl}"
         )
+        code = "RISK"
+        detail = (
+            f"risk {risk:.{DIGITS}f} "
+            f"(max {MAX_SL_DISTANCE_PRICE:.{DIGITS}f})"
+        )
+        log_pending_rejection(tf_label, pending, code, detail)
         return None
 
     tp = round(
@@ -1758,6 +1944,13 @@ def sync_pending_limit_order(
 
     # Spread filter: do not (re)place limits while the spread is too wide.
     if not spread_is_acceptable(symbol):
+        spread = int(getattr(mt5.symbol_info(symbol), "spread", 0) or 0)
+        log_pending_rejection(
+            tf_label,
+            pending,
+            "SPREAD",
+            f"spread {spread} points > MAX_SPREAD_POINTS {MAX_SPREAD_POINTS}"
+        )
         return None
 
     minimum_distance = minimum_pending_distance(symbol)
@@ -1772,6 +1965,13 @@ def sync_pending_limit_order(
     )
 
     if market_distance < minimum_distance:
+        log_pending_rejection(
+            tf_label,
+            pending,
+            "MIN_DISTANCE",
+            f"market is {market_distance:.{DIGITS}f} from the entry level, "
+            f"broker minimum is {minimum_distance:.{DIGITS}f}"
+        )
         return None
 
     order = get_pending_order(symbol, magic, direction)
@@ -1784,6 +1984,13 @@ def sync_pending_limit_order(
     if order is None:
 
         if pending.get("order_ticket") is not None:
+            log_pending_rejection(
+                tf_label,
+                pending,
+                "TICKET",
+                f"order #{pending['order_ticket']} is still believed "
+                "to be pending"
+            )
             return None
 
         if (
@@ -1791,9 +1998,23 @@ def sync_pending_limit_order(
         ) or (
             direction == "SELL" and price <= float(tick.bid)
         ):
+            log_pending_rejection(
+                tf_label,
+                pending,
+                "PRICE_RAN",
+                f"price ran away: market ask/bid is beyond the limit "
+                f"level {price:.{DIGITS}f} (pullback finished)"
+            )
             return None
 
         if not stops_are_valid(symbol, direction, tf_label, price, sl, tp):
+            log_pending_rejection(
+                tf_label,
+                pending,
+                "STOP_LEVEL",
+                f"SL {sl:.{DIGITS}f} or TP {tp:.{DIGITS}f} too close to "
+                f"limit {price:.{DIGITS}f} for the broker"
+            )
             return None
 
         result = Meta.PlacePendingOrder(
@@ -2511,6 +2732,8 @@ while True:
 
     if mt5_is_connected() is True:
 
+        prune_rejection_keys()
+
         for asset in symbols_list.keys():
 
             symbol = symbols_list[asset][0]
@@ -2717,6 +2940,29 @@ while True:
                                 pending_setup["direction"],
                                 tf_label
                             ):
+
+                                if pending_setup["direction"] == "BUY":
+                                    invalid_detail = (
+                                        f"price low "
+                                        f"{float(pending_data['low'].iloc[-1]):.{DIGITS}f} "
+                                        f"touched SL "
+                                        f"{float(pending_setup['sl']):.{DIGITS}f}"
+                                    )
+                                else:
+                                    invalid_detail = (
+                                        f"price high "
+                                        f"{float(pending_data['high'].iloc[-1]):.{DIGITS}f} "
+                                        f"touched SL "
+                                        f"{float(pending_setup['sl']):.{DIGITS}f}"
+                                    )
+
+                                log_pending_rejection(
+                                    tf_label,
+                                    pending_setup,
+                                    "INVALID",
+                                    invalid_detail
+                                )
+
                                 pending_setup = None
 
                         else:
