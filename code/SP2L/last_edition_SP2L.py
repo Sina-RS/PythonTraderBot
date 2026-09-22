@@ -1,3 +1,32 @@
+"""
+last_edition_SP2L.py
+====================
+
+Live SP2L bot = the **body** of ``SP2L_Advanced_Bot.py`` + the **trading
+logic** of ``SP2LBot.mq5``.
+
+Trading logic taken from ``SP2LBot.mq5``:
+
+* Only the PENDING LIMIT order path trades.  In the Advanced bot
+  ``Strategy()`` always returned ``trade_setup = None``, so its
+  "EXECUTE ENTRY 1" / ``Meta.run()`` market block was dead code; it is
+  removed here, exactly like the EA does.
+* Filters: EMA, ADX range, trend structure, New York session, plus the
+  MQ5-only server-hour filter and spread filter, and a trade-direction
+  filter (BOTH / LONG_ONLY / SHORT_ONLY).
+* Broker stop-level validation before a limit is placed or modified.
+* Open-position management: maximum holding time, partial take profit,
+  breakeven and trailing stop.
+* Per-timeframe cooldown after a position closes and a throttled retry
+  after a failed pending-order removal.
+* The optional second entry is reported but never sent as an order, the
+  same as the EA (the original never placed one).
+
+The multi-timeframe loop, the Meta execution layer, the logging/Telegram
+system, the settings layout and the helpers all come from
+``SP2L_Advanced_Bot.py``.
+"""
+
 import MetaTrader5 as mt5
 from datetime import datetime, timezone, time, timedelta
 import time as time_module
@@ -7,8 +36,7 @@ from TelegramBot import TeleBot
 from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
-import socket
-import sys
+import math
 import pandas as pd
 import numpy as np
 
@@ -32,6 +60,10 @@ MIN_TREND_CANDLES = 3
 # Hard alerts (entries, errors, closes) are always sent to Telegram.
 # Minimum seconds between two Telegram log messages.
 TELEGRAM_LOG_INTERVAL = 1.0
+
+# Console-only diagnostics (MQ5 "Log()" vs "LogAlways()"). When False,
+# verbose lines are neither printed nor stored.
+VERBOSE_LOG = True
 
 telegram_bot = TeleBot()
 last_telegram_log_time = None
@@ -66,6 +98,20 @@ def add_log(message, send_telegram=False, telegram_enabled=None):
             last_telegram_log_time = now
 
 
+def log_verbose(message):
+    """Console-only diagnostic, equivalent to the EA's ``Log()``.
+
+    Never mirrored to Telegram, so repeated retries cannot spam the chat.
+    """
+    if VERBOSE_LOG:
+        add_log(message, telegram_enabled=False)
+
+
+def retcode_of(result):
+    """Return ``result.retcode`` (or None) without raising on None."""
+    return None if result is None else getattr(result, "retcode", None)
+
+
 # ============================================================
 # MT5 INITIALIZE
 # ============================================================
@@ -81,12 +127,12 @@ Meta.teleBotMessage = True
 # ============================================================
 # MT5 CONNECTION CHECK
 #
-# The raw socket test above (internet()) can fail even when the
-# bot is perfectly able to trade, for example when traffic is
-# routed through a proxy/VPN or when the ISP blocks outbound
-# TCP port 53. MT5 connects to the broker through its own
-# channel, so the real connectivity requirement is the MT5
-# terminal/account connection, not a socket to Google DNS.
+# The raw socket test (internet()) can fail even when the bot is
+# perfectly able to trade, for example when traffic is routed through a
+# proxy/VPN or when the ISP blocks outbound TCP port 53. MT5 connects to
+# the broker through its own channel, so the real connectivity
+# requirement is the MT5 terminal/account connection, not a socket to
+# Google DNS.
 #
 # This check is used by the main loop instead of internet().
 # ============================================================
@@ -128,9 +174,9 @@ SYMBOL = "XAUUSD"
 NUMBER_OF_DATA = 500
 
 # ------------------------------------------------------------
-# Base magic number. Each timeframe uses MAGIC + its own
-# offset (see TIMEFRAMES below) so positions/state never
-# conflict between timeframes.
+# Base magic number. Each timeframe uses MAGIC + its own offset
+# (see TIMEFRAMES below) so positions/state never conflict
+# between timeframes.
 # ------------------------------------------------------------
 
 MAGIC = 8
@@ -153,20 +199,16 @@ TIMEFRAMES = {
     },
 }
 
+# ------------------------------------------------------------
+# Setup detection (MQ5: InpSpikeCandleSize / InpGapPoints / ...)
+# ------------------------------------------------------------
+
 SPIKE_CANDLE_SIZE = 1.5
 
 PGAP_POINTS = 100
 MAX_SL_DISTANCE_POINTS = 1000
 
 TP_R = 1.0
-
-# ------------------------------------------------------------
-# Second entry
-# ------------------------------------------------------------
-
-USE_SECOND_ENTRY = True
-
-SECOND_ENTRY_VOLUME_MULTIPLIER = 2.0
 
 # ------------------------------------------------------------
 # EMA filter
@@ -194,7 +236,7 @@ ADX_PERIOD = 14
 MIN_ADX = 20.0
 
 # ------------------------------------------------------------
-# New York session filter
+# New York session filter (disabled by default)
 # ------------------------------------------------------------
 
 USE_SESSION_FILTER = False
@@ -204,8 +246,49 @@ SESSION_END_HOUR = 5
 
 SESSION_TIMEZONE = "America/New_York"
 
+# Broker server time GMT offset, used to convert server candles to
+# New York time (MQ5: InpServerGmtOffset).
+SERVER_GMT_OFFSET = 3
+
 # ------------------------------------------------------------
-# Trading
+# Server-hour filter (MQ5 only)
+# ------------------------------------------------------------
+
+USE_HOUR_FILTER = False
+
+HOUR_FROM = 14
+HOUR_TO = 18
+
+# ------------------------------------------------------------
+# Spread filter (MQ5 only)
+# ------------------------------------------------------------
+
+USE_SPREAD_FILTER = False
+
+MAX_SPREAD_POINTS = 50
+
+# ------------------------------------------------------------
+# Trade-direction filter (MQ5 only)
+#
+# "BOTH" | "LONG_ONLY" | "SHORT_ONLY"
+# ------------------------------------------------------------
+
+TRADE_SIDE = "BOTH"
+
+
+# ------------------------------------------------------------
+# Second entry
+#
+# Kept for parity with the MQ5 EA: it is reported at startup, but no
+# second order is ever placed (the original never placed one).
+# ------------------------------------------------------------
+
+USE_SECOND_ENTRY = True
+
+SECOND_ENTRY_VOLUME_MULTIPLIER = 2.0
+
+# ------------------------------------------------------------
+# Behaviour
 # ------------------------------------------------------------
 
 # NOTE: the base MAGIC is defined above, before TIMEFRAMES,
@@ -214,10 +297,38 @@ LOT = 0.1
 
 LOOP_SECONDS = 2
 
+# Per-timeframe pause after a position closes.
+COOLDOWN_SECONDS = 60
+
 # A broker can reject removing a pending order while the symbol is
 # closed or the order is temporarily frozen. Keep the setup for a
 # later retry, but do not hammer the trade server every loop.
 PENDING_REMOVE_RETRY_SECONDS = 60
+
+# Deviation in broker points for market operations (partial close /
+# forced close).
+SLIPPAGE_POINTS = 20
+
+# ------------------------------------------------------------
+# Open-position management (MQ5 only, all disabled by default)
+# ------------------------------------------------------------
+
+USE_BREAKEVEN = False
+
+BREAKEVEN_AT_R = 1.0
+BREAKEVEN_BUFFER_POINTS = 10
+
+USE_PARTIAL_TP = False
+
+PARTIAL_AT_R = 1.0
+PARTIAL_PERCENT = 50.0
+
+USE_TRAIL_STOP = False
+
+TRAIL_START_R = 1.0
+TRAIL_DISTANCE_R = 1.0
+
+MAX_HOLDING_MINUTES = 0
 
 # ============================================================
 # SYMBOL INFORMATION
@@ -250,7 +361,7 @@ MAX_SL_DISTANCE_PRICE = (
 # ============================================================
 
 print("-" * 75)
-print("ADVANCED TRADER")
+print("LAST EDITION SP2L TRADER")
 print("-" * 75)
 print("Symbol              :", SYMBOL)
 print("Point               :", BROKER_POINT)
@@ -259,15 +370,10 @@ print("Spike multiplier    :", SPIKE_CANDLE_SIZE)
 print("Gap points          :", PGAP_POINTS)
 print("Max SL points       :", MAX_SL_DISTANCE_POINTS)
 print("TP                  :", f"{TP_R}R")
-print("Second entry        :", USE_SECOND_ENTRY)
-print("Second entry volume :", SECOND_ENTRY_VOLUME_MULTIPLIER)
 print("EMA filter          :", USE_EMA_FILTER)
 print("EMA period          :", EMA_PERIOD)
 print("Trend filter        :", USE_TREND_FILTER)
 print("Max opposite moves  :", MAX_OPPOSITE_MOVES)
-print("Trend formation log :", LOG_TREND_FORMATION)
-print("Trend log Telegram  :", TELEGRAM_TREND_FORMATION)
-print("Minimum trend bars  :", MIN_TREND_CANDLES)
 print("Range filter        :", USE_RANGE_FILTER)
 print("ADX period          :", ADX_PERIOD)
 print("Minimum ADX         :", MIN_ADX)
@@ -275,8 +381,42 @@ print("Session filter      :", USE_SESSION_FILTER)
 print("Session timezone    :", SESSION_TIMEZONE)
 print(
     "Session             :",
-    f"{SESSION_START_HOUR:02d}:00 - {SESSION_END_HOUR:02d}:00"
+    f"{SESSION_START_HOUR:02d}:00 - {SESSION_END_HOUR:02d}:00",
+    f"(server GMT+{SERVER_GMT_OFFSET})"
 )
+print("Server-hour filter  :", USE_HOUR_FILTER)
+print(
+    "Server hours        :",
+    f"{HOUR_FROM:02d}:00 - {HOUR_TO:02d}:00"
+)
+print("Spread filter       :", USE_SPREAD_FILTER)
+print("Max spread points   :", MAX_SPREAD_POINTS)
+print("Trade side          :", TRADE_SIDE)
+print("Trend formation log :", LOG_TREND_FORMATION)
+print("Trend log Telegram  :", TELEGRAM_TREND_FORMATION)
+print("Minimum trend bars  :", MIN_TREND_CANDLES)
+print("Second entry        :", USE_SECOND_ENTRY, "(log only, never sent)")
+print("Second entry volume :", SECOND_ENTRY_VOLUME_MULTIPLIER)
+print("Breakeven           :", USE_BREAKEVEN)
+print(
+    "Breakeven trigger   :",
+    f"{BREAKEVEN_AT_R}R",
+    f"(buffer {BREAKEVEN_BUFFER_POINTS} points)"
+)
+print("Partial TP          :", USE_PARTIAL_TP)
+print(
+    "Partial trigger     :",
+    f"{PARTIAL_AT_R}R",
+    f"({PARTIAL_PERCENT}% of volume)"
+)
+print("Trailing stop       :", USE_TRAIL_STOP)
+print(
+    "Trailing            :",
+    f"start {TRAIL_START_R}R",
+    f"distance {TRAIL_DISTANCE_R}R"
+)
+print("Max holding minutes :", MAX_HOLDING_MINUTES)
+print("Cooldown seconds    :", COOLDOWN_SECONDS)
 print("Magic               :", MAGIC)
 print("Lot                 :", LOT)
 print(
@@ -394,9 +534,15 @@ def calculate_adx(data, period):
 
 # ============================================================
 # NEW YORK SESSION
+#
+# Meta.GetRates returns naive broker-server timestamps, so a naive
+# candle is localised to the server offset (SERVER_GMT_OFFSET) before
+# being converted to New York time.
 # ============================================================
 
 NEW_YORK_TZ = ZoneInfo(SESSION_TIMEZONE)
+
+SERVER_TZ = f"Etc/GMT-{SERVER_GMT_OFFSET}"
 
 
 def is_in_new_york_session(timestamp):
@@ -407,7 +553,7 @@ def is_in_new_york_session(timestamp):
     ts = pd.Timestamp(timestamp)
 
     if ts.tzinfo is None:
-        ts = ts.tz_localize("Etc/GMT-3")
+        ts = ts.tz_localize(SERVER_TZ)
     else:
         ts = ts.tz_convert("UTC")
 
@@ -434,8 +580,30 @@ def is_in_new_york_session(timestamp):
     )
 
 
+def is_in_allowed_server_hour(timestamp):
+    """MQ5 InpUseHourFilter: raw broker-server hour of the entry bar."""
+
+    if not USE_HOUR_FILTER:
+        return True
+
+    if pd.isna(timestamp):
+        return False
+
+    server_hour = pd.Timestamp(timestamp).hour
+
+    return (
+        server_hour >= HOUR_FROM
+        and server_hour < HOUR_TO
+    )
+
+
 # ============================================================
 # GET MARKET DATA
+#
+# Meta.GetRates returns naive broker-server timestamps. They are kept
+# naive on purpose: the server-hour filter (and the session filter's
+# SERVER_TZ localisation) must use the broker's server clock, exactly
+# like the MQ5 EA does with ``g_rates[bar].time``.
 # ============================================================
 
 def get_data(symbol, timeframe):
@@ -540,7 +708,7 @@ def get_data(symbol, timeframe):
 
         print(
             "An exception has occurred in "
-            f"AdvancedTrader.GetRates: {str(e)}"
+            f"LastEditionSP2L.GetRates: {str(e)}"
         )
 
         return None
@@ -548,6 +716,9 @@ def get_data(symbol, timeframe):
 
 # ============================================================
 # ENTRY FILTERS
+#
+# Mirrors the MQ5 ``EntryFiltersAreValid(bar)``:
+# EMA -> ADX range -> server hour -> New York session.
 # ============================================================
 
 def entry_filters_are_valid(
@@ -600,6 +771,13 @@ def entry_filters_are_valid(
 
         if entry_adx < MIN_ADX:
             return False
+
+    # --------------------------------------------------------
+    # SERVER-HOUR FILTER (MQ5 only)
+    # --------------------------------------------------------
+
+    if not is_in_allowed_server_hour(entry_idx):
+        return False
 
     # --------------------------------------------------------
     # NEW YORK SESSION FILTER
@@ -775,7 +953,8 @@ def log_trend_formation(data, tf_label):
 #   -3 = spike candle
 #   -4 = candle before spike
 #
-# The current candle is used exactly as in the live trader style.
+# The MQ5 EA uses series indexing where 0 = -1, 1 = -2, 2 = -3 and
+# 3 = -4, so both implementations evaluate identical candles.
 # ============================================================
 
 def detect_buy_setup(data):
@@ -1013,6 +1192,9 @@ def detect_sell_setup(data):
 
 # ============================================================
 # PENDING SETUP
+#
+# A pending setup is NOT an open position. It only becomes an order
+# when sync_pending_limit_order() succeeds.
 # ============================================================
 
 def create_pending_buy(data):
@@ -1020,8 +1202,7 @@ def create_pending_buy(data):
     # The live setup corresponds to the backtest setup row.
     setup_time = data.index[-1]
 
-    # In the advanced backtest the BUY SL is the low of the
-    # candle before the spike.
+    # SL = low of the candle before the spike (MQ5 g_rates[3].low).
     sl = float(
         data["low"].iloc[-4]
     )
@@ -1036,6 +1217,7 @@ def create_pending_buy(data):
         "direction": "BUY",
         "setup_time": setup_time,
         "setup_pos_time": setup_time,
+        # The limit starts on the previous candle's low.
         "entry": float(data["low"].iloc[-2]),
         "sl": sl,
         "spike_body": spike_body,
@@ -1047,8 +1229,7 @@ def create_pending_sell(data):
 
     setup_time = data.index[-1]
 
-    # In the advanced backtest the SELL SL is the high of the
-    # candle before the spike.
+    # SL = high of the candle before the spike (MQ5 g_rates[3].high).
     sl = float(
         data["high"].iloc[-4]
     )
@@ -1063,6 +1244,7 @@ def create_pending_sell(data):
         "direction": "SELL",
         "setup_time": setup_time,
         "setup_pos_time": setup_time,
+        # The limit starts on the previous candle's high.
         "entry": float(data["high"].iloc[-2]),
         "sl": sl,
         "spike_body": spike_body,
@@ -1073,9 +1255,9 @@ def create_pending_sell(data):
 # ============================================================
 # LIMIT PRICE TRAILING
 #
-# The order starts on the previous candle's low/high. A BUY
-# limit follows higher lows and a SELL limit follows lower highs.
-# A new lower low/higher high never causes a market entry.
+# The order starts on the previous candle's low/high. A BUY limit
+# follows higher lows and a SELL limit follows lower highs. A new lower
+# low / higher high never causes a market entry (MQ5 TrailPendingLimit).
 # ============================================================
 
 def update_pending_limit(data, pending):
@@ -1100,6 +1282,52 @@ def update_pending_limit(data, pending):
     return pending
 
 
+def pending_setup_is_invalid(data, pending):
+
+    if pending["direction"] == "BUY":
+        current_price = float(data["low"].iloc[-1])
+        risk = float(pending["entry"]) - float(pending["sl"])
+        return (
+            current_price <= float(pending["sl"])
+            or risk > MAX_SL_DISTANCE_PRICE
+        )
+
+    current_price = float(data["high"].iloc[-1])
+    risk = float(pending["sl"]) - float(pending["entry"])
+    return (
+        current_price >= float(pending["sl"])
+        or risk > MAX_SL_DISTANCE_PRICE
+    )
+
+
+# ============================================================
+# ORDER / SYMBOL HELPERS
+# ============================================================
+
+def normalize_volume(symbol, volume):
+    """Clamp a volume to the symbol's step/min/max grid (MQ5 NormalizeVolume)."""
+
+    info = mt5.symbol_info(symbol)
+
+    if info is None:
+        return volume
+
+    step = float(getattr(info, "volume_step", 0.0) or 0.0)
+    if step <= 0.0:
+        step = 0.01
+
+    vmin = float(getattr(info, "volume_min", 0.0) or 0.0)
+    vmax = float(getattr(info, "volume_max", 0.0) or 0.0)
+
+    if vmax <= 0.0:
+        vmax = volume
+
+    volume = round(volume / step) * step
+    volume = min(max(volume, vmin), max(vmax, vmin))
+
+    return round(volume, 8)
+
+
 def get_pending_order(symbol, magic, direction):
 
     orders = mt5.orders_get(symbol=symbol)
@@ -1120,6 +1348,11 @@ def get_pending_order(symbol, magic, direction):
     ]
 
     return matching[-1] if matching else None
+
+
+# Next allowed removal attempt per live order. The ticket is included so
+# a new order is never throttled by an older failed removal.
+pending_remove_retry_after = {}
 
 
 def remove_pending_order(symbol, magic, direction, tf_label):
@@ -1145,49 +1378,33 @@ def remove_pending_order(symbol, magic, direction, tf_label):
         }
     )
 
-    if result is None or getattr(result, "retcode", None) not in (
+    if retcode_of(result) not in (
         mt5.TRADE_RETCODE_DONE,
         mt5.TRADE_RETCODE_PLACED,
     ):
         pending_remove_retry_after[retry_key] = (
             now + timedelta(seconds=PENDING_REMOVE_RETRY_SECONDS)
         )
-        retcode = getattr(result, "retcode", None)
         add_log(
             f"[{tf_label}] Failed to remove invalid "
-            f"{direction} LIMIT order {ticket} "
-            f"(retcode={retcode}); retrying in "
-            f"{PENDING_REMOVE_RETRY_SECONDS}s"
+            f"{direction} LIMIT order #{ticket} "
+            f"(retcode={retcode_of(result)} "
+            f"{getattr(result, 'comment', '')}); retrying in "
+            f"{PENDING_REMOVE_RETRY_SECONDS}s",
+            telegram_enabled=False
         )
         return False
 
     pending_remove_retry_after.pop(retry_key, None)
     add_log(
-        f"[{tf_label}] Removed invalid {direction} LIMIT order",
+        f"[{tf_label}] Removed invalid {direction} LIMIT order #{ticket}",
         send_telegram=True
     )
     return True
 
 
-def pending_setup_is_invalid(data, pending):
-
-    if pending["direction"] == "BUY":
-        current_price = float(data["low"].iloc[-1])
-        risk = float(pending["entry"]) - float(pending["sl"])
-        return (
-            current_price <= float(pending["sl"])
-            or risk > MAX_SL_DISTANCE_PRICE
-        )
-
-    current_price = float(data["high"].iloc[-1])
-    risk = float(pending["sl"]) - float(pending["entry"])
-    return (
-        current_price >= float(pending["sl"])
-        or risk > MAX_SL_DISTANCE_PRICE
-    )
-
-
 def minimum_pending_distance(symbol):
+    """max(trade_stops_level, trade_freeze_level) in price terms."""
 
     info = mt5.symbol_info(symbol)
 
@@ -1201,6 +1418,63 @@ def minimum_pending_distance(symbol):
 
     return max(levels) * float(info.point)
 
+
+def stops_are_valid(symbol, direction, tf_label, price, sl, tp):
+    """MQ5 StopsAreValid: broker minimum distance for SL / TP."""
+
+    info = mt5.symbol_info(symbol)
+
+    if info is None:
+        return True
+
+    stops = (
+        int(getattr(info, "trade_stops_level", 0) or 0)
+        * float(info.point)
+    )
+
+    if stops <= 0.0:
+        return True
+
+    if abs(price - sl) < stops:
+
+        log_verbose(
+            f"[{tf_label}] {direction} limit skipped: SL too close "
+            f"to price ({abs(price - sl)} < {stops})"
+        )
+        return False
+
+    if abs(tp - price) < stops:
+
+        log_verbose(
+            f"[{tf_label}] {direction} limit skipped: TP too close "
+            f"to price ({abs(tp - price)} < {stops})"
+        )
+        return False
+
+    return True
+
+
+def spread_is_acceptable(symbol):
+    """MQ5 InpUseSpreadFilter: do not place/refresh limits on wide spread."""
+
+    if not USE_SPREAD_FILTER:
+        return True
+
+    info = mt5.symbol_info(symbol)
+
+    if info is None:
+        return True
+
+    spread = int(getattr(info, "spread", 0) or 0)
+
+    return spread <= MAX_SPREAD_POINTS
+
+
+# ============================================================
+# SYNC PENDING LIMIT ORDER (MQ5 SyncPendingLimitOrder)
+#
+# This is the ONLY trading path: the EA never sends a market entry.
+# ============================================================
 
 def sync_pending_limit_order(
     symbol,
@@ -1248,7 +1522,7 @@ def sync_pending_limit_order(
     risk = price - sl if direction == "BUY" else sl - price
 
     if risk <= 0 or risk > MAX_SL_DISTANCE_PRICE:
-        add_log(
+        log_verbose(
             f"[{tf_label}] {direction} limit setup invalid: "
             f"entry={price}, sl={sl}"
         )
@@ -1264,10 +1538,13 @@ def sync_pending_limit_order(
     pending["entry"] = price
     pending["tp"] = tp
 
-    order = get_pending_order(symbol, magic, direction)
     tick = mt5.symbol_info_tick(symbol)
 
     if tick is None:
+        return None
+
+    # Spread filter: do not (re)place limits while the spread is too wide.
+    if not spread_is_acceptable(symbol):
         return None
 
     minimum_distance = minimum_pending_distance(symbol)
@@ -1284,6 +1561,13 @@ def sync_pending_limit_order(
     if market_distance < minimum_distance:
         return None
 
+    order = get_pending_order(symbol, magic, direction)
+
+    # --------------------------------------------------------
+    # No live order: place one (unless a recorded ticket is still
+    # believed to be pending, exactly like the EA).
+    # --------------------------------------------------------
+
     if order is None:
 
         if pending.get("order_ticket") is not None:
@@ -1296,9 +1580,12 @@ def sync_pending_limit_order(
         ):
             return None
 
+        if not stops_are_valid(symbol, direction, tf_label, price, sl, tp):
+            return None
+
         result = Meta.PlacePendingOrder(
             symbol,
-            lot,
+            normalize_volume(symbol, lot),
             direction == "BUY",
             direction == "SELL",
             price,
@@ -1308,26 +1595,39 @@ def sync_pending_limit_order(
             comment=f"SP2L {tf_label} {direction} LIMIT"
         )
 
-        if result is not None and getattr(result, "retcode", None) in (
+        if retcode_of(result) in (
             mt5.TRADE_RETCODE_DONE,
             mt5.TRADE_RETCODE_PLACED,
         ):
-            pending["order_ticket"] = getattr(
-                result,
-                "order",
-                None
-            )
+            pending["order_ticket"] = getattr(result, "order", None)
             add_log(
-                f"[{tf_label}] {direction} LIMIT placed at {price}",
+                f"[{tf_label}] {direction} LIMIT placed at {price} "
+                f"(SL {sl}, TP {tp}, "
+                f"#{pending['order_ticket']})",
                 send_telegram=True
+            )
+        else:
+            add_log(
+                f"[{tf_label}] {direction} LIMIT failed: "
+                f"retcode={retcode_of(result)} "
+                f"{getattr(result, 'comment', '')}",
+                telegram_enabled=False
             )
 
         return result
 
+
+    # Order already exists: only move when the limit price
+    # improved, and only when the broker stop levels still allow it.
+    # --------------------------------------------------------
+
     old_price = round(float(getattr(order, "price_open", price)), DIGITS)
 
-    if old_price == price:
+    if abs(old_price - price) < BROKER_POINT / 2:
         return order
+
+    if not stops_are_valid(symbol, direction, tf_label, price, sl, tp):
+        return None
 
     request = {
         "action": mt5.TRADE_ACTION_MODIFY,
@@ -1342,170 +1642,48 @@ def sync_pending_limit_order(
 
     result = mt5.order_send(request)
 
-    if result is not None and getattr(result, "retcode", None) in (
+    if retcode_of(result) in (
         mt5.TRADE_RETCODE_DONE,
         mt5.TRADE_RETCODE_PLACED,
     ):
         add_log(
             f"[{tf_label}] {direction} LIMIT moved "
-            f"from {old_price} to {price}",
+            f"from {old_price} to {price} (#{int(order.ticket)})",
             send_telegram=True
+        )
+    else:
+        log_verbose(
+            f"[{tf_label}] {direction} LIMIT modify failed: "
+            f"retcode={retcode_of(result)} "
+            f"{getattr(result, 'comment', '')}"
         )
 
     return result
 
 
-def check_pending_buy(
-    data,
-    pending
-):
-
-    if len(data) < 2:
-        return None
-
-    sl = pending["sl"]
-
-    current_low = float(
-        data["low"].iloc[-1]
-    )
-
-    previous_low = float(
-        data["low"].iloc[-2]
-    )
-
-    if current_low >= previous_low:
-        return None
-
-    risk = current_low - sl
-
-    if risk <= 0:
-        return None
-
-    if risk > MAX_SL_DISTANCE_PRICE:
-        return "INVALID"
-
-    # Find the setup candle in the current data.
-    try:
-        start_pos = data.index.get_loc(
-            pending["setup_pos_time"]
-        )
-    except KeyError:
-        return None
-
-    entry_pos = len(data) - 1
-
-    if not buy_trend_is_valid(
-        data,
-        start_pos,
-        entry_pos
-    ):
-        return None
-
-    if not entry_filters_are_valid(
-        data,
-        entry_pos,
-        "BUY"
-    ):
-        return None
-
-    return {
-        "direction": "BUY",
-        "entry": current_low,
-        "sl": sl,
-        "risk": risk,
-        "setup_time": pending["setup_time"],
-        "entry_time": data.index[-1],
-        "spike_body": pending["spike_body"]
-    }
-
-
 # ============================================================
-# FIND FIRST VALID SELL ENTRY
+# OPEN POSITION MANAGEMENT (MQ5 ManageOpenPosition)
+#
+# The risk is recovered from the fixed TP distance that the limit
+# carried (|tp - entry| / TP_R), so no extra state has to survive a
+# restart.
 # ============================================================
 
-def check_pending_sell(
-    data,
-    pending
-):
+def get_position(symbol, magic):
+    """Return the live position object for this symbol/magic (or None)."""
 
-    if len(data) < 2:
+    positions = mt5.positions_get(symbol=symbol)
+
+    if positions is None:
         return None
 
-    sl = pending["sl"]
+    matching = [
+        position for position in positions
+        if int(getattr(position, "magic", -1)) == int(magic)
+    ]
 
-    current_high = float(
-        data["high"].iloc[-1]
-    )
+    return matching[-1] if matching else None
 
-    previous_high = float(
-        data["high"].iloc[-2]
-    )
-
-    if current_high <= previous_high:
-        return None
-
-    risk = sl - current_high
-
-    if risk <= 0:
-        return None
-
-    if risk > MAX_SL_DISTANCE_PRICE:
-        return "INVALID"
-
-    try:
-        start_pos = data.index.get_loc(
-            pending["setup_pos_time"]
-        )
-    except KeyError:
-        return None
-
-    entry_pos = len(data) - 1
-
-    if not sell_trend_is_valid(
-        data,
-        start_pos,
-        entry_pos
-    ):
-        return None
-
-    if not entry_filters_are_valid(
-        data,
-        entry_pos,
-        "SELL"
-    ):
-        return None
-
-    return {
-        "direction": "SELL",
-        "entry": current_high,
-        "sl": sl,
-        "risk": risk,
-        "setup_time": pending["setup_time"],
-        "entry_time": data.index[-1],
-        "spike_body": pending["spike_body"]
-    }
-
-
-# ============================================================
-# SECOND ENTRY
-# ============================================================
-
-def get_second_entry(
-    direction,
-    entry,
-    risk
-):
-
-    if direction == "BUY":
-
-        return entry - risk / 2
-
-    return entry + risk / 2
-
-
-# ============================================================
-# TRADE STATE
-# ============================================================
 
 def get_trade_state(symbol, magic):
 
@@ -1529,8 +1707,292 @@ def get_trade_state(symbol, magic):
     return True, row
 
 
+def position_risk(entry, tp):
+    """Initial risk in price terms, recovered from the fixed TP distance."""
+
+    if TP_R <= 0:
+        return 0.0
+
+    return abs(float(tp) - float(entry)) / TP_R
+
+
+def position_stops_are_ok(symbol, price, sl):
+
+    info = mt5.symbol_info(symbol)
+
+    if info is None:
+        return False
+
+    stops = (
+        int(getattr(info, "trade_stops_level", 0) or 0)
+        * float(info.point)
+    )
+
+    if stops <= 0.0:
+        return True
+
+    return abs(price - sl) >= stops
+
+
+def modify_position_stops(symbol, ticket, sl, tp):
+
+    request = {
+        "action": mt5.TRADE_ACTION_SLTP,
+        "symbol": symbol,
+        "position": int(ticket),
+        "sl": sl,
+        "tp": tp,
+        "type_filling": Meta.FindFillingMode(symbol),
+        "type_time": mt5.ORDER_TIME_GTC,
+    }
+
+    return mt5.order_send(request)
+
+
+def close_position_volume(symbol, position, volume):
+
+    tick = mt5.symbol_info_tick(symbol)
+
+    if tick is None:
+        return None
+
+    is_buy = int(position.type) == mt5.POSITION_TYPE_BUY
+
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "position": int(position.ticket),
+        "symbol": symbol,
+        "volume": volume,
+        "type": mt5.ORDER_TYPE_SELL if is_buy else mt5.ORDER_TYPE_BUY,
+        "price": float(tick.bid) if is_buy else float(tick.ask),
+        "deviation": SLIPPAGE_POINTS,
+        "magic": int(position.magic),
+        "comment": "SP2L exit",
+        "type_filling": Meta.FindFillingMode(symbol),
+        "type_time": mt5.ORDER_TIME_GTC,
+    }
+
+    return mt5.order_send(request)
+
+
+def manage_open_position(symbol, magic, tf_label, state):
+    """MQ5 ManageOpenPosition: holding time, partial TP, BE, trailing."""
+
+    position = get_position(symbol, magic)
+
+    if position is None:
+        return
+
+    ticket = int(position.ticket)
+
+    if state.get("mgmt_ticket") != ticket:
+        state["mgmt_ticket"] = ticket
+        state["partial_done"] = False
+        state["be_diag_done"] = False
+
+    entry = float(position.price_open)
+    ref_tp = float(position.tp)
+    current_sl = float(position.sl)
+    volume = float(position.volume)
+
+    risk = position_risk(entry, ref_tp)
+
+    if risk <= 0:
+        return
+
+    tick = mt5.symbol_info_tick(symbol)
+
+    if tick is None:
+        return
+
+    is_buy = int(position.type) == mt5.POSITION_TYPE_BUY
+
+    price = float(tick.bid) if is_buy else float(tick.ask)
+
+    r_multiple = (
+        (price - entry) / risk
+        if is_buy
+        else (entry - price) / risk
+    )
+
+    # --------------------------------------------------------
+    # 1. MAXIMUM HOLDING TIME
+    # --------------------------------------------------------
+
+    if MAX_HOLDING_MINUTES > 0:
+
+        holding_seconds = int(tick.time) - int(position.time)
+
+        if holding_seconds >= MAX_HOLDING_MINUTES * 60:
+
+            result = close_position_volume(symbol, position, volume)
+
+            if retcode_of(result) == mt5.TRADE_RETCODE_DONE:
+
+                add_log(
+                    f"[{tf_label}] Position #{ticket} closed: "
+                    f"max holding time ({MAX_HOLDING_MINUTES} min) "
+                    "reached",
+                    send_telegram=True
+                )
+
+            return
+
+    # --------------------------------------------------------
+    # 2. PARTIAL TAKE PROFIT
+    # --------------------------------------------------------
+
+    if (
+        USE_PARTIAL_TP
+        and not state.get("partial_done", False)
+        and r_multiple >= PARTIAL_AT_R
+    ):
+
+        info = mt5.symbol_info(symbol)
+
+        step = float(getattr(info, "volume_step", 0.0) or 0.0)
+        if step <= 0.0:
+            step = 0.01
+
+        vmin = float(getattr(info, "volume_min", 0.0) or 0.0)
+
+        # Round the partial volume onto the step grid, then never let it
+        # consume the whole position.
+        part = round(
+            math.floor(
+                (volume * PARTIAL_PERCENT / 100.0) / step + 0.5
+            ) * step,
+            8
+        )
+
+        rest = round(volume - part, 8)
+
+        if part >= vmin and rest >= vmin:
+
+            result = close_position_volume(symbol, position, part)
+
+            if retcode_of(result) == mt5.TRADE_RETCODE_DONE:
+
+                state["partial_done"] = True
+
+                add_log(
+                    f"[{tf_label}] Position #{ticket} partial close "
+                    f"{part} lots at {r_multiple:.2f}R",
+                    send_telegram=True
+                )
+
+            else:
+
+                log_verbose(
+                    f"[{tf_label}] Position #{ticket} partial close "
+                    f"failed: retcode={retcode_of(result)} "
+                    f"{getattr(result, 'comment', '')}"
+                )
+
+        else:
+
+            # Position too small to split: never retry every loop.
+            state["partial_done"] = True
+
+
+    # --------------------------------------------------------
+    # 3. BREAKEVEN
+    # --------------------------------------------------------
+
+    if USE_BREAKEVEN and r_multiple >= BREAKEVEN_AT_R:
+
+        buffer = BREAKEVEN_BUFFER_POINTS * BROKER_POINT
+
+        new_sl = round(
+            entry + buffer if is_buy else entry - buffer,
+            DIGITS
+        )
+
+        improves = (
+            new_sl > current_sl + BROKER_POINT / 2
+            if is_buy
+            else (
+                current_sl == 0
+                or new_sl < current_sl - BROKER_POINT / 2
+            )
+        )
+
+        if improves and position_stops_are_ok(symbol, price, new_sl):
+
+            result = modify_position_stops(
+                symbol,
+                ticket,
+                new_sl,
+                ref_tp
+            )
+
+            if retcode_of(result) in (
+                mt5.TRADE_RETCODE_DONE,
+                mt5.TRADE_RETCODE_PLACED,
+            ):
+
+                add_log(
+                    f"[{tf_label}] Position #{ticket} SL -> "
+                    f"breakeven {new_sl}",
+                    send_telegram=True
+                )
+
+            elif not state.get("be_diag_done", False):
+
+                state["be_diag_done"] = True
+
+                log_verbose(
+                    f"[{tf_label}] Position #{ticket} BE modify FAILED "
+                    f"retcode={retcode_of(result)} "
+                    f"{getattr(result, 'comment', '')} "
+                    f"(price={price}, sl={current_sl}, newSl={new_sl})"
+                )
+
+    # --------------------------------------------------------
+    # 4. TRAILING STOP
+    # --------------------------------------------------------
+
+    if USE_TRAIL_STOP and r_multiple >= TRAIL_START_R:
+
+        new_sl = round(
+            price - TRAIL_DISTANCE_R * risk
+            if is_buy
+            else price + TRAIL_DISTANCE_R * risk,
+            DIGITS
+        )
+
+        improves = (
+            new_sl > current_sl + BROKER_POINT / 2
+            if is_buy
+            else (
+                current_sl == 0
+                or new_sl < current_sl - BROKER_POINT / 2
+            )
+        )
+
+        if improves and position_stops_are_ok(symbol, price, new_sl):
+
+            result = modify_position_stops(
+                symbol,
+                ticket,
+                new_sl,
+                ref_tp
+            )
+
+            if retcode_of(result) in (
+                mt5.TRADE_RETCODE_DONE,
+                mt5.TRADE_RETCODE_PLACED,
+            ):
+
+                add_log(
+                    f"[{tf_label}] Position #{ticket} SL trailed "
+                    f"to {new_sl}",
+                    send_telegram=True
+                )
+
+
 # ============================================================
-# ADVANCED STRATEGY
+# STRATEGY (MQ5 RunStrategy, step 1 + 2)
 #
 # Returns:
 #
@@ -1542,8 +2004,12 @@ def get_trade_state(symbol, magic):
 #   pending_setup
 #   trade_setup
 #
-# pending_setup is deliberately kept separate from status.
-# A pending setup is NOT an open position.
+# pending_setup is deliberately kept separate from status: a pending
+# setup is NOT an open position.
+#
+# ``trade_setup`` is always None here, exactly like the EA: the only
+# execution path is the pending limit order, so the Advanced bot's
+# market-entry block was removed instead of ported.
 # ============================================================
 
 def Strategy(
@@ -1595,8 +2061,8 @@ def Strategy(
     # ========================================================
     # PENDING SETUP
     #
-    # This is the key difference from Simple Trader.
-    # The setup waits for the first valid entry.
+    # This is the key difference from Simple Trader:
+    # the setup waits for the first valid entry.
     # ========================================================
 
     if pending_setup is not None:
@@ -1625,12 +2091,20 @@ def Strategy(
     # ========================================================
     # LOOK FOR A NEW SETUP
     #
-    # A setup is only created here.
-    # It is NOT an entry.
+    # A setup is only created here. It is NOT an entry.
+    # The direction filter is applied before detection, exactly like
+    # the EA does with InpTradeSide.
     # ========================================================
 
-    buy = detect_buy_setup(data)
-    sell = detect_sell_setup(data)
+    buy = (
+        TRADE_SIDE != "SHORT_ONLY"
+        and bool(detect_buy_setup(data))
+    )
+
+    sell = (
+        TRADE_SIDE != "LONG_ONLY"
+        and bool(detect_sell_setup(data))
+    )
 
     if buy and not sell:
 
@@ -1688,6 +2162,14 @@ print(
 
 print("-" * 75)
 
+if USE_SECOND_ENTRY:
+    add_log(
+        "NOTE: USE_SECOND_ENTRY is enabled, but the original bot never "
+        "placed a second order (it only logged it). "
+        "No second entry is executed.",
+        telegram_enabled=False
+    )
+
 
 # ============================================================
 # SYMBOLS
@@ -1701,8 +2183,17 @@ symbols_list = {
 # ============================================================
 # INITIAL STATE
 #
-# One independent state block per enabled timeframe so M1, M5
-# and M15 never share status / pending setups / magic numbers.
+# One independent state block per enabled timeframe so M1, M5 and M15
+# never share status / pending setups / magic numbers.
+#
+# The management fields mirror the EA's per-instance globals:
+# ``mgmt_ticket`` (g_mgmtTicket), ``partial_done`` (g_partialDone) and
+# ``be_diag_done`` (g_beDiagDone).
+#
+# ``buy`` / ``sell`` are kept because the Advanced body's ``Strategy()``
+# signature takes and returns them. They are never set to True: the only
+# execution path is the pending limit order, so there is no market entry
+# to flag.
 # ============================================================
 
 tf_states = {}
@@ -1714,27 +2205,28 @@ for tf_name, tf_cfg in TIMEFRAMES.items():
         "sell": False,
         "status": False,
         "pending_setup": None,
-        # Per-timeframe cooldown after a position closes. This
-        # pauses only this timeframe, not the whole loop.
+        # Per-timeframe cooldown after a position closes. This pauses
+        # only this timeframe, not the whole loop.
         "cooldown_until": None,
+        "mgmt_ticket": None,
+        "partial_done": False,
+        "be_diag_done": False,
     }
-
-# Used to prevent detecting the same live setup repeatedly.
-last_setup_time = None
-
-# Used to prevent processing the same live candle repeatedly.
-last_processed_candle = None
 
 # Throttle for the "MT5 disconnected" notice so it does not spam.
 last_disconnect_log_time = None
 DISCONNECT_LOG_INTERVAL = 30.0
 
-# Next allowed removal attempt per live order. The ticket is included
-# so a new order is never throttled by an older failed removal.
-pending_remove_retry_after = {}
 
 # ============================================================
 # MAIN LOOP
+#
+# Mirrors the EA's OnTick order per timeframe:
+#
+#   1. an existing position -> resync status, manage it, done
+#   2. status set but no position -> position closed, cooldown
+#   3. still in cooldown -> skip this timeframe
+#   4. run the strategy: trail -> detect -> invalidate/remove or sync
 # ============================================================
 
 while True:
@@ -1782,10 +2274,105 @@ while True:
                 cooldown_until = state.get("cooldown_until")
 
                 # =============================================
+                # CHECK EXISTING POSITION (for this magic)
+                # =============================================
+
+                position_exists, row = get_trade_state(
+                    symbol,
+                    magic
+                )
+
+                # ---------------------------------------------
+                # Position is open: manage it and stop scanning
+                # this timeframe (MQ5: OnTick -> ManageOpenPosition).
+                # ---------------------------------------------
+
+                if position_exists:
+
+                    if not status:
+
+                        add_log(
+                            f"[{tf_label}] Position detected but the "
+                            "status key was False (a limit filled) - "
+                            "state resynchronised",
+                            send_telegram=True
+                        )
+
+                        status = True
+                        pending_setup = None
+
+                        state["mgmt_ticket"] = None
+                        state["partial_done"] = False
+                        state["be_diag_done"] = False
+
+                    manage_open_position(
+                        symbol,
+                        magic,
+                        tf_label,
+                        state
+                    )
+
+                    tf_states[tf_label] = {
+                        "buy": buy,
+                        "sell": sell,
+                        "status": status,
+                        "pending_setup": pending_setup,
+                        "cooldown_until": cooldown_until,
+                        "mgmt_ticket": state.get("mgmt_ticket"),
+                        "partial_done": state.get("partial_done", False),
+                        "be_diag_done": state.get("be_diag_done", False),
+                    }
+
+                    continue
+
+
+                # ---------------------------------------------
+                # Stop loss / take profit / manual close
+                # ---------------------------------------------
+
+                if status:
+
+                    status = False
+                    buy = False
+                    sell = False
+                    pending_setup = None
+
+                    state["mgmt_ticket"] = None
+                    state["partial_done"] = False
+                    state["be_diag_done"] = False
+
+                    # Pause only this timeframe.
+                    cooldown_until = (
+                        datetime.now()
+                        + timedelta(seconds=COOLDOWN_SECONDS)
+                    )
+
+                    add_log(
+                        f"[{tf_label}] Strategy "
+                        f"{Fore.YELLOW}"
+                        f"Position closed / SL or TP hit - "
+                        f"cooldown started"
+                        f"{Style.RESET_ALL}",
+                        send_telegram=True
+                    )
+
+                    tf_states[tf_label] = {
+                        "buy": buy,
+                        "sell": sell,
+                        "status": status,
+                        "pending_setup": pending_setup,
+                        "cooldown_until": cooldown_until,
+                        "mgmt_ticket": None,
+                        "partial_done": False,
+                        "be_diag_done": False,
+                    }
+
+                    continue
+
+                # =============================================
                 # PER-TIMEFRAME COOLDOWN
                 #
-                # After a position closes, this timeframe pauses
-                # for a while. Other timeframes keep scanning.
+                # Other timeframes keep scanning while this one waits.
                 # =============================================
 
                 if cooldown_until is not None:
@@ -1796,68 +2383,7 @@ while True:
                     cooldown_until = None
 
                 # =============================================
-                # CHECK EXISTING POSITION (for this magic)
-                # =============================================
-
-                position_exists, row = get_trade_state(
-                    symbol,
-                    magic
-                )
-
-                # ---------------------------------------------
-                # Stop loss / position closed
-                # ---------------------------------------------
-
-                if not position_exists and status:
-
-                    status = False
-                    buy = False
-                    sell = False
-                    pending_setup = None
-
-                    add_log(
-                        f"[{tf_label}] Strategy "
-                        f"{Fore.YELLOW}"
-                        f"Position closed / SL or TP hit!"
-                        f"{Style.RESET_ALL}",
-                        send_telegram=True
-                    )
-
-                    # Pause only this timeframe for 60 seconds.
-                    cooldown_until = (
-                        datetime.now()
-                        + timedelta(seconds=60)
-                    )
-
-                    tf_states[tf_label] = {
-                        "buy": buy,
-                        "sell": sell,
-                        "status": status,
-                        "pending_setup": pending_setup,
-                        "cooldown_until": cooldown_until,
-                    }
-
-                    continue
-
-                # ---------------------------------------------
-                # Abnormal open position
-                # ---------------------------------------------
-
-                elif position_exists and not status:
-
-                    add_log(
-                        f"[{tf_label}] Abnormally position: "
-                        "you have an open position "
-                        "with Advanced Trader "
-                        "but the status key is False!!",
-                        send_telegram=True
-                    )
-
-                    status = True
-                    pending_setup = None
-
-                # =============================================
-                # STRATEGY
+                # STRATEGY (MQ5 RunStrategy)
                 # =============================================
 
                 (
@@ -1879,22 +2405,25 @@ while True:
                 )
 
                 # Keep the entry passive: place the limit at the
-                # previous candle low/high and move it only when
-                # the new candle improves that level.
+                # previous candle low/high and move it only when the
+                # new candle improves that level.
                 if (
                     pending_setup is not None
                     and not status
                 ):
+
                     pending_data = get_data(
                         symbol,
                         timeframe
                     )
 
                     if pending_data is not None:
+
                         if pending_setup_is_invalid(
                             pending_data,
                             pending_setup
                         ):
+
                             if remove_pending_order(
                                 symbol,
                                 magic,
@@ -1902,7 +2431,9 @@ while True:
                                 tf_label
                             ):
                                 pending_setup = None
+
                         else:
+
                             sync_pending_limit_order(
                                 symbol,
                                 lot,
@@ -1912,125 +2443,6 @@ while True:
                                 pending_setup
                             )
 
-                # =============================================
-                # EXECUTE ENTRY 1
-                # =============================================
-
-                if trade_setup is not None:
-
-                    direction = trade_setup["direction"]
-
-                    entry = trade_setup["entry"]
-                    sl = trade_setup["sl"]
-                    tp = trade_setup["tp"]
-
-                    print()
-                    print("-" * 75)
-                    print(
-                        f"{Fore.GREEN if buy == True else Fore.RED}"
-                        f"[{tf_label}] VALID {direction} ENTRY"
-                        f"{Style.RESET_ALL}"
-                    )
-
-                    print(
-                        "Setup time :",
-                        trade_setup["setup_time"]
-                    )
-
-                    print(
-                        "Entry time :",
-                        trade_setup["entry_time"]
-                    )
-
-                    print(
-                        "Entry      :",
-                        round(entry, DIGITS)
-                    )
-
-                    print(
-                        "SL         :",
-                        round(sl, DIGITS)
-                    )
-
-                    print(
-                        "TP         :",
-                        round(tp, DIGITS)
-                    )
-
-                    print(
-                        "Risk       :",
-                        round(
-                            trade_setup["risk"],
-                            DIGITS
-                        )
-                    )
-
-                    print(
-                        "Second     :",
-                        round(
-                            trade_setup["second_entry"],
-                            DIGITS
-                        )
-                    )
-
-                    print("-" * 75)
-
-                    add_log(
-                        f"{Fore.GREEN if buy == True else Fore.RED}"
-                        f"[{tf_label}] VALID {direction} ENTRY"
-                        f"{Style.RESET_ALL} | "
-                        f"Setup: {trade_setup['setup_time']} | "
-                        f"Entry: {round(entry, DIGITS)} | "
-                        f"SL: {round(sl, DIGITS)} | "
-                        f"TP: {round(tp, DIGITS)} | "
-                        f"Risk: {round(trade_setup['risk'], DIGITS)} | "
-                        f"Second: {round(trade_setup['second_entry'], DIGITS)}",
-                        send_telegram=True
-                    )
-
-                    Meta.SetExecutionBasedTP(
-                        enabled=True,
-                        tp_r=TP_R,
-                        signal_entry=entry
-                    )
-
-                    Meta.run(
-                        symbol,
-                        buy,
-                        sell,
-                        lot,
-                        tp,
-                        sl,
-                        magic,
-                        stopLossPure=True
-                    )
-
-                    # =========================================
-                    # SECOND ENTRY
-                    #
-                    # This is intentionally optional.
-                    # Default = False.
-                    #
-                    # If enabled, the actual second-entry order
-                    # must be handled by the same Meta execution
-                    # layer used by the existing trader
-                    # environment.
-                    # =========================================
-
-                    if USE_SECOND_ENTRY:
-
-                        add_log(
-                            f"{Fore.MAGENTA}"
-                            f"[{tf_label}] Second entry is ENABLED. "
-                            f"Price: "
-                            f"{round(trade_setup['second_entry'], DIGITS)} | "
-                            f"Volume: "
-                            f"{lot * SECOND_ENTRY_VOLUME_MULTIPLIER}"
-                            f"{Style.RESET_ALL}",
-                            send_telegram=True
-                        )
-
-                    trade_setup = None
 
                 # =============================================
                 # PERSIST THIS TIMEFRAME'S STATE
@@ -2042,12 +2454,15 @@ while True:
                     "status": status,
                     "pending_setup": pending_setup,
                     "cooldown_until": cooldown_until,
+                    "mgmt_ticket": state.get("mgmt_ticket"),
+                    "partial_done": state.get("partial_done", False),
+                    "be_diag_done": state.get("be_diag_done", False),
                 }
 
     else:
 
-        # MT5 is not connected. Log a throttled notice so the
-        # console does not get spammed every loop iteration.
+        # MT5 is not connected. Log a throttled notice so the console
+        # does not get spammed every loop iteration.
         now = datetime.now()
 
         if (
