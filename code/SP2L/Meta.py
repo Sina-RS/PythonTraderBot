@@ -19,6 +19,22 @@ class Meta:
     # Send Messages to Telegram
     teleBotMessage = False
 
+    # زبان پیام های تلگرام
+    # Telegram message language:
+    #   True  -> Persian / Dari (دری)
+    #   False -> English
+    teleBotPersian = True
+
+    def TelegramMessage(fa, en):
+        """Return the Persian text when teleBotPersian is True, else English."""
+        return fa if Meta.teleBotPersian else en
+
+    def ReportException(en, fa):
+        """Print the English message and mirror the switched text to Telegram."""
+        print(en)
+        if Meta.teleBotMessage:
+            TeleBot().SendMessage(Meta.TelegramMessage(fa, en))
+
     # Optional execution-based TP configuration. Existing method signatures
     # and the default Meta behavior remain unchanged.
     executionBasedTP = False
@@ -131,10 +147,10 @@ class Meta:
             return result
 
         except BaseException as e:
-            exceptMessage = f"An exception has occurred in Meta.UpdateTPAfterFill: {str(e)}"
-            print(exceptMessage)
-            if Meta.teleBotMessage:
-                TeleBot().SendMessage(exceptMessage)
+            Meta.ReportException(
+                f"An exception has occurred in Meta.UpdateTPAfterFill: {str(e)}",
+                f"خطا در Meta.UpdateTPAfterFill: {str(e)}"
+            )
             return None
 
     def __init__(self) -> None:
@@ -144,10 +160,10 @@ class Meta:
             if not mt5.initialize():
                 print("MetaTrader initialize() failed, error code =",mt5.last_error())
         except BaseException as e:
-            exceptMessage = f"An exception has occurred in Meta.__init__: {str(e)}"
-            print(exceptMessage)
-            if Meta.teleBotMessage:
-                TeleBot().SendMessage(exceptMessage)
+            Meta.ReportException(
+                f"An exception has occurred in Meta.__init__: {str(e)}",
+                f"خطا در Meta.__init__: {str(e)}"
+            )
     
     def ConvertStringToDatetime(strDate):
         year,month,day=strDate.split("/")
@@ -174,10 +190,10 @@ class Meta:
         try:
             rates = mt5.copy_rates_from(symbol, timeFrame, fromDate, number_of_data)
         except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.GetRates: {str(e)}"
-                print(exceptMessage)
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.GetRates: {str(e)}",
+                    f"خطا در Meta.GetRates: {str(e)}"
+                )
         else:
             df = pd.DataFrame(rates)
             df["time"] = pd.to_datetime(df["time"], unit="s")    
@@ -193,10 +209,10 @@ class Meta:
         try:
             ticks = mt5.copy_ticks_from(symbol, fromDate, number_of_data,  mt5.COPY_TICKS_ALL)
         except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.GetTicks: {str(e)}"
-                print(exceptMessage)
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.GetTicks: {str(e)}",
+                    f"خطا در Meta.GetTicks: {str(e)}"
+                )
         else:
             df = pd.DataFrame(ticks)
             df["time"] = pd.to_datetime(df["time"], unit="s")    
@@ -219,10 +235,10 @@ class Meta:
                 if result.comment == "Done":
                     break
             except BaseException as e:
-                exceptMessage = f"An Exception has occurred in Meta.FindFillingMode: {str(e)}"
-                print(exceptMessage)
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
+                Meta.ReportException(
+                    f"An Exception has occurred in Meta.FindFillingMode: {str(e)}",
+                    f"خطا در Meta.FindFillingMode: {str(e)}"
+                )
                 break
 
         return i
@@ -248,10 +264,10 @@ class Meta:
                     sl = np.round(price + price_varDown, decimalCount)
                 print(f"price: {price} sl:{sl} tp:{tp}")
             except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.RiskReward: {str(e)}"
-                print(exceptMessage)
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.RiskReward: {str(e)}",
+                    f"خطا در Meta.RiskReward: {str(e)}"
+                )
                 return 0, 0
             else:
                 return tp, sl
@@ -314,10 +330,10 @@ class Meta:
             return result
 
         except BaseException as e:
-            exceptMessage = f"An exception has occurred in Meta.PlacePendingOrder: {str(e)}"
-            print(exceptMessage)
-            if Meta.teleBotMessage:
-                TeleBot().SendMessage(exceptMessage)
+            Meta.ReportException(
+                f"An exception has occurred in Meta.PlacePendingOrder: {str(e)}",
+                f"خطا در Meta.PlacePendingOrder: {str(e)}"
+            )
             return None
 
     def SendOrder(symbol, lot, buy, sell, ticket=None,pct_tp=0.02, pct_sl=0.01, comment="No specific comment", magic=0, stopLossWithAtr=False, stopLossPure=False):    
@@ -424,11 +440,11 @@ class Meta:
                         fallback_tp=tp
                     )
             except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.SendOrder open a buy trade: {str(e)}"
-                print(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.SendOrder open a buy trade: {str(e)}",
+                    f"خطا در Meta.SendOrder (باز کردن خرید): {str(e)}"
+                )
                 result = None
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
 
             return result
 
@@ -507,11 +523,11 @@ class Meta:
                         fallback_tp=tp
                     )
             except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.SendOrder open a sell trade: {str(e)}"
-                print(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.SendOrder open a sell trade: {str(e)}",
+                    f"خطا در Meta.SendOrder (باز کردن فروش): {str(e)}"
+                )
                 result = None
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
             return result
         
         
@@ -533,11 +549,11 @@ class Meta:
             
                 result = mt5.order_send(request)
             except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.SendOrder close a buy trade: {str(e)}"
-                print(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.SendOrder close a buy trade: {str(e)}",
+                    f"خطا در Meta.SendOrder (بستن خرید): {str(e)}"
+                )
                 result = None
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
 
             return result
 
@@ -559,11 +575,11 @@ class Meta:
             
                 result = mt5.order_send(request)
             except BaseException as e:
-                exceptMessage = f"An exception has occurred in Meta.SendOrder close a sell trade: {str(e)}"
-                print(exceptMessage)
+                Meta.ReportException(
+                    f"An exception has occurred in Meta.SendOrder close a sell trade: {str(e)}",
+                    f"خطا در Meta.SendOrder (بستن فروش): {str(e)}"
+                )
                 result = None
-                if Meta.teleBotMessage:
-                    TeleBot().SendMessage(exceptMessage)
 
             return result
         
@@ -585,10 +601,10 @@ class Meta:
                 summary["profit %"] = summary.profit / (summary.price * summary.trade_size * summary.volume)
                 summary = summary.reset_index(drop=True)
         except BaseException as e:
-            exceptMessage = f"Error in Meta.resume: {str(e)}"
-            print(exceptMessage)
-            if Meta.teleBotMessage:
-                TeleBot.SendMessage(exceptMessage)
+            Meta.ReportException(
+                f"Error in Meta.resume: {str(e)}",
+                f"خطا در Meta.resume: {str(e)}"
+            )
         
         return summary    
     
@@ -637,10 +653,10 @@ class Meta:
                                 information = mt5.order_send(request)
                                 print(f"Buy StopLoss Trailing\tsymbol:{symbol}\tmagic:{magic}\torder:{row['ticket']}\tprice:{information.request.price}\tSL:{information.request.sl}")
                         except BaseException as e:
-                            exceptMessage = f"An exception has occurred in Meta.Trailing_stop_loss buy order :{str(e)}"
-                            print(exceptMessage)
-                            if Meta.teleBotMessage:
-                                TeleBot().SendMessage(exceptMessage)
+                            Meta.ReportException(
+                                f"An exception has occurred in Meta.Trailing_stop_loss buy order :{str(e)}",
+                                f"خطا در Meta.Trailing_stop_loss (سفارش خرید): {str(e)}"
+                            )
 
                     """ تغییر پویای استاپ لاس برای سفارش های فروش """
                     if row["position"] == 1:
@@ -673,10 +689,10 @@ class Meta:
                                 information = mt5.order_send(request)
                                 print(f"Sell StopLoss Trailing\t{symbol}\tmagic:{magic}\torder:{row['ticket']}\tprice:{information.request.price}\tSL:{information.request.sl}")
                         except BaseException as e:
-                            exceptMessage = f"An exception has occurred in Meta.Trailing_stop_loss sell order :{str(e)}"
-                            print(exceptMessage)
-                            if Meta.teleBotMessage:
-                                TeleBot.SendMessage(exceptMessage)
+                            Meta.ReportException(
+                                f"An exception has occurred in Meta.Trailing_stop_loss sell order :{str(e)}",
+                                f"خطا در Meta.Trailing_stop_loss (سفارش فروش): {str(e)}"
+                            )
                         
     def VerifyTSL(magicList):
         #print("MAX", Meta.maxPrice)
@@ -773,10 +789,10 @@ class Meta:
                         else:
                             passBecauseStopLossHit = True
                     except BaseException as e:
-                        exceptMessage = f"An exception has occurred in Coinex.WaitUntilMarketOpen: {str(e)}"
-                        print(exceptMessage)
-                        if Meta.teleBotMessage:
-                            TeleBot().SendMessage(exceptMessage)
+                        Meta.ReportException(
+                            f"An exception has occurred in Coinex.WaitUntilMarketOpen: {str(e)}",
+                            f"خطا در Coinex.WaitUntilMarketOpen: {str(e)}"
+                        )
                 else:
                     passBecauseStopLossHit = True
             # برای باز کردن پوزیشن جدید در شرایط بسته بودن بازار
@@ -804,10 +820,10 @@ class Meta:
                             ticket = row.values[0][0]
                             magicFromPositon= row.values[0][4]
                     except BaseException as e:
-                        exceptMessage = f"An exception has occurred in Meta.run: {str(e)}"
-                        print(exceptMessage)
-                        if Meta.teleBotMessage:
-                            TeleBot().SendMessage(exceptMessage)
+                        Meta.ReportException(
+                            f"An exception has occurred in Meta.run: {str(e)}",
+                            f"خطا در Meta.run: {str(e)}"
+                        )
             else:
                 position = None
                 ticket = None
@@ -847,7 +863,10 @@ class Meta:
                     pct = np.round(100*(after-before)/before, 6)
                     print(f"your profit:{pct}")
                     if Meta.teleBotMessage:
-                        TeleBot().SendMessage(f"CLOSE BUY {symbol}: {result.comment}")
+                        TeleBot().SendMessage(Meta.TelegramMessage(
+                            f"بستن خرید {symbol}: {result.comment}",
+                            f"CLOSE BUY {symbol}: {result.comment}"
+                        ))
                     if result.comment != "Request executed":
                         print("WARNINGS", result.comment)
                     print("-"*75)   
@@ -881,7 +900,10 @@ class Meta:
                     pct = np.round(100*(after-before)/before, 6)
                     print(f"your profit:{pct}")
                     if Meta.teleBotMessage:
-                        TeleBot().SendMessage(f"CLOSE SELL {symbol}: {result.comment}")
+                        TeleBot().SendMessage(Meta.TelegramMessage(
+                            f"بستن فروش {symbol}: {result.comment}",
+                            f"CLOSE SELL {symbol}: {result.comment}"
+                        ))
                     if result.comment != "Request executed":
                         print("WARNINGS", result.comment)                   
                     print("-"*75)
@@ -906,7 +928,10 @@ class Meta:
                     print(f"OPEN BUY POSITION: {result.comment}")
                     print(f"price: {result.request.price} \t SL: {result.request.sl} \t TP: {result.request.tp}")
                     if Meta.teleBotMessage:
-                        TeleBot().SendMessage(f"OPEN Buy {symbol}: {result.comment} price:{result.request.price} sl:{result.request.sl} tp:{result.request.tp}")
+                        TeleBot().SendMessage(Meta.TelegramMessage(
+                            f"باز کردن خرید {symbol}: {result.comment} قیمت:{result.request.price} حد ضرر:{result.request.sl} حد سود:{result.request.tp}",
+                            f"OPEN Buy {symbol}: {result.comment} price:{result.request.price} sl:{result.request.sl} tp:{result.request.tp}"
+                        ))
                     if result.comment != "Request executed":
                         print("WARNINGS", result.comment)
                     print("-"*75)
@@ -931,7 +956,10 @@ class Meta:
                     print(f"OPEN SELL POSITION: {result.comment}")
                     print(f"price: {result.request.price} \t SL: {result.request.sl} \t TP: {result.request.tp}")
                     if Meta.teleBotMessage:
-                        TeleBot().SendMessage(f"OPEN SELL {symbol}: {result.comment} price:{result.request.price} sl:{result.request.sl} tp:{result.request.tp}")
+                        TeleBot().SendMessage(Meta.TelegramMessage(
+                            f"باز کردن فروش {symbol}: {result.comment} قیمت:{result.request.price} حد ضرر:{result.request.sl} حد سود:{result.request.tp}",
+                            f"OPEN SELL {symbol}: {result.comment} price:{result.request.price} sl:{result.request.sl} tp:{result.request.tp}"
+                        ))
                     if result.comment != "Request executed":
                         print("WARNINGS",  result.comment)
                     print("-"*75)

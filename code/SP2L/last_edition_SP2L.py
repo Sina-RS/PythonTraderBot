@@ -39,6 +39,10 @@ from colorama import Style
 import math
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from io import BytesIO
 
 colorama_init()
 
@@ -52,10 +56,17 @@ logs = []
 # Only explicitly marked outcome logs are mirrored to Telegram.
 TELEGRAMLOG_FOR_STATAS = True
 
+# Telegram log language:
+#   True  -> Persian / Dari (دری)
+#   False -> English
+# The console output is always English; this only affects Telegram.
+TELEGRAM_PERSIAN = True
+
 # Trend-formation logs can be controlled independently from trade logs.
 LOG_TREND_FORMATION = True
 TELEGRAM_TREND_FORMATION = True
 MIN_TREND_CANDLES = 3
+TREND_CHART_ENABLED = True
 
 # Hard alerts (entries, errors, closes) are always sent to Telegram.
 # Minimum seconds between two Telegram log messages.
@@ -68,8 +79,36 @@ VERBOSE_LOG = True
 telegram_bot = TeleBot()
 last_telegram_log_time = None
 
+# ------------------------------------------------------------
+# Persian / Dari (دری) translations for the Telegram messages.
+#
+# The console keeps the original English text; only the messages
+# mirrored to Telegram are translated, so the terminal output stays
+# easy to grep while the chat reads naturally in Persian.
+# ------------------------------------------------------------
 
-def add_log(message, send_telegram=False, telegram_enabled=None):
+DIRECTION_FA = {
+    "BUY": "خرید",
+    "SELL": "فروش",
+}
+
+TREND_FA = {
+    "UPTREND": "روند صعودی",
+    "DOWNTREND": "روند نزولی",
+}
+
+STRUCTURE_FA = {
+    "Higher Lows": "کف‌های بالاتر",
+    "Lower Highs": "سقف‌های پایین‌تر",
+}
+
+
+def add_log(
+    message,
+    send_telegram=False,
+    telegram_enabled=None,
+    telegram_message=None
+):
     global last_telegram_log_time
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -94,7 +133,16 @@ def add_log(message, send_telegram=False, telegram_enabled=None):
             or (now - last_telegram_log_time).total_seconds()
             >= TELEGRAM_LOG_INTERVAL
         ):
-            telegram_bot.SendMessage(f"🤖 SP2L Bot:\n{log_entry}")
+            # Use the Persian text for Telegram when provided and the
+            # Persian language is enabled, otherwise fall back to the
+            # English console message.
+            if telegram_message is not None and TELEGRAM_PERSIAN:
+                telegram_text = telegram_message
+            else:
+                telegram_text = message
+            telegram_bot.SendMessage(
+                f"🤖 SP2L Bot:\n[{timestamp}] {telegram_text}"
+            )
             last_telegram_log_time = now
 
 
@@ -123,6 +171,9 @@ if not mt5.initialize():
 
 # Mirror Meta-layer execution messages (opens/closes/errors) to Telegram.
 Meta.teleBotMessage = True
+
+# Keep the Meta-layer Telegram language in sync with TELEGRAM_PERSIAN.
+Meta.teleBotPersian = TELEGRAM_PERSIAN
 
 # ============================================================
 # MT5 CONNECTION CHECK
@@ -394,6 +445,10 @@ print("Max spread points   :", MAX_SPREAD_POINTS)
 print("Trade side          :", TRADE_SIDE)
 print("Trend formation log :", LOG_TREND_FORMATION)
 print("Trend log Telegram  :", TELEGRAM_TREND_FORMATION)
+print(
+    "Telegram language   :",
+    "Persian / Dari" if TELEGRAM_PERSIAN else "English"
+)
 print("Minimum trend bars  :", MIN_TREND_CANDLES)
 print("Second entry        :", USE_SECOND_ENTRY, "(log only, never sent)")
 print("Second entry volume :", SECOND_ENTRY_VOLUME_MULTIPLIER)
@@ -886,6 +941,46 @@ def sell_trend_is_valid(
 last_trend_log_keys = {}
 
 
+def make_trend_chart(candles, tf_label, direction):
+    figure, axis = plt.subplots(figsize=(4.2, 3.0), dpi=130)
+    figure.patch.set_facecolor("white")
+    axis.set_facecolor("white")
+
+    for position, (_, candle) in enumerate(candles.iterrows()):
+        open_price = float(candle["open"])
+        close_price = float(candle["close"])
+        high_price = float(candle["high"])
+        low_price = float(candle["low"])
+        bullish = close_price >= open_price
+        color = "#159957" if bullish else "#d64545"
+        axis.vlines(position, low_price, high_price, color="#263746", linewidth=1.2)
+        body_bottom = min(open_price, close_price)
+        body_height = max(abs(close_price - open_price), (high_price - low_price) * 0.015)
+        axis.add_patch(
+            plt.Rectangle(
+                (position - 0.28, body_bottom),
+                0.56,
+                body_height,
+                facecolor=color,
+                edgecolor=color,
+                linewidth=0.8
+            )
+        )
+
+    axis.set_title(f"{tf_label} - {direction}", fontsize=10, fontweight="bold")
+    axis.set_xticks(range(len(candles)))
+    axis.set_xticklabels([str(index)[11:16] for index in candles.index], fontsize=7)
+    axis.grid(axis="y", alpha=0.2)
+    axis.margins(x=0.15, y=0.12)
+    figure.tight_layout(pad=0.8)
+
+    image = BytesIO()
+    figure.savefig(image, format="png", bbox_inches="tight")
+    plt.close(figure)
+    image.seek(0)
+    return image
+
+
 def log_trend_formation(data, tf_label):
     """Log a newly formed three-candle trend without repeating each loop."""
 
@@ -938,8 +1033,23 @@ def log_trend_formation(data, tf_label):
         f"[{tf_label}] {direction} formed: "
         f"{required_candles} aligned candles with {structure}. "
         "Entry trigger: first pullback after the spike for Leg 2.",
-        telegram_enabled=TELEGRAM_TREND_FORMATION
+        telegram_enabled=TELEGRAM_TREND_FORMATION,
+        telegram_message=(
+            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد: "
+            f"{required_candles} کندل هم‌جهت با {STRUCTURE_FA.get(structure, structure)}. "
+            "تریگر ورود: اولین پول‌بک بعد از اسپایک برای لگ دوم."
+        )
     )
+
+    if TELEGRAM_TREND_FORMATION and TREND_CHART_ENABLED:
+        chart = make_trend_chart(candles, tf_label, direction)
+        telegram_bot.SendPhoto(
+            chart,
+            caption=(
+                f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد - "
+                f"{STRUCTURE_FA.get(structure, structure)}"
+            )
+        )
 
 
 # ============================================================
@@ -1398,7 +1508,11 @@ def remove_pending_order(symbol, magic, direction, tf_label):
     pending_remove_retry_after.pop(retry_key, None)
     add_log(
         f"[{tf_label}] Removed invalid {direction} LIMIT order #{ticket}",
-        send_telegram=True
+        send_telegram=True,
+        telegram_message=(
+            f"[{tf_label}] سفارش لیمیت {DIRECTION_FA.get(direction, direction)} "
+            f"نامعتبر حذف شد #{ticket}"
+        )
     )
     return True
 
@@ -1604,7 +1718,14 @@ def sync_pending_limit_order(
                 f"[{tf_label}] {direction} LIMIT placed at {price} "
                 f"(SL {sl}, TP {tp}, "
                 f"#{pending['order_ticket']})",
-                send_telegram=True
+                send_telegram=True,
+                telegram_message=(
+                    f"[{tf_label}] سفارش لیمیت "
+                    f"{DIRECTION_FA.get(direction, direction)} ثبت شد "
+                    f"در قیمت {price} "
+                    f"(حد ضرر {sl}، حد سود {tp}، "
+                    f"#{pending['order_ticket']})"
+                )
             )
         else:
             add_log(
@@ -1649,7 +1770,12 @@ def sync_pending_limit_order(
         add_log(
             f"[{tf_label}] {direction} LIMIT moved "
             f"from {old_price} to {price} (#{int(order.ticket)})",
-            send_telegram=True
+            send_telegram=True,
+            telegram_message=(
+                f"[{tf_label}] سفارش لیمیت "
+                f"{DIRECTION_FA.get(direction, direction)} جابه‌جا شد "
+                f"از {old_price} به {price} (#{int(order.ticket)})"
+            )
         )
     else:
         log_verbose(
@@ -1833,7 +1959,12 @@ def manage_open_position(symbol, magic, tf_label, state):
                     f"[{tf_label}] Position #{ticket} closed: "
                     f"max holding time ({MAX_HOLDING_MINUTES} min) "
                     "reached",
-                    send_telegram=True
+                    send_telegram=True,
+                    telegram_message=(
+                        f"[{tf_label}] پوزیشن #{ticket} بسته شد: "
+                        f"به حداکثر زمان نگه‌داری "
+                        f"({MAX_HOLDING_MINUTES} دقیقه) رسید"
+                    )
                 )
 
             return
@@ -1878,7 +2009,11 @@ def manage_open_position(symbol, magic, tf_label, state):
                 add_log(
                     f"[{tf_label}] Position #{ticket} partial close "
                     f"{part} lots at {r_multiple:.2f}R",
-                    send_telegram=True
+                    send_telegram=True,
+                    telegram_message=(
+                        f"[{tf_label}] بستن جزئی پوزیشن #{ticket}: "
+                        f"{part} لات در {r_multiple:.2f}R"
+                    )
                 )
 
             else:
@@ -1934,7 +2069,11 @@ def manage_open_position(symbol, magic, tf_label, state):
                 add_log(
                     f"[{tf_label}] Position #{ticket} SL -> "
                     f"breakeven {new_sl}",
-                    send_telegram=True
+                    send_telegram=True,
+                    telegram_message=(
+                        f"[{tf_label}] پوزیشن #{ticket} حد ضرر به "
+                        f"نقطه سربه‌سر منتقل شد: {new_sl}"
+                    )
                 )
 
             elif not state.get("be_diag_done", False):
@@ -1987,7 +2126,11 @@ def manage_open_position(symbol, magic, tf_label, state):
                 add_log(
                     f"[{tf_label}] Position #{ticket} SL trailed "
                     f"to {new_sl}",
-                    send_telegram=True
+                    send_telegram=True,
+                    telegram_message=(
+                        f"[{tf_label}] حد ضرر پوزیشن #{ticket} "
+                        f"دنبال‌کننده شد به {new_sl}"
+                    )
                 )
 
 
@@ -2295,7 +2438,12 @@ while True:
                             f"[{tf_label}] Position detected but the "
                             "status key was False (a limit filled) - "
                             "state resynchronised",
-                            send_telegram=True
+                            send_telegram=True,
+                            telegram_message=(
+                                f"[{tf_label}] پوزیشن شناسایی شد ولی "
+                                "وضعیت ثبت‌شده False بود (لیمیت پر شد) - "
+                                "وضعیت همگام‌سازی شد"
+                            )
                         )
 
                         status = True
@@ -2353,7 +2501,11 @@ while True:
                         f"Position closed / SL or TP hit - "
                         f"cooldown started"
                         f"{Style.RESET_ALL}",
-                        send_telegram=True
+                        send_telegram=True,
+                        telegram_message=(
+                            f"[{tf_label}] پوزیشن بسته شد / حد ضرر یا "
+                            "حد سود فعال شد - دوره انتظار شروع شد"
+                        )
                     )
 
                     tf_states[tf_label] = {
@@ -2475,7 +2627,11 @@ while True:
                 f"{Fore.YELLOW}"
                 f"MT5 is not connected. Waiting for the "
                 f"terminal/broker connection..."
-                f"{Style.RESET_ALL}"
+                f"{Style.RESET_ALL}",
+                telegram_message=(
+                    "اتصال متاتریدر ۵ قطع است. در انتظار اتصال "
+                    "ترمینال/بروکر..."
+                )
             )
 
             last_disconnect_log_time = now

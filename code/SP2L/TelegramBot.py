@@ -52,3 +52,23 @@ class TeleBot():
                 print(check['description'])
         except BaseException as e:
             print(f"An exception has occurred in TelegramBot SendMessage: {str(e)}")
+
+    def SendPhoto(self, photo, caption=''):
+        cmd = 'sendPhoto'
+        try:
+            files = {'photo': ('trend.png', photo, 'image/png')}
+            data = {'chat_id': self.chatId, 'caption': str(caption)}
+            proxies = self.proxies if useProxy else None
+            resp = requests.post(
+                self.url + cmd,
+                data=data,
+                files=files,
+                proxies=proxies
+            )
+            check = resp.json()
+            if check['ok']:
+                print('Photo Send Successfully')
+            else:
+                print(check['description'])
+        except BaseException as e:
+            print(f"An exception has occurred in TelegramBot SendPhoto: {str(e)}")
