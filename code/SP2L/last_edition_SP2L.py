@@ -665,20 +665,31 @@ def get_data(symbol, timeframe):
 
     try:
 
-        data = Meta.GetRates(
+        # copy_rates_from_pos ignores the local PC clock and always
+        # returns the most recent N candles from the broker's own feed
+        # (candle timestamps are broker-server / Cyprus time). The old
+        # copy_rates_from path computed fromDate from the system clock,
+        # which returned shifted/stale data whenever the PC clock was
+        # wrong.
+        rates = mt5.copy_rates_from_pos(
             symbol,
-            NUMBER_OF_DATA,
-            timeFrame=timeframe
-        ).copy()
+            timeframe,
+            0,
+            NUMBER_OF_DATA
+        )
+
+        data = pd.DataFrame(rates).copy()
 
         if data.empty:
             print("No data received")
             return None
 
-        data.columns = [
-            str(c).lower()
-            for c in data.columns
-        ]
+        data["time"] = pd.to_datetime(
+            data["time"],
+            unit="s"
+        )
+
+        data.set_index("time", inplace=True)
 
         required = [
             "open",
@@ -708,37 +719,6 @@ def get_data(symbol, timeframe):
             subset=required,
             inplace=True
         )
-
-        if not isinstance(
-            data.index,
-            pd.DatetimeIndex
-        ):
-
-            possible_time_columns = [
-                "time",
-                "datetime",
-                "date",
-                "local time"
-            ]
-
-            found_time = None
-
-            for c in possible_time_columns:
-
-                if c in data.columns:
-                    found_time = c
-                    break
-
-            if found_time is not None:
-
-                data[found_time] = pd.to_datetime(
-                    data[found_time]
-                )
-
-                data.set_index(
-                    found_time,
-                    inplace=True
-                )
 
         data.sort_index(
             inplace=True
@@ -994,6 +974,50 @@ def trend_candle_summary(candles):
     return " | ".join(values)
 
 
+def data_is_fresh(data):
+    """Reject stale data before any analysis or Telegram log.
+
+    Meta.GetRates (mt5.copy_rates_from) can return candles that are
+    minutes behind the broker when the terminal feed lags. Analysing
+    old candles produced "trend formed" logs for setups that were long
+    over on the live chart. The broker's last tick time is used as the
+    server clock and the newest bar in ``data`` must be the currently
+    forming bar (or at most one bar behind).
+    """
+
+    try:
+
+        if len(data) < 3:
+            return False
+
+        tick = mt5.symbol_info_tick(SYMBOL)
+
+        if tick is None or not tick.time:
+            return False
+
+        period = data.index[-1] - data.index[-2]
+
+        if period <= pd.Timedelta(0):
+            return False
+
+        now_server = pd.Timestamp(int(tick.time), unit="s")
+        epoch = pd.Timestamp("1970-01-01")
+        forming_open = epoch + ((now_server - epoch) // period) * period
+
+        # The newest candle in the feed must be the forming bar itself
+        # or, at most, the bar right before it. Anything older is stale.
+        return data.index[-1] >= forming_open - period
+
+    except BaseException as e:
+
+        print(
+            "An exception has occurred in "
+            f"data_is_fresh: {str(e)}"
+        )
+
+        return False
+
+
 def log_trend_formation(data, tf_label):
     """Log a newly formed three-candle trend without repeating each loop."""
 
@@ -1002,6 +1026,10 @@ def log_trend_formation(data, tf_label):
 
     required_candles = max(MIN_TREND_CANDLES, 3)
     if len(data) < required_candles + 1:
+        return
+
+    # Never announce a trend built from old candles.
+    if not data_is_fresh(data):
         return
 
     # Ignore the currently forming candle and use the latest closed candles.
@@ -2197,6 +2225,18 @@ def Strategy(
             sl,
             tp,
             pending_setup,
+            trade_setup
+        )
+
+    # Stale feed: do not analyse and do not create/keep setups.
+    if not data_is_fresh(data):
+        return (
+            preBuy,
+            preSell,
+            status,
+            sl,
+            tp,
+            None,
             trade_setup
         )
 
