@@ -222,7 +222,11 @@ def mt5_is_connected():
 # ============================================================
 
 SYMBOL = "XAUUSD"
-NUMBER_OF_DATA = 500
+
+# Enough history for the indicators to converge (EMA 60 / ADX 14 need
+# roughly 3x their period of warm-up) plus the setup window. 500 was
+# unnecessary; 200 keeps the same indicator values with a lighter feed.
+NUMBER_OF_DATA = 200
 
 # ------------------------------------------------------------
 # Base magic number. Each timeframe uses MAGIC + its own offset
@@ -974,6 +978,54 @@ def trend_candle_summary(candles):
     return " | ".join(values)
 
 
+# Market-open detection: the PC clock is unreliable, so "is the
+# market open" is decided by watching whether the broker's tick time
+# actually advances between loop iterations. If the tick time has not
+# moved for more than MARKET_CLOSED_AFTER_SECONDS, the market is
+# closed (or the feed is frozen) and no analysis/log is produced.
+last_tick_time_seen = None
+last_tick_progress_time = None
+MARKET_CLOSED_AFTER_SECONDS = 120.0
+
+
+def market_is_open():
+    """True only while the broker's tick time keeps advancing."""
+
+    global last_tick_time_seen
+    global last_tick_progress_time
+
+    try:
+
+        tick = mt5.symbol_info_tick(SYMBOL)
+
+        if tick is None or not tick.time:
+            return False
+
+        tick_time = int(tick.time)
+        now = datetime.now()
+
+        if last_tick_time_seen is None or tick_time > last_tick_time_seen:
+            last_tick_time_seen = tick_time
+            last_tick_progress_time = now
+            return True
+
+        # Tick time frozen: closed market / frozen feed.
+        elapsed = (
+            now - last_tick_progress_time
+        ).total_seconds()
+
+        return elapsed < MARKET_CLOSED_AFTER_SECONDS
+
+    except BaseException as e:
+
+        print(
+            "An exception has occurred in "
+            f"market_is_open: {str(e)}"
+        )
+
+        return False
+
+
 def data_is_fresh(data):
     """Reject stale data before any analysis or Telegram log.
 
@@ -1028,8 +1080,9 @@ def log_trend_formation(data, tf_label):
     if len(data) < required_candles + 1:
         return
 
-    # Never announce a trend built from old candles.
-    if not data_is_fresh(data):
+    # Never announce a trend built from old candles or while the
+    # market is closed.
+    if not data_is_fresh(data) or not market_is_open():
         return
 
     # Ignore the currently forming candle and use the latest closed candles.
@@ -2228,8 +2281,28 @@ def Strategy(
             trade_setup
         )
 
-    # Stale feed: do not analyse and do not create/keep setups.
-    if not data_is_fresh(data):
+    # Stale feed or closed market: do not analyse and do not
+    # create/keep setups.
+    if not data_is_fresh(data) or not market_is_open():
+
+        global last_market_closed_log_time
+
+        now = datetime.now()
+
+        if (
+            last_market_closed_log_time is None
+            or (now - last_market_closed_log_time).total_seconds()
+            >= MARKET_CLOSED_LOG_INTERVAL
+        ):
+
+            print(
+                f"[{now:%Y-%m-%d %H:%M:%S}] "
+                "Market closed / feed frozen - analysis paused, "
+                "waiting for ticks..."
+            )
+
+            last_market_closed_log_time = now
+
         return (
             preBuy,
             preSell,
@@ -2417,6 +2490,10 @@ for tf_name, tf_cfg in TIMEFRAMES.items():
 # Throttle for the "MT5 disconnected" notice so it does not spam.
 last_disconnect_log_time = None
 DISCONNECT_LOG_INTERVAL = 30.0
+
+# Throttle for the "market closed" console notice.
+last_market_closed_log_time = None
+MARKET_CLOSED_LOG_INTERVAL = 300.0
 
 
 # ============================================================
