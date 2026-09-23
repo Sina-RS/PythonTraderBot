@@ -103,6 +103,120 @@ STRUCTURE_FA = {
 }
 
 
+def _is_persian_char(char):
+    """True for Persian/Arabic letters, the Persian half-space (ZWNJ,
+    used inside words like "جابه‌جا") and Arabic presentation forms."""
+
+    return (
+        "\u0600" <= char <= "\u06FF"
+        or char == "\u200C"
+        or "\uFB50" <= char <= "\uFDFF"
+        or "\uFE70" <= char <= "\uFEFF"
+    )
+
+
+def _split_direction_lines(text):
+    """Split text into bullet lines that never mix text directions.
+
+    Telegram scrambles the visual order of a line that contains both
+    Persian words (RTL) and English words (LTR). Digits are safe inside
+    an RTL line (they are direction-neutral), so only a real
+    Persian-word / English-word boundary starts a new line.
+    """
+
+    body_lines = []
+
+    for raw_line in str(text).splitlines():
+        line = raw_line.strip()
+        if not line:
+            body_lines.append("")
+            continue
+
+        runs = []
+        current_type = None  # None / True (Persian) / False (English)
+        current = ""
+        neutral_buffer = ""
+
+        for char in line:
+            if char.isspace():
+                neutral_buffer += char
+                continue
+
+            is_persian = _is_persian_char(char)
+            is_letter = is_persian or (char.isascii() and char.isalpha())
+
+            if not is_letter:
+                if current_type is not None:
+                    # Digits and punctuation are direction-neutral and
+                    # render correctly in both directions, so they stay
+                    # inside the current run (e.g. "[M1]", "ADX 17.9").
+                    current += neutral_buffer + char
+                    neutral_buffer = ""
+                else:
+                    neutral_buffer += char
+                continue
+
+            if current_type is None:
+                current_type = is_persian
+                current = neutral_buffer + char
+                neutral_buffer = ""
+            elif is_persian == current_type:
+                current += neutral_buffer + char
+                neutral_buffer = ""
+            else:
+                # Direction change: the neutral part in between travels
+                # with the new run so brackets stay with their text.
+                runs.append((current_type, current.strip()))
+                current_type = is_persian
+                current = neutral_buffer + char
+                neutral_buffer = ""
+
+        if current_type is not None:
+            # A trailing neutral part stays with the last run, so a
+            # label like "قیمت: 4314.77" is never broken apart.
+            runs.append((current_type, (current + neutral_buffer).strip()))
+        elif neutral_buffer.strip():
+            runs.append((None, neutral_buffer.strip()))
+
+        for is_persian, segment in runs:
+            if not segment:
+                continue
+
+            if is_persian is None or is_persian is False:
+                body_lines.append("• " + segment)
+            else:
+                # RLM keeps the bullet and the Persian text
+                # right-aligned and readable.
+                body_lines.append("\u200F• " + segment)
+
+        if not runs:
+            body_lines.append("• " + line)
+
+    return body_lines
+
+
+def format_telegram_message(timestamp, text):
+    """Build a clean, readable Telegram message.
+
+    Header, timestamp and every content line are separated by real
+    line breaks (never one long wrapped line), and mixed Persian /
+    English content is split so the two directions are never written
+    on the same line. Plain text is used (no HTML/Markdown), so
+    brackets and symbols are always rendered literally.
+    """
+
+    lines = [
+        "🤖 SP2L Bot",
+        "━━━━━━━━━━━━━━",
+        f"🕐 {timestamp}",
+        "━━━━━━━━━━━━━━",
+    ]
+
+    lines.extend(_split_direction_lines(text))
+
+    return "\n".join(lines)
+
+
 def add_log(
     message,
     send_telegram=False,
@@ -141,7 +255,7 @@ def add_log(
             else:
                 telegram_text = message
             telegram_bot.SendMessage(
-                f"🤖 SP2L Bot:\n[{timestamp}] {telegram_text}"
+                format_telegram_message(timestamp, telegram_text)
             )
             last_telegram_log_time = now
 
@@ -982,9 +1096,10 @@ def log_pending_rejection(tf_label, pending, code, detail):
     )
 
     fa_text = (
-        f"[{tf_label}] ستاپ {DIRECTION_FA.get(direction, direction)} در قیمت "
-        f"{entry:.{DIGITS}f} باز نشد - دلیل: "
-        f"{REJECTION_FA.get(code, code)} ({detail})"
+        f"[{tf_label}] ستاپ {DIRECTION_FA.get(direction, direction)} "
+        f"در قیمت {entry:.{DIGITS}f} باز نشد\n"
+        f"دلیل: {REJECTION_FA.get(code, code)}\n"
+        f"{detail}"
     )
 
     add_log(
@@ -1132,19 +1247,6 @@ def make_trend_chart(candles, tf_label, direction):
     plt.close(figure)
     image.seek(0)
     return image
-
-
-def trend_candle_summary(candles):
-    values = []
-    for index, candle in candles.iterrows():
-        values.append(
-            f"{str(index)} "
-            f"O={float(candle['open']):.{DIGITS}f} "
-            f"H={float(candle['high']):.{DIGITS}f} "
-            f"L={float(candle['low']):.{DIGITS}f} "
-            f"C={float(candle['close']):.{DIGITS}f}"
-        )
-    return " | ".join(values)
 
 
 # Market-open detection: the PC clock is unreliable, so "is the
@@ -1298,24 +1400,24 @@ def log_trend_formation(data, tf_label):
         "Entry trigger: first pullback after the spike for Leg 2.",
         telegram_enabled=TELEGRAM_TREND_FORMATION,
         telegram_message=(
-            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد: "
-            f"{required_candles} کندل هم‌جهت با {STRUCTURE_FA.get(structure, structure)}. "
-            "تریگر ورود: اولین پول‌بک بعد از اسپایک برای لگ دوم."
+            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد\n"
+            f"{required_candles} کندل هم‌جهت\n"
+            f"{STRUCTURE_FA.get(structure, structure)}\n"
+            "تریگر ورود: اولین پول‌بک بعد از اسپایک برای لگ دوم"
         )
     )
 
     if TELEGRAM_TREND_FORMATION and TREND_CHART_ENABLED:
-        candle_summary = trend_candle_summary(candles)
-        log_verbose(
-            f"[{tf_label}] Trend chart OHLC: {candle_summary}"
-        )
         chart = make_trend_chart(candles, tf_label, direction)
+        caption_body = (
+            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد\n"
+            f"{STRUCTURE_FA.get(structure, structure)}"
+        )
         telegram_bot.SendPhoto(
             chart,
-            caption=(
-                f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد - "
-                f"{STRUCTURE_FA.get(structure, structure)}\n"
-                f"{candle_summary}"
+            caption=format_telegram_message(
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                caption_body
             )
         )
 
@@ -2041,10 +2143,11 @@ def sync_pending_limit_order(
                 send_telegram=True,
                 telegram_message=(
                     f"[{tf_label}] سفارش لیمیت "
-                    f"{DIRECTION_FA.get(direction, direction)} ثبت شد "
-                    f"در قیمت {price} "
-                    f"(حد ضرر {sl}، حد سود {tp}، "
-                    f"#{pending['order_ticket']})"
+                    f"{DIRECTION_FA.get(direction, direction)} ثبت شد\n"
+                    f"قیمت: {price}\n"
+                    f"حد ضرر: {sl}\n"
+                    f"حد سود: {tp}\n"
+                    f"#{pending['order_ticket']}"
                 )
             )
         else:
@@ -2093,8 +2196,9 @@ def sync_pending_limit_order(
             send_telegram=True,
             telegram_message=(
                 f"[{tf_label}] سفارش لیمیت "
-                f"{DIRECTION_FA.get(direction, direction)} جابه‌جا شد "
-                f"از {old_price} به {price} (#{int(order.ticket)})"
+                f"{DIRECTION_FA.get(direction, direction)} جابه‌جا شد\n"
+                f"از {old_price} به {price}\n"
+                f"#{int(order.ticket)}"
             )
         )
     else:
@@ -2281,9 +2385,9 @@ def manage_open_position(symbol, magic, tf_label, state):
                     "reached",
                     send_telegram=True,
                     telegram_message=(
-                        f"[{tf_label}] پوزیشن #{ticket} بسته شد: "
-                        f"به حداکثر زمان نگه‌داری "
-                        f"({MAX_HOLDING_MINUTES} دقیقه) رسید"
+                        f"[{tf_label}] پوزیشن #{ticket} بسته شد\n"
+                        f"دلیل: حداکثر زمان نگه‌داری\n"
+                        f"({MAX_HOLDING_MINUTES} دقیقه)"
                     )
                 )
 
@@ -2331,8 +2435,9 @@ def manage_open_position(symbol, magic, tf_label, state):
                     f"{part} lots at {r_multiple:.2f}R",
                     send_telegram=True,
                     telegram_message=(
-                        f"[{tf_label}] بستن جزئی پوزیشن #{ticket}: "
-                        f"{part} لات در {r_multiple:.2f}R"
+                        f"[{tf_label}] بستن جزئی پوزیشن #{ticket}\n"
+                        f"حجم: {part} لات\n"
+                        f"در {r_multiple:.2f}R"
                     )
                 )
 
@@ -2391,8 +2496,8 @@ def manage_open_position(symbol, magic, tf_label, state):
                     f"breakeven {new_sl}",
                     send_telegram=True,
                     telegram_message=(
-                        f"[{tf_label}] پوزیشن #{ticket} حد ضرر به "
-                        f"نقطه سربه‌سر منتقل شد: {new_sl}"
+                        f"[{tf_label}] پوزیشن #{ticket}\n"
+                        f"حد ضرر به نقطه سربه‌سر منتقل شد: {new_sl}"
                     )
                 )
 
@@ -2448,7 +2553,7 @@ def manage_open_position(symbol, magic, tf_label, state):
                     f"to {new_sl}",
                     send_telegram=True,
                     telegram_message=(
-                        f"[{tf_label}] حد ضرر پوزیشن #{ticket} "
+                        f"[{tf_label}] حد ضرر پوزیشن #{ticket}\n"
                         f"دنبال‌کننده شد به {new_sl}"
                     )
                 )
@@ -2799,7 +2904,8 @@ while True:
                             send_telegram=True,
                             telegram_message=(
                                 f"[{tf_label}] پوزیشن شناسایی شد ولی "
-                                "وضعیت ثبت‌شده False بود (لیمیت پر شد) - "
+                                "وضعیت ثبت‌شده False بود\n"
+                                f"(لیمیت پر شد)\n"
                                 "وضعیت همگام‌سازی شد"
                             )
                         )
@@ -2861,8 +2967,9 @@ while True:
                         f"{Style.RESET_ALL}",
                         send_telegram=True,
                         telegram_message=(
-                            f"[{tf_label}] پوزیشن بسته شد / حد ضرر یا "
-                            "حد سود فعال شد - دوره انتظار شروع شد"
+                            f"[{tf_label}] پوزیشن بسته شد\n"
+                            f"حد ضرر یا حد سود فعال شد\n"
+                            "دوره انتظار شروع شد"
                         )
                     )
 
@@ -3010,8 +3117,8 @@ while True:
                 f"terminal/broker connection..."
                 f"{Style.RESET_ALL}",
                 telegram_message=(
-                    "اتصال متاتریدر ۵ قطع است. در انتظار اتصال "
-                    "ترمینال/بروکر..."
+                    "اتصال متاتریدر ۵ قطع است\n"
+                    "در انتظار اتصال ترمینال/بروکر..."
                 )
             )
 
