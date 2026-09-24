@@ -68,6 +68,15 @@ TELEGRAM_TREND_FORMATION = True
 MIN_TREND_CANDLES = 3
 TREND_CHART_ENABLED = True
 
+# "3 candle plus" extension (4-candle trend pattern).
+# When True the trend detector also checks a 4-candle window in
+# which candles 2 and 3 are merged into one synthetic spike candle
+# (their bodies are added together and the merged body must satisfy
+# the normal SPIKE_CANDLE_SIZE rules) while candle 4 keeps the
+# direction of the previous candles. Matches are logged with the
+# tag "3 candle plus" / "۳ کندل پلاس".
+USE_TREND_PLUS = True
+
 # Hard alerts (entries, errors, closes) are always sent to Telegram.
 # Minimum seconds between two Telegram log messages.
 TELEGRAM_LOG_INTERVAL = 1.0
@@ -568,6 +577,7 @@ print(
     "Persian / Dari" if TELEGRAM_PERSIAN else "English"
 )
 print("Minimum trend bars  :", MIN_TREND_CANDLES)
+print("3 candle plus ext   :", USE_TREND_PLUS)
 print("Second entry        :", USE_SECOND_ENTRY, "(log only, never sent)")
 print("Second entry volume :", SECOND_ENTRY_VOLUME_MULTIPLIER)
 print("Breakeven           :", USE_BREAKEVEN)
@@ -1209,7 +1219,110 @@ def sell_trend_is_valid(
 last_trend_log_keys = {}
 
 
-def make_trend_chart(candles, tf_label, direction):
+def detect_trend_plus(data, required_candles):
+    """``3 candle plus`` extension: the 4-candle trend window.
+
+    Uses ``required_candles + 1`` closed candles (4 with the default
+    settings). The inner candles (candles 2 and 3 of the window) are
+    merged into one synthetic spike candle by adding their bodies
+    together, and the merged body must satisfy the normal
+    ``SPIKE_CANDLE_SIZE`` rules against the candle before the pair,
+    the last candle of the window and the forming candle. Every
+    candle of the window - including candle 4 - must keep the same
+    direction, so candle 4 always continues the path of the previous
+    candles.
+
+    Returns ``(direction, structure, candles)`` on a match and
+    ``None`` otherwise. The caller logs the match with the tag
+    ``3 candle plus`` / ``۳ کندل پلاس``.
+    """
+
+    window = required_candles + 1
+
+    if len(data) < window + 1:
+        return None
+
+    candles = data.iloc[-(window + 1):-1]
+
+    bullish = all(
+        float(candles.iloc[pos]["close"])
+        > float(candles.iloc[pos]["open"])
+        for pos in range(window)
+    )
+    higher_lows = all(
+        float(candles.iloc[pos]["low"])
+        > float(candles.iloc[pos - 1]["low"])
+        for pos in range(1, window)
+    )
+
+    bearish = all(
+        float(candles.iloc[pos]["close"])
+        < float(candles.iloc[pos]["open"])
+        for pos in range(window)
+    )
+    lower_highs = all(
+        float(candles.iloc[pos]["high"])
+        < float(candles.iloc[pos - 1]["high"])
+        for pos in range(1, window)
+    )
+
+    if bullish and higher_lows:
+        direction = "UPTREND"
+        structure = "Higher Lows"
+    elif bearish and lower_highs:
+        direction = "DOWNTREND"
+        structure = "Lower Highs"
+    else:
+        return None
+
+    # Merged spike candle = candles 2 and 3 of the window added
+    # together (bodies of positions 1 .. window-2).
+    spike_body = sum(
+        abs(
+            float(candles.iloc[pos]["close"])
+            - float(candles.iloc[pos]["open"])
+        )
+        for pos in range(1, window - 1)
+    )
+
+    left_body = abs(
+        float(candles.iloc[0]["close"])
+        - float(candles.iloc[0]["open"])
+    )
+
+    right_body = abs(
+        float(candles.iloc[window - 1]["close"])
+        - float(candles.iloc[window - 1]["open"])
+    )
+
+    forming_body = abs(
+        float(data.iloc[-1]["close"])
+        - float(data.iloc[-1]["open"])
+    )
+
+    spike_ok = (
+        spike_body > SPIKE_CANDLE_SIZE * left_body
+        and spike_body > SPIKE_CANDLE_SIZE * right_body
+        and spike_body > SPIKE_CANDLE_SIZE * forming_body
+    )
+
+    if not spike_ok:
+        return None
+
+    return direction, structure, candles
+
+
+def make_trend_chart(candles, tf_label, direction, pattern_start=0,
+                     pattern_tag=None):
+    """Render the trend window for Telegram.
+
+    ``pattern_start`` is the index of the first candle of the pattern
+    inside ``candles``; everything before it (the two candles before
+    the trend) is drawn faded and labelled
+    "trend candles, befor trend" so the setup can be found easily on
+    the live chart.
+    """
+
     figure, axis = plt.subplots(figsize=(4.2, 3.0), dpi=130)
     figure.patch.set_facecolor("white")
     axis.set_facecolor("white")
@@ -1221,7 +1334,13 @@ def make_trend_chart(candles, tf_label, direction):
         low_price = float(candle["low"])
         bullish = close_price >= open_price
         color = "#159957" if bullish else "#d64545"
-        axis.vlines(position, low_price, high_price, color="#263746", linewidth=1.2)
+        # Candles before the trend are drawn faded so the pattern
+        # itself stays visually separated.
+        alpha = 0.45 if position < pattern_start else 1.0
+        axis.vlines(
+            position, low_price, high_price,
+            color="#263746", linewidth=1.2, alpha=alpha
+        )
         body_bottom = min(open_price, close_price)
         body_height = max(abs(close_price - open_price), (high_price - low_price) * 0.015)
         axis.add_patch(
@@ -1231,15 +1350,53 @@ def make_trend_chart(candles, tf_label, direction):
                 body_height,
                 facecolor=color,
                 edgecolor=color,
-                linewidth=0.8
+                linewidth=0.8,
+                alpha=alpha
             )
         )
 
-    axis.set_title(f"{tf_label} - {direction}", fontsize=10, fontweight="bold")
+    title = f"{tf_label} - {direction}"
+    if pattern_tag:
+        title = f"{title} ({pattern_tag})"
+    axis.set_title(title, fontsize=10, fontweight="bold")
     axis.set_xticks(range(len(candles)))
     axis.set_xticklabels([str(index)[11:16] for index in candles.index], fontsize=7)
     axis.grid(axis="y", alpha=0.2)
     axis.margins(x=0.15, y=0.12)
+
+    # Bracket + caption under the two candles before the trend.
+    if 0 < pattern_start < len(candles):
+        lows = [
+            float(candle["low"])
+            for _, candle in candles.iterrows()
+        ]
+        highs = [
+            float(candle["high"])
+            for _, candle in candles.iterrows()
+        ]
+        y_min = min(lows)
+        y_max = max(highs)
+        span = y_max - y_min
+        if span <= 0:
+            span = max(abs(y_max) * 0.001, 1e-9)
+        label_x = (pattern_start - 1) / 2.0
+        axis.hlines(
+            y_min - span * 0.08,
+            -0.35,
+            pattern_start - 0.65,
+            color="#d64545",
+            linewidth=1.0
+        )
+        axis.text(
+            label_x,
+            y_min - span * 0.12,
+            "trend candles, befor trend",
+            ha="center",
+            va="top",
+            fontsize=6.5,
+            color="#d64545"
+        )
+        axis.set_ylim(y_min - span * 0.35, y_max + span * 0.12)
     figure.tight_layout(pad=0.8)
 
     image = BytesIO()
@@ -1419,37 +1576,79 @@ def log_trend_formation(data, tf_label):
         and middle_body > SPIKE_CANDLE_SIZE * forming_body
     )
 
+    is_plus = False
+
     if bullish and higher_lows and spike_ok:
         direction = "UPTREND"
         structure = "Higher Lows"
+        window = required_candles
+        pattern_candles = candles
     elif bearish and lower_highs and spike_ok:
         direction = "DOWNTREND"
         structure = "Lower Highs"
+        window = required_candles
+        pattern_candles = candles
     else:
-        last_trend_log_keys.pop(tf_label, None)
-        return
+        # Classic 3-candle pattern not found. When the extension is
+        # enabled, also check the 4-candle "3 candle plus" pattern
+        # (candles 2 + 3 merged as the spike, candle 4 continuing
+        # the direction of the previous candles).
+        plus_result = (
+            detect_trend_plus(data, required_candles)
+            if USE_TREND_PLUS
+            else None
+        )
+
+        if plus_result is None:
+            last_trend_log_keys.pop(tf_label, None)
+            return
+
+        direction, structure, pattern_candles = plus_result
+        is_plus = True
+        window = required_candles + 1
 
     if last_trend_log_keys.get(tf_label) == direction:
         return
 
     last_trend_log_keys[tf_label] = direction
+
+    # Telegram chart window: the pattern plus the two candles before
+    # it, so the setup can be located on the live chart.
+    if len(data) >= window + 3:
+        chart_candles = data.iloc[-(window + 3):-1]
+    else:
+        chart_candles = pattern_candles
+
+    tag_en = " (3 candle plus)" if is_plus else ""
+    tag_fa = " (۳ کندل پلاس)" if is_plus else ""
+    merge_en = "Candles 2 and 3 merged as the spike. " if is_plus else ""
+    merge_fa = "کندل ۲ و ۳ با هم به عنوان اسپایک\n" if is_plus else ""
+
     add_log(
-        f"[{tf_label}] {direction} formed: "
-        f"{required_candles} aligned candles with {structure}. "
+        f"[{tf_label}] {direction} formed{tag_en}: "
+        f"{window} aligned candles with {structure}. "
+        f"{merge_en}"
         "Entry trigger: first pullback after the spike for Leg 2.",
         telegram_enabled=TELEGRAM_TREND_FORMATION,
         telegram_message=(
-            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد\n"
-            f"{required_candles} کندل هم‌جهت\n"
+            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد{tag_fa}\n"
+            f"{window} کندل هم‌جهت\n"
             f"{STRUCTURE_FA.get(structure, structure)}\n"
+            f"{merge_fa}"
             "تریگر ورود: اولین پول‌بک بعد از اسپایک برای لگ دوم"
         )
     )
 
     if TELEGRAM_TREND_FORMATION and TREND_CHART_ENABLED:
-        chart = make_trend_chart(candles, tf_label, direction)
+        chart = make_trend_chart(
+            chart_candles,
+            tf_label,
+            direction,
+            pattern_start=len(chart_candles) - window,
+            pattern_tag="3 candle plus" if is_plus else None,
+        )
         caption_body = (
-            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد\n"
+            f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد{tag_fa}\n"
             f"{STRUCTURE_FA.get(structure, structure)}"
         )
         telegram_bot.SendPhoto(
