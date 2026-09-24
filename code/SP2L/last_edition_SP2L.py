@@ -1380,10 +1380,49 @@ def log_trend_formation(data, tf_label):
         for pos in range(1, required_candles)
     )
 
-    if bullish and higher_lows:
+    # --------------------------------------------------------
+    # SP2L SPIKE CHECK (same rule as detect_buy_setup /
+    # detect_sell_setup): the middle candle of the announced
+    # window (the spike candle, -3 in setup indexing) must be a
+    # real spike: its body has to be more than
+    # SPIKE_CANDLE_SIZE times the bodies of the candle before
+    # it, the candle after it and the forming candle. A doji in
+    # the middle is NOT a spike, so no trend is announced.
+    # Threshold is controlled by SPIKE_CANDLE_SIZE (settings).
+    # --------------------------------------------------------
+
+    spike_pos = required_candles - 2
+
+    middle_body = abs(
+        float(candles.iloc[spike_pos]["close"])
+        - float(candles.iloc[spike_pos]["open"])
+    )
+
+    left_body = abs(
+        float(candles.iloc[spike_pos - 1]["close"])
+        - float(candles.iloc[spike_pos - 1]["open"])
+    )
+
+    right_body = abs(
+        float(candles.iloc[spike_pos + 1]["close"])
+        - float(candles.iloc[spike_pos + 1]["open"])
+    )
+
+    forming_body = abs(
+        float(data.iloc[-1]["close"])
+        - float(data.iloc[-1]["open"])
+    )
+
+    spike_ok = (
+        middle_body > SPIKE_CANDLE_SIZE * left_body
+        and middle_body > SPIKE_CANDLE_SIZE * right_body
+        and middle_body > SPIKE_CANDLE_SIZE * forming_body
+    )
+
+    if bullish and higher_lows and spike_ok:
         direction = "UPTREND"
         structure = "Higher Lows"
-    elif bearish and lower_highs:
+    elif bearish and lower_highs and spike_ok:
         direction = "DOWNTREND"
         structure = "Lower Highs"
     else:
