@@ -2,23 +2,19 @@
 last_edition_SP2L.py
 ====================
 
-Live SP2L bot = the **body** of ``SP2L_Advanced_Bot.py`` + the **trading
-logic** of ``SP2LBot.mq5``.
+Trading behavior:
 
-Trading logic taken from ``SP2LBot.mq5``:
-
-* Only the PENDING LIMIT order path trades.  In the Advanced bot
-  ``Strategy()`` always returned ``trade_setup = None``, so its
-  "EXECUTE ENTRY 1" / ``Meta.run()`` market block was dead code; it is
-  removed here, exactly like the EA does.
-* Filters: EMA, ADX range, trend structure, New York session, plus the
-  MQ5-only server-hour filter and spread filter, and a trade-direction
-  filter (BOTH / LONG_ONLY / SHORT_ONLY).
-* Broker stop-level validation before a limit is placed or modified.
+* Signals use three fully closed setup candles. EMA must agree on all
+    three, and a valid signal opens immediately with a market order.
+* Filters: EMA, ADX range, trend structure, New York session, the
+    server-hour and spread filters, and trade direction.
+* Leftover pending orders from older versions are removed; this version
+    does not place or modify pending orders.
+* Broker stop-level validation is performed before market entry.
 * Open-position management: maximum holding time, partial take profit,
   breakeven and trailing stop.
-* Per-timeframe cooldown after a position closes and a throttled retry
-  after a failed pending-order removal.
+* Per-timeframe cooldown after a position closes and throttled retries
+    when removing leftover pending orders.
 * The optional second entry is reported but never sent as an order, the
   same as the EA (the original never placed one).
 
@@ -383,6 +379,10 @@ TIMEFRAMES = {
 
 SPIKE_CANDLE_SIZE = 1.5
 
+# Minimum percentage of the spike body that must remain clear of the
+# neighboring candles. 60% clear means at most 40% overlap.
+MIN_SPIKE_BODY_CLEAR_PERCENT = 60.0
+
 PGAP_POINTS = 100
 MAX_SL_DISTANCE_POINTS = 1000
 
@@ -408,7 +408,7 @@ MAX_OPPOSITE_MOVES = 2
 # Range / ADX filter
 # ------------------------------------------------------------
 
-USE_RANGE_FILTER = True
+USE_RANGE_FILTER = False
 
 ADX_PERIOD = 14
 MIN_ADX = 20.0
@@ -441,7 +441,7 @@ HOUR_TO = 18
 # Spread filter (MQ5 only)
 # ------------------------------------------------------------
 
-USE_SPREAD_FILTER = False
+USE_SPREAD_FILTER = True
 
 MAX_SPREAD_POINTS = 50
 
@@ -471,7 +471,7 @@ SECOND_ENTRY_VOLUME_MULTIPLIER = 2.0
 
 # NOTE: the base MAGIC is defined above, before TIMEFRAMES,
 # because each timeframe's magic is derived from it.
-LOT = 0.1
+RISK_PERCENT = 1.0
 
 LOOP_SECONDS = 2
 
@@ -545,6 +545,7 @@ print("Symbol              :", SYMBOL)
 print("Point               :", BROKER_POINT)
 print("Digits              :", DIGITS)
 print("Spike multiplier    :", SPIKE_CANDLE_SIZE)
+print("Spike body clear    :", f"{MIN_SPIKE_BODY_CLEAR_PERCENT}%")
 print("Gap points          :", PGAP_POINTS)
 print("Max SL points       :", MAX_SL_DISTANCE_POINTS)
 print("TP                  :", f"{TP_R}R")
@@ -601,7 +602,7 @@ print(
 print("Max holding minutes :", MAX_HOLDING_MINUTES)
 print("Cooldown seconds    :", COOLDOWN_SECONDS)
 print("Magic               :", MAGIC)
-print("Lot                 :", LOT)
+print("Risk per trade      :", f"{RISK_PERCENT}% of balance")
 print(
     "Timeframes          :",
     ", ".join(
@@ -880,8 +881,8 @@ def get_data(symbol, timeframe):
 # ============================================================
 # ENTRY FILTERS
 #
-# Mirrors the MQ5 ``EntryFiltersAreValid(bar)``:
-# EMA -> ADX range -> server hour -> New York session.
+# EMA is checked on the three closed candles that form the setup.
+# Other filters use the final closed setup candle.
 # ============================================================
 
 def entry_filters_are_valid(
@@ -898,26 +899,18 @@ def entry_filters_are_valid(
 
     if USE_EMA_FILTER:
 
-        entry_close = float(
-            data.iloc[entry_pos]["close"]
-        )
+        pattern = data.iloc[entry_pos - 2:entry_pos + 1]
+        closes = pattern["close"].to_numpy(dtype=float)
+        emas = pattern["EMA"].to_numpy(dtype=float)
 
-        entry_ema = float(
-            data.iloc[entry_pos]["EMA"]
-        )
-
-        if not np.isfinite(entry_ema):
+        if not np.isfinite(emas).all():
             return False
 
-        if direction == "BUY":
+        if direction == "BUY" and not (closes > emas).all():
+            return False
 
-            if entry_close <= entry_ema:
-                return False
-
-        else:
-
-            if entry_close >= entry_ema:
-                return False
+        if direction == "SELL" and not (closes < emas).all():
+            return False
 
     # --------------------------------------------------------
     # RANGE / ADX FILTER
@@ -990,29 +983,30 @@ def collect_entry_rejections(data, direction):
     """Return a list of (code, detail) for every failed entry filter."""
 
     rejections = []
-    entry_pos = len(data) - 1
+    entry_pos = len(data) - 2
 
     if USE_EMA_FILTER:
+        pattern = data.iloc[entry_pos - 2:entry_pos + 1]
+        for candle_time, candle in pattern.iterrows():
+            close = float(candle["close"])
+            ema = float(candle["EMA"])
 
-        entry_close = float(data.iloc[entry_pos]["close"])
-        entry_ema = float(data.iloc[entry_pos]["EMA"])
-
-        if not np.isfinite(entry_ema):
-            rejections.append(
-                ("EMA", f"EMA not converged yet (EMA={entry_ema})")
-            )
-        elif direction == "BUY" and entry_close <= entry_ema:
-            rejections.append(
-                ("EMA",
-                 f"close {entry_close:.{DIGITS}f} <= EMA{EMA_PERIOD} "
-                 f"{entry_ema:.{DIGITS}f} (price below EMA for BUY)")
-            )
-        elif direction == "SELL" and entry_close >= entry_ema:
-            rejections.append(
-                ("EMA",
-                 f"close {entry_close:.{DIGITS}f} >= EMA{EMA_PERIOD} "
-                 f"{entry_ema:.{DIGITS}f} (price above EMA for SELL)")
-            )
+            if not np.isfinite(ema):
+                rejections.append(
+                    ("EMA", f"EMA not converged at {candle_time}")
+                )
+            elif direction == "BUY" and close <= ema:
+                rejections.append(
+                    ("EMA",
+                     f"close {close:.{DIGITS}f} <= EMA{EMA_PERIOD} "
+                     f"{ema:.{DIGITS}f} at {candle_time} (BUY needs all 3 above EMA)")
+                )
+            elif direction == "SELL" and close >= ema:
+                rejections.append(
+                    ("EMA",
+                     f"close {close:.{DIGITS}f} >= EMA{EMA_PERIOD} "
+                     f"{ema:.{DIGITS}f} at {candle_time} (SELL needs all 3 below EMA)")
+                )
 
     if USE_RANGE_FILTER:
 
@@ -1217,6 +1211,7 @@ def sell_trend_is_valid(
 
 
 last_trend_log_keys = {}
+last_processed_closed_bar = {}
 
 
 def detect_trend_plus(data, required_candles):
@@ -1729,6 +1724,37 @@ def detect_buy_setup(data):
         P_GAP_PRICE
     )
 
+    spike_body = (
+        float(data["close"].iloc[-3])
+        -
+        float(data["open"].iloc[-3])
+    )
+    max_overlap = spike_body * (
+        1 - MIN_SPIKE_BODY_CLEAR_PERCENT / 100
+    )
+    previous_high_overlap = max(
+        0.0,
+        min(
+            float(data["high"].iloc[-4]),
+            float(data["close"].iloc[-3])
+        )
+        -
+        float(data["open"].iloc[-3])
+    )
+    next_low_overlap = max(
+        0.0,
+        float(data["close"].iloc[-3])
+        -
+        max(
+            float(data["low"].iloc[-2]),
+            float(data["open"].iloc[-3])
+        )
+    )
+    spike_overlap_buy = (
+        previous_high_overlap <= max_overlap
+        and next_low_overlap <= max_overlap
+    )
+
     spike_buy = (
 
         (
@@ -1761,21 +1787,6 @@ def detect_buy_setup(data):
             data["open"].iloc[-4]
         )
 
-    ) & (
-
-        (
-            data["close"].iloc[-3]
-            -
-            data["open"].iloc[-3]
-        )
-        >
-        SPIKE_CANDLE_SIZE
-        *
-        (
-            data["close"].iloc[-1]
-            -
-            data["open"].iloc[-1]
-        )
     )
 
     return (
@@ -1788,6 +1799,7 @@ def detect_buy_setup(data):
         & buy7
         & p_gap_buy
         & spike_buy
+        & spike_overlap_buy
     )
 
 
@@ -1846,6 +1858,37 @@ def detect_sell_setup(data):
         P_GAP_PRICE
     )
 
+    spike_body = (
+        float(data["open"].iloc[-3])
+        -
+        float(data["close"].iloc[-3])
+    )
+    max_overlap = spike_body * (
+        1 - MIN_SPIKE_BODY_CLEAR_PERCENT / 100
+    )
+    previous_low_overlap = max(
+        0.0,
+        min(
+            float(data["low"].iloc[-4]),
+            float(data["open"].iloc[-3])
+        )
+        -
+        float(data["close"].iloc[-3])
+    )
+    next_high_overlap = max(
+        0.0,
+        min(
+            float(data["high"].iloc[-2]),
+            float(data["open"].iloc[-3])
+        )
+        -
+        float(data["close"].iloc[-3])
+    )
+    spike_overlap_sell = (
+        previous_low_overlap <= max_overlap
+        and next_high_overlap <= max_overlap
+    )
+
     spike_sell = (
 
         (
@@ -1878,21 +1921,6 @@ def detect_sell_setup(data):
             data["close"].iloc[-4]
         )
 
-    ) & (
-
-        (
-            data["open"].iloc[-3]
-            -
-            data["close"].iloc[-3]
-        )
-        >
-        SPIKE_CANDLE_SIZE
-        *
-        (
-            data["open"].iloc[-1]
-            -
-            data["close"].iloc[-1]
-        )
     )
 
     return (
@@ -1905,6 +1933,7 @@ def detect_sell_setup(data):
         & sell7
         & p_gap_sell
         & spike_sell
+        & spike_overlap_sell
     )
 
 
@@ -2042,6 +2071,59 @@ def normalize_volume(symbol, volume):
 
     volume = round(volume / step) * step
     volume = min(max(volume, vmin), max(vmax, vmin))
+
+    return round(volume, 8)
+
+
+def calculate_risk_volume(symbol, direction, entry, sl):
+    """Return a volume whose planned SL loss is RISK_PERCENT of balance."""
+
+    account = mt5.account_info()
+    info = mt5.symbol_info(symbol)
+
+    if account is None or info is None:
+        return None
+
+    risk_amount = float(account.balance) * RISK_PERCENT / 100.0
+    order_type = (
+        mt5.ORDER_TYPE_BUY
+        if direction == "BUY"
+        else mt5.ORDER_TYPE_SELL
+    )
+
+    one_lot_loss = mt5.order_calc_profit(
+        order_type,
+        symbol,
+        1.0,
+        float(entry),
+        float(sl)
+    )
+
+    if one_lot_loss is None or abs(float(one_lot_loss)) <= 0.0:
+        return None
+
+    raw_volume = risk_amount / abs(float(one_lot_loss))
+    step = float(getattr(info, "volume_step", 0.0) or 0.0)
+    minimum = float(getattr(info, "volume_min", 0.0) or 0.0)
+    maximum = float(getattr(info, "volume_max", 0.0) or 0.0)
+
+    if step <= 0.0 or minimum <= 0.0:
+        return None
+
+    # Round down so the planned SL loss does not exceed the target risk.
+    volume = math.floor(raw_volume / step) * step
+    volume = round(volume, 8)
+
+    if volume < minimum:
+        add_log(
+            f"{direction} skipped: 1% risk requires {raw_volume:.4f} lots, "
+            f"below broker minimum {minimum}",
+            telegram_enabled=False
+        )
+        return None
+
+    if maximum > 0.0:
+        volume = min(volume, maximum)
 
     return round(volume, 8)
 
@@ -2190,6 +2272,98 @@ def spread_is_acceptable(symbol):
     spread = int(getattr(info, "spread", 0) or 0)
 
     return spread <= MAX_SPREAD_POINTS
+
+
+def open_market_trade(symbol, lot, magic, tf_label, trade_setup):
+    """Open immediately at market using the setup candle's stop level."""
+
+    direction = trade_setup["direction"]
+    is_buy = direction == "BUY"
+    tick = mt5.symbol_info_tick(symbol)
+
+    if tick is None:
+        return None
+
+    price = float(tick.ask if is_buy else tick.bid)
+    sl = round(float(trade_setup["sl"]), DIGITS)
+    risk = price - sl if is_buy else sl - price
+
+    if risk <= 0 or risk > MAX_SL_DISTANCE_PRICE:
+        add_log(
+            f"[{tf_label}] {direction} market entry skipped: "
+            f"invalid risk {risk:.{DIGITS}f} "
+            f"(max {MAX_SL_DISTANCE_PRICE:.{DIGITS}f})",
+            telegram_enabled=False
+        )
+        return None
+
+    tp = round(
+        price + TP_R * risk if is_buy else price - TP_R * risk,
+        DIGITS
+    )
+
+    if not spread_is_acceptable(symbol):
+        spread = int(getattr(mt5.symbol_info(symbol), "spread", 0) or 0)
+        add_log(
+            f"[{tf_label}] {direction} market entry skipped: "
+            f"spread {spread} points > MAX_SPREAD_POINTS {MAX_SPREAD_POINTS}",
+            telegram_enabled=False
+        )
+        return None
+
+    if not stops_are_valid(symbol, direction, tf_label, price, sl, tp):
+        return None
+
+    volume = calculate_risk_volume(
+        symbol,
+        direction,
+        price,
+        sl
+    )
+
+    if volume is None:
+        return None
+
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "symbol": symbol,
+        "volume": volume,
+        "type": mt5.ORDER_TYPE_BUY if is_buy else mt5.ORDER_TYPE_SELL,
+        "price": price,
+        "sl": sl,
+        "tp": tp,
+        "deviation": SLIPPAGE_POINTS,
+        "magic": int(magic),
+        "comment": f"SP2L {tf_label} {direction}",
+        "type_filling": Meta.FindFillingMode(symbol),
+        "type_time": mt5.ORDER_TIME_GTC,
+    }
+
+    result = mt5.order_send(request)
+
+    if retcode_of(result) in (
+        mt5.TRADE_RETCODE_DONE,
+        mt5.TRADE_RETCODE_DONE_PARTIAL,
+    ):
+        ticket = getattr(result, "order", None)
+        add_log(
+            f"[{tf_label}] {direction} MARKET opened at {price} "
+            f"(SL {sl}, TP {tp}, #{ticket})",
+            send_telegram=True,
+            telegram_message=(
+                f"[{tf_label}] معاملهٔ بازار {DIRECTION_FA.get(direction, direction)} باز شد\n"
+                f"قیمت: {price}\nحد ضرر: {sl}\nحد سود: {tp}\n"
+                f"حجم: {volume}\nریسک: {RISK_PERCENT}%\n#{ticket}"
+            )
+        )
+    else:
+        add_log(
+            f"[{tf_label}] {direction} MARKET failed: "
+            f"retcode={retcode_of(result)} {getattr(result, 'comment', '')}",
+            telegram_enabled=False
+        )
+
+    return result
 
 
 # ============================================================
@@ -2798,24 +2972,10 @@ def manage_open_position(symbol, magic, tf_label, state):
 
 
 # ============================================================
-# STRATEGY (MQ5 RunStrategy, step 1 + 2)
+# STRATEGY
 #
-# Returns:
-#
-#   preBuy
-#   preSell
-#   status
-#   sl
-#   tp
-#   pending_setup
-#   trade_setup
-#
-# pending_setup is deliberately kept separate from status: a pending
-# setup is NOT an open position.
-#
-# ``trade_setup`` is always None here, exactly like the EA: the only
-# execution path is the pending limit order, so the Advanced bot's
-# market-entry block was removed instead of ported.
+# Signals are evaluated once when a new candle starts, which means the
+# three setup candles are closed before a market order can be sent.
 # ============================================================
 
 def Strategy(
@@ -2824,8 +2984,7 @@ def Strategy(
     tf_label,
     preBuy,
     preSell,
-    status,
-    pending_setup
+    status
 ):
 
     sl = 0
@@ -2841,12 +3000,10 @@ def Strategy(
             status,
             sl,
             tp,
-            pending_setup,
             trade_setup
         )
 
-    # Stale feed or closed market: do not analyse and do not
-    # create/keep setups.
+    # Stale feed or closed market: do not analyse.
     if not data_is_fresh(data) or not market_is_open():
 
         global last_market_closed_log_time
@@ -2873,7 +3030,6 @@ def Strategy(
             status,
             sl,
             tp,
-            None,
             trade_setup
         )
 
@@ -2892,47 +3048,17 @@ def Strategy(
             status,
             sl,
             tp,
-            pending_setup,
             trade_setup
         )
 
-    # ========================================================
-    # PENDING SETUP
-    #
-    # This is the key difference from Simple Trader:
-    # the setup waits for the first valid entry.
-    # ========================================================
+    closed_bar_time = data.index[-2]
 
-    if pending_setup is not None:
+    if last_processed_closed_bar.get(tf_label) == closed_bar_time:
+        return preBuy, preSell, status, sl, tp, trade_setup
 
-        update_pending_limit(data, pending_setup)
+    last_processed_closed_bar[tf_label] = closed_bar_time
 
-        direction = pending_setup["direction"]
-        entry = float(pending_setup["entry"])
-        sl = float(pending_setup["sl"])
-        risk = (
-            entry - sl
-            if direction == "BUY"
-            else sl - entry
-        )
-
-        if risk <= 0 or risk > MAX_SL_DISTANCE_PRICE:
-            pending_setup = None
-        else:
-            tp = (
-                entry + TP_R * risk
-                if direction == "BUY"
-                else entry - TP_R * risk
-            )
-            pending_setup["tp"] = tp
-
-    # ========================================================
-    # LOOK FOR A NEW SETUP
-    #
-    # A setup is only created here. It is NOT an entry.
-    # The direction filter is applied before detection, exactly like
-    # the EA does with InpTradeSide.
-    # ========================================================
+    # The direction filter is applied before checking the setup.
 
     buy = (
         TRADE_SIDE != "SHORT_ONLY"
@@ -2944,17 +3070,50 @@ def Strategy(
         and bool(detect_sell_setup(data))
     )
 
-    if buy and not sell:
+    if buy == sell:
+        return preBuy, preSell, status, sl, tp, trade_setup
 
-        pending_setup = create_pending_buy(
-            data
-        )
+    direction = "BUY" if buy else "SELL"
+    entry_pos = len(data) - 2
+    start_pos = entry_pos - 2
 
-    elif sell and not buy:
+    trend_valid = (
+        buy_trend_is_valid(data, start_pos, entry_pos)
+        if buy
+        else sell_trend_is_valid(data, start_pos, entry_pos)
+    )
+    rejections = collect_entry_rejections(data, direction)
 
-        pending_setup = create_pending_sell(
-            data
-        )
+    rejection_setup = {
+        "direction": direction,
+        "setup_time": closed_bar_time,
+        "entry": float(data.iloc[entry_pos]["close"]),
+    }
+
+    if not trend_valid:
+        for code, detail in collect_trend_rejections(
+            data,
+            start_pos,
+            direction
+        ):
+            log_pending_rejection(tf_label, rejection_setup, code, detail)
+
+    for code, detail in rejections:
+        log_pending_rejection(tf_label, rejection_setup, code, detail)
+
+    if not trend_valid or rejections:
+        return preBuy, preSell, status, sl, tp, trade_setup
+
+    stop = (
+        float(data["low"].iloc[-4])
+        if buy
+        else float(data["high"].iloc[-4])
+    )
+    trade_setup = {
+        "direction": direction,
+        "sl": stop,
+        "signal_time": closed_bar_time,
+    }
 
     return (
         preBuy,
@@ -2962,7 +3121,6 @@ def Strategy(
         status,
         sl,
         tp,
-        pending_setup,
         trade_setup
     )
 
@@ -3014,7 +3172,7 @@ if USE_SECOND_ENTRY:
 # ============================================================
 
 symbols_list = {
-    SYMBOL: [SYMBOL, LOT],
+    SYMBOL: [SYMBOL],
 }
 
 
@@ -3022,16 +3180,14 @@ symbols_list = {
 # INITIAL STATE
 #
 # One independent state block per enabled timeframe so M1, M5 and M15
-# never share status / pending setups / magic numbers.
+# never share status or magic numbers.
 #
 # The management fields mirror the EA's per-instance globals:
 # ``mgmt_ticket`` (g_mgmtTicket), ``partial_done`` (g_partialDone) and
 # ``be_diag_done`` (g_beDiagDone).
 #
 # ``buy`` / ``sell`` are kept because the Advanced body's ``Strategy()``
-# signature takes and returns them. They are never set to True: the only
-# execution path is the pending limit order, so there is no market entry
-# to flag.
+# signature takes and returns them.
 # ============================================================
 
 tf_states = {}
@@ -3042,7 +3198,6 @@ for tf_name, tf_cfg in TIMEFRAMES.items():
         "buy": False,
         "sell": False,
         "status": False,
-        "pending_setup": None,
         # Per-timeframe cooldown after a position closes. This pauses
         # only this timeframe, not the whole loop.
         "cooldown_until": None,
@@ -3068,7 +3223,7 @@ MARKET_CLOSED_LOG_INTERVAL = 300.0
 #   1. an existing position -> resync status, manage it, done
 #   2. status set but no position -> position closed, cooldown
 #   3. still in cooldown -> skip this timeframe
-#   4. run the strategy: trail -> detect -> invalidate/remove or sync
+#   4. evaluate each newly closed setup and open at market if valid
 # ============================================================
 
 while True:
@@ -3080,7 +3235,6 @@ while True:
         for asset in symbols_list.keys():
 
             symbol = symbols_list[asset][0]
-            lot = symbols_list[asset][1]
 
             selected = mt5.symbol_select(
                 symbol
@@ -3114,8 +3268,12 @@ while True:
                 buy = state["buy"]
                 sell = state["sell"]
                 status = state["status"]
-                pending_setup = state["pending_setup"]
                 cooldown_until = state.get("cooldown_until")
+
+                # Clear leftover limits from older bot versions; this
+                # version does not create pending orders.
+                remove_pending_order(symbol, magic, "BUY", tf_label)
+                remove_pending_order(symbol, magic, "SELL", tf_label)
 
                 # =============================================
                 # CHECK EXISTING POSITION (for this magic)
@@ -3137,19 +3295,17 @@ while True:
 
                         add_log(
                             f"[{tf_label}] Position detected but the "
-                            "status key was False (a limit filled) - "
+                            "status key was False - "
                             "state resynchronised",
                             send_telegram=True,
                             telegram_message=(
                                 f"[{tf_label}] پوزیشن شناسایی شد ولی "
                                 "وضعیت ثبت‌شده False بود\n"
-                                f"(لیمیت پر شد)\n"
                                 "وضعیت همگام‌سازی شد"
                             )
                         )
 
                         status = True
-                        pending_setup = None
 
                         state["mgmt_ticket"] = None
                         state["partial_done"] = False
@@ -3166,7 +3322,6 @@ while True:
                         "buy": buy,
                         "sell": sell,
                         "status": status,
-                        "pending_setup": pending_setup,
                         "cooldown_until": cooldown_until,
                         "mgmt_ticket": state.get("mgmt_ticket"),
                         "partial_done": state.get("partial_done", False),
@@ -3185,7 +3340,6 @@ while True:
                     status = False
                     buy = False
                     sell = False
-                    pending_setup = None
 
                     state["mgmt_ticket"] = None
                     state["partial_done"] = False
@@ -3215,7 +3369,6 @@ while True:
                         "buy": buy,
                         "sell": sell,
                         "status": status,
-                        "pending_setup": pending_setup,
                         "cooldown_until": cooldown_until,
                         "mgmt_ticket": None,
                         "partial_done": False,
@@ -3247,7 +3400,6 @@ while True:
                     status,
                     sl,
                     tp,
-                    pending_setup,
                     trade_setup
                 ) = Strategy(
                     symbol,
@@ -3255,71 +3407,17 @@ while True:
                     tf_label,
                     buy,
                     sell,
-                    status,
-                    pending_setup
+                    status
                 )
 
-                # Keep the entry passive: place the limit at the
-                # previous candle low/high and move it only when the
-                # new candle improves that level.
-                if (
-                    pending_setup is not None
-                    and not status
-                ):
-
-                    pending_data = get_data(
+                if trade_setup is not None and not status:
+                    open_market_trade(
                         symbol,
-                        timeframe
+                        None,
+                        magic,
+                        tf_label,
+                        trade_setup
                     )
-
-                    if pending_data is not None:
-
-                        if pending_setup_is_invalid(
-                            pending_data,
-                            pending_setup
-                        ):
-
-                            if remove_pending_order(
-                                symbol,
-                                magic,
-                                pending_setup["direction"],
-                                tf_label
-                            ):
-
-                                if pending_setup["direction"] == "BUY":
-                                    invalid_detail = (
-                                        f"price low "
-                                        f"{float(pending_data['low'].iloc[-1]):.{DIGITS}f} "
-                                        f"touched SL "
-                                        f"{float(pending_setup['sl']):.{DIGITS}f}"
-                                    )
-                                else:
-                                    invalid_detail = (
-                                        f"price high "
-                                        f"{float(pending_data['high'].iloc[-1]):.{DIGITS}f} "
-                                        f"touched SL "
-                                        f"{float(pending_setup['sl']):.{DIGITS}f}"
-                                    )
-
-                                log_pending_rejection(
-                                    tf_label,
-                                    pending_setup,
-                                    "INVALID",
-                                    invalid_detail
-                                )
-
-                                pending_setup = None
-
-                        else:
-
-                            sync_pending_limit_order(
-                                symbol,
-                                lot,
-                                magic,
-                                tf_label,
-                                pending_data,
-                                pending_setup
-                            )
 
 
                 # =============================================
@@ -3330,7 +3428,6 @@ while True:
                     "buy": buy,
                     "sell": sell,
                     "status": status,
-                    "pending_setup": pending_setup,
                     "cooldown_until": cooldown_until,
                     "mgmt_ticket": state.get("mgmt_ticket"),
                     "partial_done": state.get("partial_done", False),
