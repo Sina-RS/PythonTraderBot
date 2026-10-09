@@ -1602,6 +1602,14 @@ def log_trend_formation(data, tf_label):
         is_plus = True
         window = required_candles + 1
 
+    telegram_formation_allowed = (
+        TELEGRAM_TREND_FORMATION
+        and (
+            not USE_EMA_FILTER
+            or trend_formation_matches_ema(direction, pattern_candles)
+        )
+    )
+
     if last_trend_log_keys.get(tf_label) == direction:
         return
 
@@ -1624,7 +1632,7 @@ def log_trend_formation(data, tf_label):
         f"{window} aligned candles with {structure}. "
         f"{merge_en}"
         "Entry trigger: first pullback after the spike for Leg 2.",
-        telegram_enabled=TELEGRAM_TREND_FORMATION,
+        telegram_enabled=telegram_formation_allowed,
         telegram_message=(
             f"[{tf_label}] {TREND_FA.get(direction, direction)} تشکیل شد{tag_fa}\n"
             f"{window} کندل هم‌جهت\n"
@@ -1634,7 +1642,7 @@ def log_trend_formation(data, tf_label):
         )
     )
 
-    if TELEGRAM_TREND_FORMATION and TREND_CHART_ENABLED:
+    if telegram_formation_allowed and TREND_CHART_ENABLED:
         chart = make_trend_chart(
             chart_candles,
             tf_label,
@@ -1653,6 +1661,22 @@ def log_trend_formation(data, tf_label):
                 caption_body
             )
         )
+
+
+def trend_formation_matches_ema(direction, pattern_candles):
+    """Return whether every trend candle is on the permitted side of EMA."""
+
+    closes = pattern_candles["close"].to_numpy(dtype=float)
+    emas = pattern_candles["EMA"].to_numpy(dtype=float)
+
+    if not np.isfinite(emas).all():
+        return False
+
+    if direction == "UPTREND":
+        return bool((closes > emas).all())
+    if direction == "DOWNTREND":
+        return bool((closes < emas).all())
+    return False
 
 
 # ============================================================

@@ -12,7 +12,7 @@ AUDIT_DIR = Path(r"C:\Users\Sina\AppData\Local\Temp\sp2l-audit-cli")
 lines = []
 
 # 1) Offline unit tests
-from test_sp2l_backtest import BacktestTests  # noqa: E402
+from PythonTraderBot.code.SP2L.backtest.test_sp2l_backtest import BacktestTests  # noqa: E402
 
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(BacktestTests)
 result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)

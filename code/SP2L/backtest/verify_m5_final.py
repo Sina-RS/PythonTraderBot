@@ -11,7 +11,7 @@ AUDIT = ROOT.parent.parent / "audit" / "M5"
 JSON_PATH = ROOT / "market_data" / "XAUUSD_M5.json"
 sys.path.insert(0, str(ROOT))
 from SP2L_Advanced_Backtest import Settings, prepare_data, run_backtest  # noqa: E402
-from SP2L_Audit import SignalAudit  # noqa: E402
+from PythonTraderBot.code.SP2L.backtest.SP2L_Audit import SignalAudit  # noqa: E402
 
 
 def load_json(path):

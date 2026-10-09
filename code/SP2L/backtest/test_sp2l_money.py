@@ -7,8 +7,8 @@ import tempfile
 import unittest
 
 import pandas as pd
-from SP2L_Money_Backtest import MoneySettings, main, simulate_money, size_trade, validate_money
-from test_sp2l_backtest import history
+from PythonTraderBot.code.SP2L.backtest.SP2L_Money_Backtest import MoneySettings, main, simulate_money, size_trade, validate_money
+from PythonTraderBot.code.SP2L.backtest.test_sp2l_backtest import history
 
 
 def trade(index=0, outcome='TP', direction='BUY'):

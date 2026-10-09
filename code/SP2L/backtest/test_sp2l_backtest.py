@@ -102,7 +102,7 @@ class BacktestTests(unittest.TestCase):
             prepare_data(pd.concat([history(), history()]))
 
     def test_audit_records_without_changing_trades(self):
-        from SP2L_Audit import SignalAudit
+        from PythonTraderBot.code.SP2L.backtest.SP2L_Audit import SignalAudit
         data = history([(110, 112, 106, 111), (111, 116, 110, 115)])
         audit = SignalAudit()
         audited = run_backtest(data, self.settings, audit=audit)
@@ -132,7 +132,7 @@ class BacktestTests(unittest.TestCase):
             self.assertEqual(audit.signals[0]['decision_utc'], data.index[5])
 
     def test_audit_replacement_and_unfilled_statuses(self):
-        from SP2L_Audit import SignalAudit
+        from PythonTraderBot.code.SP2L.backtest.SP2L_Audit import SignalAudit
         # Hand-built series: BUY signal at bar 4 (entry 106.5, SL 99); the
         # limit trails up but never fills; a second BUY signal at bar 6
         # replaces it while it is still valid.
